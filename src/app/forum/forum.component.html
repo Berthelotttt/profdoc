@@ -1,0 +1,13 @@
+<div class="chats">
+  <div *ngFor="let contenu of listUser; trackBy: trackById" class="chat-item" routerLink="/reponse">
+    <div class="avatar">
+      <img [src]="contenu.imageUrl" alt="Avatar" />
+    </div>
+    <div class="chat-info">
+      <h2>{{ contenu.prenom }}</h2>
+      <div class="info-div">
+        <p>{{ contenu.heure }}</p>
+      </div>
+    </div>
+  </div>
+</div>

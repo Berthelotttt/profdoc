@@ -1,0 +1,89 @@
+<body>
+  <div class="container">
+    <mat-button-toggle-group [(value)]="selectedSegment" aria-label="Select an option" class="header">
+      <mat-button-toggle (click)="LASTselect()" value="cours">COURS</mat-button-toggle>
+      <mat-button-toggle (click)="LASTselect()" value="td">TD</mat-button-toggle>
+      <mat-button-toggle (click)="LASTselect()" value="forum">FORUM</mat-button-toggle>
+      <mat-button-toggle (click)="cle()">CLE</mat-button-toggle>
+    </mat-button-toggle-group>
+
+
+    <!-- Afficher la liste des cours -->
+    <!-- Afficher la liste des cours -->
+<div *ngIf="selectedSegment === 'cours'">
+
+  <h2>Liste des cours</h2>
+  <div *ngIf="(loadingService.loading$ | async) === true" class="loading-overlay">
+    <p>Chargement en cours...</p>
+  </div>
+  <div class="file">
+    <div class="file-item" *ngFor="let cours of courss; let i = index">
+      <div class="file_card_txt">
+        <h3>{{ cours.titre }}</h3>
+        <p>Date : {{ cours.date }}</p>
+      </div>
+      <div class="file_card_but">
+        <button class="but_voir" (click)="voir_file(cours.fichier)">Voir</button>
+        <button class="but_delete" (click)="delete_file(cours.id)">Supprimer</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <form (ngSubmit)="onSubmit()" class="add-cours" *ngIf="selectedSegment === 'cours'">
+      <h2>Ajout des cours</h2>
+      <input  type="text" id="titre" [(ngModel)]="titre" name="titre" required placeholder="Titre">
+      <input  input type="file" id="file" (change)="onFileSelected($event)" accept="application/pdf" required type="file" placeholder="file">
+      <button type="submit">AJOUTER</button>
+    </form >
+
+    <!-- Afficher la liste des TD -->
+    <div class="list-cours" *ngIf="selectedSegment === 'td'">
+      <h2>Liste des Travaux Dirigés</h2>
+      <div *ngFor="let cours of cours; let i = index">
+        <p>{{ cours.nom }}</p>
+        <button class="but_voir">voir</button>
+        <button class="but_delete" (click)="deleteClient(i)">DELETE</button>
+      </div>
+    </div>
+
+    <div class="add-cours" *ngIf="selectedSegment === 'td'">
+      <h2>Ajout de Travail Dirigé</h2>
+      <input #newCours type="text" placeholder="Titre">
+      <input type="file" placeholder="file">
+      <button (click)="addClient(newCours.value, 'date')">AJOUTER</button>
+    </div>
+
+    <!-- Afficher la liste des forums -->
+    <div class="add-cours" *ngIf="selectedSegment === 'forum'">
+      <div class="chats">
+        <div *ngFor="let contenu of list_user" class="chat-item" (click)="reponse(contenu.id)">
+          <div class="avatar_user_message">
+            <div class="avatar">
+              <mat-icon>person</mat-icon>
+            </div>
+            <div class="nom_messg">
+              <h2>{{ contenu.Prenom }}</h2>
+              <p>
+                {{ contenu.showFullMessage ? contenu.dernier_message : truncateMessage(contenu.dernier_message, 50) }}
+                <span *ngIf="contenu.dernier_message.length > 50" (click)="toggleFullMessage(contenu)" class="see-more">
+                  {{ contenu.showFullMessage ? 'voir moins' : 'voir plus' }}
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <div class="info-div">
+            <p>{{ contenu.date }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulaire d'ajout de TD -->
+    <div class="add-cours" *ngIf="selectedSegment === 'cle'">
+      <h2>Ajout de TD</h2>
+    </div>
+  </div>
+</body>
+
+

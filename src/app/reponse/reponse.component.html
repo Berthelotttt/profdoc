@@ -1,0 +1,44 @@
+<div class="header">
+  <div class="info">
+    <span class="details">
+      <h1>Bella</h1>
+    </span>
+  </div>
+</div>
+
+<!-- Corps de la conversation -->
+<div class="conversation">
+  <div class="conteneur_quest_reponse">
+    <div class="question_aide">
+      jhdsjfhjskdfhjksdhfjkhsdjfkhjfgdfgdfgdfgdfgdfgdfgdgdfgdfsgdsfgsdfgdsfgdfgfgdsfgdsgsdgskdfhjksdhfjkhsdsdksjldfhjklsdfhjklsdfhljksdhfjkhsdfjkhsdjfhjskdfhjksdhfjkdshfjhsdfjhsdjfjskdf
+    </div>
+
+    <!-- Liste des messages -->
+    <div class="text_reponse">
+      <label>Reponse</label>
+    </div>
+
+    <div class="chat_section" id="chat">
+      <div class="yours_messages" *ngFor="let message of messages">
+        <div class="avatar">
+          <mat-icon>person</mat-icon>
+        </div>
+        <div class="nom_message">
+          <h2 class="nom">{{ message.nom }}</h2>
+          <span class="message">{{ message.contenu }}</span>
+        </div>
+        <span class="date">{{ message.date }}</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Nouvelle entrée de message -->
+  <div class="message-input">
+    <input type="text" placeholder="Votre réponse ..." [(ngModel)]="newMessage" class="input-message">
+    <!-- Utiliser une icône Angular Material pour le bouton envoyer -->
+    <button mat-fab class="send-button" (click)="sendMessage()">
+      <mat-icon>send</mat-icon>
+    </button>
+  </div>
+</div>
