@@ -1,15 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // Importez FormsModule
 import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute } from '@angular/router';
-interface Message {
-  nom: string;
-  contenu: string;
-  date: string;
-}
+import { BackendserviceService, LoadingService, Message, Reponse, } from '../backendservice.service';
 
 @Component({
   standalone: true, // Indique que c'est un composant autonome
@@ -23,32 +20,26 @@ interface Message {
     MatIconModule,
     MatButtonModule,CommonModule
   ],
+  template: 'passed in {{ data.id }}'
 })
 export class ReponseComponent implements OnInit {
+  message: Message | undefined;
+  reponses: Reponse[] = [];
+  newReponse: string = ''; // Propriété pour stocker la réponse saisie
+  nom: string = '';  // Variables pour stocker le nom et prénom
+  prenom: string = '';
+  public loading: boolean = false;
   id: number | undefined; // ID récupéré à partir des paramètres de route
-  messages: Message[] = [
-    { nom: 'boy blac', contenu: "Help,hofdgdfgdfgdfgdfgdfgdfgdsfgdsfgdsfgsdfgsdfgsdfgsdfgdsfgdfgdsfgdfgw's goingw's going?", date: '1:4 PM\n00/00/2000' },
-    { nom: 'boy blac', contenu: "Help, how's going?", date: '1:4 PM\n00/00/2000' },
-    { nom: 'boy blac', contenu: "Help, how's going?", date: '1:4 PM\n00/00/2000' },
-    { nom: 'boy blac', contenu: "Help, how's going?", date: '1:4 PM\n00/00/2000' },
-    {nom: 'boy blac',contenu:"Help, hofdgdfgdfgdfgdfgdfgdfgdsfgdsfgdsfgsdfgsdfgsdfgsdfgdsfgdfgdsfgdfgw's going?",
-      date: '1:4 PM\n00/00/2000',
-    },
-    { nom: 'boy blac', contenu: "Help, how's going?", date: '1:4 PM\n00/00/2000' },
-  ];
+
   newMessage: string = ''; // Variable pour stocker le nouveau message
 
-  constructor(private route: ActivatedRoute) {} // Injectez ActivatedRoute
+  constructor(@Inject(MAT_DIALOG_DATA) public  data:{id: number},public loadingService: LoadingService,private messageService: BackendserviceService, private route: ActivatedRoute) {} // Injectez ActivatedRoute
 
   ngOnInit(): void {
-    // Méthode 1 : Utilisation de snapshot pour récupérer les queryParams
-    this.id = +this.route.snapshot.queryParams['id']; // Utilisation du '+' pour convertir en nombre
+       // Convertir l'ID en nombre
+        this.getMessage(this.data.id);
+        this.getReponses(this.data.id); // Récupérer les réponses associées
 
-    // Méthode 2 : Utilisation de l'abonnement pour récupérer les queryParams (recommandé si les paramètres peuvent changer sans rechargement de la page)
-    this.route.queryParams.subscribe((params) => {
-      this.id = +params['id']; // Utilisation du '+' pour convertir en nombre
-      console.log('ID récupéré via queryParams :', this.id);
-    });
   }
 
   // Méthode pour naviguer en arrière
@@ -56,19 +47,81 @@ export class ReponseComponent implements OnInit {
     console.log('Navigating back...'); // Logique de navigation
   }
 
-  // Méthode pour envoyer un message
-  sendMessage() {
-    if (this.newMessage.trim() !== '') {
-      // Ajouter un nouveau message à la liste des messages
-      this.messages.push({
-        nom: 'Votre nom', // Remplacez par le nom de l'utilisateur actuel
-        contenu: this.newMessage,
-        date: this.getCurrentTime(), // Méthode pour obtenir l'heure actuelle
-      });
+  getMessage(id: number): void {
+    this.messageService.getMessageById(id).subscribe(
+      (data: Message) => {
+        this.message = data;
 
-      // Réinitialiser le champ de saisie
-      this.newMessage = '';
+      },
+      (error) => {
+        console.error('Erreur lors de la récupération du message', error);
+      }
+    );
+  }
+
+  getReponses(id: number): void {
+    this.messageService.getReponses().subscribe(
+      (data: Reponse[]) => {
+        this.reponses = data.filter(reponse => reponse.idMessage === id);
+        this.getReponses(id);
+      },
+      (error) => {
+        console.error('Erreur lors de la récupération des réponses', error);
+      }
+    );
+  }
+
+  async sendReponse() {
+    console.log(this.newReponse)
+    console.log(this.newReponse.trim())
+    if (this.newReponse.trim() && this.message) {
+
+      const newReponse: Reponse = {
+        id: 0, // L'ID sera généré automatiquement par le backend
+        contenu: this.newReponse,
+        nom: 'Proffesseur', // Remplacez par le nom de l'utilisateur actuel si disponible
+        prenom: this.prenom, // Remplacez par le prénom de l'utilisateur actuel si disponible
+        date: new Date().toISOString().split('T')[0], // Date au format ISO
+        idMessage: this.message.id,
+      };
+      this.loadingService.show();
+      this.loading = true;
+      this.messageService.addReponse(newReponse).subscribe(
+        () => {
+          this.newReponse = ''; // Réinitialiser le champ de saisie
+          this.loadingService.hide();
+          this.loading = false;
+
+        },
+        (error) => {
+          console.error('Erreur lors de l\'envoi de la réponse', error);
+          this.loadingService.hide();
+          this.loading = false;
+        }
+      );
     }
+  }
+  deleteReponses(idMessage: number): void {
+    this.messageService.deleteMessage(idMessage).subscribe(
+      () => {
+        console.log('mmssg supprimées avec succès');
+        // Mettez à jour votre interface utilisateur ici, par exemple en supprimant le message ou en rafraîchissant la liste
+      },
+      (error) => {
+        console.error('Erreur lors de la suppression des mssg', error);
+      }
+    );
+    this.messageService.deleteReponsesByMessageId(idMessage).subscribe(
+      () => {
+        console.log('Réponses supprimées avec succès');
+        // Mettez à jour votre interface utilisateur ici, par exemple en supprimant le message ou en rafraîchissant la liste
+      },
+      (error) => {
+        console.error('Erreur lors de la suppression des réponses', error);
+      }
+    );
+    this.getMessage(this.data.id);
+    this.getReponses(this.data.id)
   }
 
   // Méthode pour obtenir l'heure actuelle

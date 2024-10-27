@@ -1,10 +1,6 @@
 <div class="change-key-container">
   <form (ngSubmit)="onChangeKey()">
-
-    <!-- Titre -->
     <h2>Changements de Clé de Sécurité</h2>
-
-    <!-- Champ pour l'ancienne clé -->
     <div class="form-group">
       <label for="oldKey">Ancienne Clé</label>
       <mat-form-field appearance="outline" class="full-width">
@@ -12,7 +8,6 @@
         <input matInput [(ngModel)]="oldKey" name="oldKey" placeholder="Entrez l'ancienne clé de sécurité" required/>
       </mat-form-field>
     </div>
-
     <!-- Champ pour la nouvelle clé -->
     <div class="form-group">
       <label for="newKey">Nouvelle Clé</label>
@@ -34,7 +29,7 @@
   </div>
 
   <!-- Message d'erreur -->
-  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+  <div [ngClass]="{'alert-success':succes===true , 'alert-error':succes===false , }" *ngIf="errorMessage" class="alert alert-error mt-3">
     {{ errorMessage }}
   </div>
 </div>

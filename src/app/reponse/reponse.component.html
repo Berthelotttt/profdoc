@@ -1,8 +1,14 @@
 <div class="header">
   <div class="info">
     <span class="details">
-      <h1>Bella</h1>
+      <h1>{{message?.nom}}</h1>
+      <h1>{{message?.prenom}}</h1>
     </span>
+  </div>
+  <div>
+    <button class="deletsujet" (click)="deleteReponses(data.id)">
+      <mat-icon>delete</mat-icon>
+    </button>
   </div>
 </div>
 
@@ -10,7 +16,7 @@
 <div class="conversation">
   <div class="conteneur_quest_reponse">
     <div class="question_aide">
-      jhdsjfhjskdfhjksdhfjkhsdjfkhjfgdfgdfgdfgdfgdfgdfgdgdfgdfsgdsfgsdfgdsfgdfgfgdsfgdsgsdgskdfhjksdhfjkhsdsdksjldfhjklsdfhjklsdfhljksdhfjkhsdfjkhsdjfhjskdfhjksdhfjkdshfjhsdfjhsdjfjskdf
+      {{message?.message}}
     </div>
 
     <!-- Liste des messages -->
@@ -19,15 +25,15 @@
     </div>
 
     <div class="chat_section" id="chat">
-      <div class="yours_messages" *ngFor="let message of messages">
+      <div class="yours_messages" *ngFor="let reponse of reponses.slice().reverse()">
         <div class="avatar">
           <mat-icon>person</mat-icon>
         </div>
         <div class="nom_message">
-          <h2 class="nom">{{ message.nom }}</h2>
-          <span class="message">{{ message.contenu }}</span>
+          <h2 class="nom">{{ reponse.nom }}</h2>
+          <span class="message">{{ reponse.contenu }}</span>
         </div>
-        <span class="date">{{ message.date }}</span>
+        <span class="date">{{ reponse.date }}</span>
       </div>
     </div>
 
@@ -35,10 +41,12 @@
 
   <!-- Nouvelle entrée de message -->
   <div class="message-input">
-    <input type="text" placeholder="Votre réponse ..." [(ngModel)]="newMessage" class="input-message">
+    <input type="text" placeholder="Votre réponse ..." [(ngModel)]="newReponse" class="input-message">
     <!-- Utiliser une icône Angular Material pour le bouton envoyer -->
-    <button mat-fab class="send-button" (click)="sendMessage()">
+    <button mat-fab class="send-button" (click)="sendReponse()">
       <mat-icon>send</mat-icon>
     </button>
+
+
   </div>
 </div>

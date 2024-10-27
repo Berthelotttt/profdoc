@@ -62,14 +62,27 @@
 
 /* Style pour le message de confirmation */
 .alert-success {
-  background-color: #d4edda;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  background-color: #d4edda00;
   color: #155724;
   border: 1px solid #c3e6cb;
   border-radius: 4px;
   padding: 15px;
   margin-top: 20px; /* Espace au-dessus du message */
 }
-
+.alert-error{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  background-color: #ffffff00;
+  color: #cf0606;
+  border: 1px solid #c3e6cb;
+  border-radius: 4px;
+  padding: 15px;
+  margin-top: 20px; /* Espace au-dessus du message */
+}
 /* Ajustement pour le formulaire */
 form {
   display: flex;

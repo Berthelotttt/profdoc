@@ -1,11 +1,12 @@
-
-
 .landing-page {
   font-family: 'Arial', sans-serif;
   background: linear-gradient(to bottom, #18fddf, #f028d5);
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
 }
 
 .navbar {
@@ -40,33 +41,40 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 60px 20px;
-  color: white;
+  padding: 60px 5%;
+  color: rgb(35, 39, 255);
 }
 
 .text-content {
-  flex: 1;
+  display:flex;
+  flex-direction: column;
 }
 
 .text-content h1 {
-  font-size: 48px;
+  font-size: 100px;
   margin-bottom: 20px;
+  font-weight: bolder;
+  margin-bottom: 100px;
 }
 
 .text-content p {
-  font-size: 20px;
+  font-size: 15px;
   margin-bottom: 40px;
+  width: 60%;
+  margin-bottom: 20px;
+  color: rgb(255, 255, 255);
 }
 
 .learn-more-btn {
   padding: 15px 30px;
-  background: linear-gradient(to right, #284ffa, #45f5e6);
+  background: linear-gradient(to right, #fa289b, #45f5e6);
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
   transition: box-shadow 0.3s ease;
+  width: 15%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
@@ -79,6 +87,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 10%;
 }
 
 .phone-image img {

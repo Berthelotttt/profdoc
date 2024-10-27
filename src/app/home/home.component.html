@@ -1,4 +1,7 @@
 <body>
+  <div *ngIf="(loadingService.loading$ | async) === true" class="loading-overlay">
+    <p>Chargement en cours...</p>
+  </div>
   <div class="container">
     <mat-button-toggle-group [(value)]="selectedSegment" aria-label="Select an option" class="header">
       <mat-button-toggle (click)="LASTselect()" value="cours">COURS</mat-button-toggle>
@@ -7,15 +10,8 @@
       <mat-button-toggle (click)="cle()">CLE</mat-button-toggle>
     </mat-button-toggle-group>
 
-
-    <!-- Afficher la liste des cours -->
-    <!-- Afficher la liste des cours -->
 <div *ngIf="selectedSegment === 'cours'">
-
   <h2>Liste des cours</h2>
-  <div *ngIf="(loadingService.loading$ | async) === true" class="loading-overlay">
-    <p>Chargement en cours...</p>
-  </div>
   <div class="file">
     <div class="file-item" *ngFor="let cours of courss; let i = index">
       <div class="file_card_txt">
@@ -37,46 +33,58 @@
     </form >
 
     <!-- Afficher la liste des TD -->
-    <div class="list-cours" *ngIf="selectedSegment === 'td'">
+    <div  *ngIf="selectedSegment === 'td'">
       <h2>Liste des Travaux Dirigés</h2>
-      <div *ngFor="let cours of cours; let i = index">
-        <p>{{ cours.nom }}</p>
-        <button class="but_voir">voir</button>
-        <button class="but_delete" (click)="deleteClient(i)">DELETE</button>
+      <div class="file">
+        <div class="file-item" *ngFor="let td of Tds; let i = index">
+          <div class="file_card_txt">
+            <h3>{{ td.titre }}</h3>
+            <p>Date : {{ td.date }}</p>
+          </div>
+          <div class="file_card_but">
+            <button class="but_voir" (click)="voir_file(td.fichier)">Voir</button>
+            <button class="but_delete" (click)="delete_file_td(td.id)">Supprimer</button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="add-cours" *ngIf="selectedSegment === 'td'">
-      <h2>Ajout de Travail Dirigé</h2>
-      <input #newCours type="text" placeholder="Titre">
-      <input type="file" placeholder="file">
-      <button (click)="addClient(newCours.value, 'date')">AJOUTER</button>
-    </div>
+    <form (ngSubmit)="onSubmit_td()" class="add-cours" *ngIf="selectedSegment === 'td'">
+      <h2>Ajout des TD</h2>
+      <input type="text" id="titre" [(ngModel)]="titre_td" name="titre" required placeholder="Titre">
+       <input type="file" id="file" (change)="onFileSelected($event)" accept="application/pdf" required placeholder="file">
+       <button type="submit">AJOUTER</button>
+    </form>
 
     <!-- Afficher la liste des forums -->
     <div class="add-cours" *ngIf="selectedSegment === 'forum'">
+
       <div class="chats">
-        <div *ngFor="let contenu of list_user" class="chat-item" (click)="reponse(contenu.id)">
-          <div class="avatar_user_message">
+        <div class="contenu_cht" *ngFor="let message of messages.slice().reverse()" (click)="reponse(message.id)">
+           <div class="avatar_user_message">
             <div class="avatar">
               <mat-icon>person</mat-icon>
             </div>
-            <div class="nom_messg">
-              <h2>{{ contenu.Prenom }}</h2>
+           <div class="nom_messg">
+              <h2>{{ message.nom }} {{ message.prenom }}</h2>
               <p>
-                {{ contenu.showFullMessage ? contenu.dernier_message : truncateMessage(contenu.dernier_message, 50) }}
-                <span *ngIf="contenu.dernier_message.length > 50" (click)="toggleFullMessage(contenu)" class="see-more">
-                  {{ contenu.showFullMessage ? 'voir moins' : 'voir plus' }}
+                {{message.message? message.message : truncateMessage(message.message, 50) }}
+                <span *ngIf="message.message" (click)="toggleFullMessage(message)" class="see-more">
+                  {{ message.message ? 'voir moins' : 'voir plus' }}
                 </span>
               </p>
             </div>
           </div>
-
           <div class="info-div">
-            <p>{{ contenu.date }}</p>
+            <p>{{ message.date }}</p>
           </div>
         </div>
+
       </div>
+      <form (ngSubmit)="sendMessage()" class="add-cours" >
+        <input  type="text" id="titre" [(ngModel)]="newMessage" placeholder="Votre sujet ..." name="form" required >
+        <button type="submit">Actualiser</button>
+        </form >
     </div>
 
     <!-- Formulaire d'ajout de TD -->

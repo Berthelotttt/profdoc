@@ -24,14 +24,14 @@ import { SecurityModalComponent } from '../security-modal/security-modal.compone
 export class AcceuilleComponent implements OnInit {
   title = 'profdoc';
   isHomePage = false;
-
-  constructor(public dialog: MatDialog, private router: Router, private location: Location) {}  // Injecter le Router
+  constructor( public dialog: MatDialog, private router: Router, private location: Location) {}  // Injecter le Router
 
   ngOnInit() {
     // Écouter les changements de l'historique
     this.router.events.subscribe(() => {
       this.isHomePage = this.router.url === '/acceuille';
     });
+
   }
 
   openModal(): void {

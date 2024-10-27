@@ -278,79 +278,72 @@ body {
   }
 }
 /*--------------forum-------------------*/
-.chat-item {
+.contenu_cht {
+  height: 15vh;
   display: flex;
-  align-items: center;
-  padding: 10px;
-  justify-content: space-between;
+  flex-direction: column;
   background-color: #ffffff;
-  border-radius: 8px;
-  margin-bottom: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  padding: 15px;
   cursor: pointer;
+  border-bottom: 1px solid #cac7c7;
 }
-.avatar_user_message{
+
+.contenu_cht:hover {
+  background-color: #e9e9e9;
+}
+
+.avatar_user_message {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  margin-bottom: 10px;
 }
+
 .avatar {
   width: 50px;
   height: 50px;
+  background-color: #4caf50;
   border-radius: 50%;
-  margin-right: 15px;
-  background-color: #70dfd9;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.chat-info {
-  flex-grow: 1;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
+  margin-right: 10px;
+  color: white;
 }
 
 .nom_messg {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  flex-grow: 1;
 }
 
 .nom_messg h2 {
   margin: 0;
   font-size: 18px;
-  color: #333;
+  font-weight: 600;
+}
+
+.nom_messg p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.nom_messg .see-more {
+  color: #2196f3;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.nom_messg .see-more:hover {
+  text-decoration: underline;
 }
 
 .info-div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 14px;
-  color: #666;
+  text-align: right;
+  margin-top: 5px;
 }
-.chat-button {
-  position: fixed;
-  z-index: 111;
-  width: 60px;
-  height: 60px;
-  bottom: 5vh; /* Ajustez la distance par rapport au bas */
-  right: 10vw; /* Ajustez la distance par rapport à la droite */
-  background: #c23838;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.see-more {
-  color: blue;
-  cursor: pointer;
-  font-size: 14px;
+
+.info-div p {
+  font-size: 12px;
+  color: #888;
 }
 
 /*---------------------------------------*/

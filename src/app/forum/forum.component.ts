@@ -14,7 +14,7 @@ import { Component, OnInit } from '@angular/core';
 export class  ForumComponent   implements OnInit {
   activeTab: string = 'chats';
   list_user :any =[];
-
+  mddg: string = '';
   constructor() {}
   segmentChange(e: any) {
     this.activeTab = e.target.value;
