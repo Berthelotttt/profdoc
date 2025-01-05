@@ -1,0 +1,92 @@
+import { Component, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { Car, GarageserviceService } from './garageservice.service';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css',
+  providers:[ GarageserviceService]
+})
+
+export class AppComponent implements OnInit {
+  title = 'profdoc';
+  cars: Car[] = [];
+  newCar: Car = {
+    id: 0,
+    model: '',
+    brand: '',
+    year: 2023,
+    color: 'black'
+  };
+  serverStatus: string = 'Checking server connection...';
+
+  constructor(private garageService: GarageserviceService) { }
+
+  ngOnInit(): void {
+ //   this.getCars();
+    this.checkServerConnection();
+  }
+
+  /*getCars(): void {
+    this.garageService.getCars().subscribe(
+      (data: Car[]) => this.cars = data,
+      (error) => console.error('Erreur lors du chargement des voitures', error)
+    );
+  }*/
+
+  addCar(): void {
+    this.garageService.addCar(this.newCar).subscribe(
+      (data: Car) => {
+        console.log('Voiture ajoutée avec succès', data);
+        this.cars.push(data);
+        this.newCar = { id: 0, model: '', brand: '', year: 2023, color: 'black' }; // Réinitialiser le formulaire
+      },
+      (error) => console.error('Erreur lors de l\'ajout de la voiture', error)
+    );
+  }
+
+  checkServerConnection(): void {
+    this.garageService.checkServerConnection().subscribe(
+      () => this.serverStatus = 'Connecté au serveur',
+      () => this.serverStatus = 'Échec de la connexion au serveur'
+    );
+  }
+}
+----------------
+service import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+export interface Car {
+  id: number;
+  model: string;
+  brand: string;
+  year: number;
+  color: string;
+}
+@Injectable({
+  providedIn: 'root'
+})
+export class GarageserviceService {
+ readonly API_URL="http://localhost:8080"
+
+  readonly ENDPOINT_CARS="/cars"
+  constructor(private httpClient: HttpClient ) { }
+  getCars(){
+    return this.httpClient.get(this.API_URL+this.ENDPOINT_CARS)
+
+  }
+   // Ajouter une nouvelle voiture
+   addCar(car: Car): Observable<Car> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.post<Car>(this.API_URL + this.ENDPOINT_CARS, car, { headers });
+  }
+
+  // Vérifier la connexion avec le serveur
+  checkServerConnection(): Observable<any> {
+    return this.httpClient.get(this.API_URL );
+  }
+}

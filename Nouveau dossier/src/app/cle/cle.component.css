@@ -1,0 +1,96 @@
+/* Style global pour le conteneur */
+.change-key-container {
+  width: 100%;
+  max-width: 500px; /* Limite la largeur maximale du conteneur */
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; /* Inclut le padding dans la largeur totale */
+  overflow: hidden; /* Empêche le défilement */
+}
+
+/* Style pour le titre */
+.change-key-container h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  margin-top: 0; /* Enlève la marge supérieure si nécessaire */
+}
+
+/* Style pour les groupes de formulaire */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Style pour les labels */
+.form-group label {
+  font-size: 14px;
+  color: #555;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Style pour les champs de saisie */
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-form-field .mat-form-field-label {
+  color: #333;
+}
+
+.mat-form-field input.mat-input-element {
+  color: #333;
+}
+
+/* Style pour le bouton de soumission */
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Style pour le message de confirmation */
+.alert-success {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  background-color: #d4edda00;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  border-radius: 4px;
+  padding: 15px;
+  margin-top: 20px; /* Espace au-dessus du message */
+}
+.alert-error{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  background-color: #ffffff00;
+  color: #cf0606;
+  border: 1px solid #c3e6cb;
+  border-radius: 4px;
+  padding: 15px;
+  margin-top: 20px; /* Espace au-dessus du message */
+}
+/* Ajustement pour le formulaire */
+form {
+  display: flex;
+  flex-direction: column; /* Alignement vertical */
+}
+
+/* Limite la hauteur du conteneur à 100% de la hauteur de la fenêtre */
+.change-key-container {
+  max-height: 90vh; /* Hauteur maximale du conteneur */
+  overflow: auto; /* Permet le défilement si nécessaire */
+}

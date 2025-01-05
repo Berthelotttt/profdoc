@@ -1,323 +1,209 @@
-/* Global styles */
 body {
+  font-family: Arial, sans-serif;
   margin: 0;
-  padding-bottom: 3vw;
   padding: 0;
-  font-family: 'Helvetica Neue', 'Arial', sans-serif;
-  background: linear-gradient(  #284ffa, #45f5e6);
-  overflow: hidden;
+  color: #333;
+  height: 100vh; /* Assure que le body occupe toute la hauteur de la fenêtre */
+  overflow: scroll; /* Empêche le débordement */
 }
 
-/* Conteneur principal */
+
+.back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("fr.jpeg");
+  background-size: cover; /* Pour que l'image occupe toute la fenêtre sans être déformée */
+  background-position: center;
+  z-index: -1; /* S'assure que l'image reste en arrière-plan */
+  filter: blur(10px); /* Applique le flou à l'image */
+}
+
+
 .container {
-  max-width: 1100px;
-  margin: 20px auto;
+  position: relative;
+  border-radius: 2%;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.479); /* Fond blanc semi-transparent */
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); /* Ombre légère */
-  border-radius: 8px; /* Coins légèrement arrondis */
-  backdrop-filter: blur(5px); /* Effet de flou pour un effet vitre */
-  overflow-y: auto; /* Permet le défilement vertical si nécessaire */
-  overflow-x: hidden; /* Cache le défilement horizontal */
-  height: 90%; /* Hauteur du conteneur */
-
+  background-color: #f5f5f5b3; /* couleur semi-transparente */
+  backdrop-filter: blur(10px); /* Applique le flou en arrière-plan */
+  margin-top: 4%;
+  margin-bottom: 4%;
+  margin-left: 10%;
+  margin-right: 10%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Légère ombre portée pour l'effet 3D */
 }
 
 
-/* Header styles */
-/* Styles spécifiques pour le groupe de boutons */
 .header {
   display: flex;
   justify-content: space-around;
-  background-color: #111524;
-  padding: 15px 0;
-  border-radius: 8px ;
   margin-bottom: 20px;
-  display: flex;
-  flex-direction: row;
-}
-/* Style par défaut pour les écrans plus grands (en ligne) */
-.header-toggle-group {
-  display: flex;
-  justify-content: space-around; /* Alignement des boutons en ligne avec espace uniforme */
-  flex-wrap: wrap; /* Permet au contenu de se placer en plusieurs lignes si nécessaire */
 }
 
-/* Styles pour les éléments de bascule */
-.header-toggle-group .mat-button-toggle {
-  flex: 1; /* Les éléments occupent une largeur égale */
-  margin: 5px; /* Espacement entre les boutons */
-}
-
-/* Media Query pour les écrans plus petits (en colonne) */
-@media (max-width: 600px) {
-  .header-toggle-group {
-    flex-direction: row; /* Affichage en colonne sur les petits écrans */
-    align-items: center; /* Centre les éléments horizontalement */
-  }
-
-  /* Ajuste les marges pour les petits écrans si nécessaire */
-  .header-toggle-group .mat-button-toggle {
-    margin: 10px 0; /* Espacement vertical entre les boutons */
-    width: 100%; /* Les boutons prennent toute la largeur disponible */
-  }
-}
-
-.mat-button-toggle-group {
-  width: 100%;
-}
-
-.mat-button-toggle {
-  background-color:#111524;
-  color: #ebedf3;
+mat-button-toggle {
+  font-weight: bold;
+  background-color: #f0f0f0;
+  color: #333;
   border-radius: 8px;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.mat-button-toggle-checked {
-  background-color: #e0e3e9;
-  color: #0f1013;
+mat-button-toggle:hover {
+  background-color: #cce7ff;
+  transform: scale(1.05);
 }
 
-
-/* List of courses styles */
 .file {
   display: flex;
-  flex-direction: column;
-  gap: 2px; /* Espace entre chaque cours */
-
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .file-item {
   display: flex;
-  justify-content: space-between; /* Espace entre le texte et les boutons */
-  align-items: center; /* Alignement vertical centré */
-  padding: 10px; /* Espace interne */
-  background-color: #ffffff; /* Couleur de fond blanc */
-  border-radius: 8px; /* Coins arrondis */
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); /* Ombre pour donner du relief */
-  cursor: pointer; /* Curseur main au survol */
-  margin-bottom: 2px; /* Espace entre chaque item */
-  transition: transform 0.2s; /* Transition pour l'effet au survol */
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  height: 15%;
 }
 
 .file-item:hover {
-  transform: scale(1.02); /* Agrandissement léger au survol */
+  transform: scale(1.03);
 }
 
-.file_card_txt {
-  flex: 1; /* Prendre tout l'espace disponible */
+.file_card_txt h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #0018f0;
+}
+
+.file_card_txt p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #666;
 }
 
 .file_card_but {
-  display: flex; /* Afficher les boutons en ligne */
-  gap: 10px; /* Espace entre les boutons */
+  display: flex;
+  width: 40%;
+  justify-content: space-around;
+  button {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
 }
 
+
 .but_voir {
-  padding: 8px 12px; /* Espace interne pour le bouton */
-  background-color: #007bff; /* Couleur de fond bleu */
-  color: white; /* Couleur du texte */
-  border: none; /* Pas de bordure */
-  border-radius: 4px; /* Coins arrondis */
-  cursor: pointer; /* Curseur main */
-  transition: background-color 0.3s; /* Transition pour le changement de couleur */
+  background-color: #190857;
+  color: white;
 }
 
 .but_voir:hover {
-  background-color: #0056b3; /* Couleur plus sombre au survol */
+  background-color: #063780;
 }
 
 .but_delete {
-  padding: 8px 12px; /* Espace interne pour le bouton */
-  background-color: #dc3545; /* Couleur de fond rouge */
-  color: white; /* Couleur du texte */
-  border: none; /* Pas de bordure */
-  border-radius: 4px; /* Coins arrondis */
-  cursor: pointer; /* Curseur main */
-  transition: background-color 0.3s; /* Transition pour le changement de couleur */
+  background-color: #500330;
+  color: white;
 }
 
 .but_delete:hover {
-  background-color: #c82333; /* Couleur plus sombre au survol */
+  background-color: #811513;
 }
 
-/*---------------------------------------*/
-.list-cours {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); /* Ombre légère */
-  overflow-y: auto; /* Gère le débordement vertical */
-}
-
-.list-cours h2 {
-  color: #333333;
-  margin-bottom: 15px;
-  font-weight: bold;
-  font-size: 35px;
-}
-
-.list-cours div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #e9ebee; /* Ligne de séparation */
-}
-
-.list-cours div:last-child {
-  border-bottom: none;
-}
-
-.list-cours p {
-  margin: 0;
-  color: #555555;
-  flex: 1; /* Permet au texte de s'ajuster */
-}
-.cours_card{
-  display: flex;
-  flex-direction: column;
-}
-.but_delete {
-  background-color: #f02849; /* Couleur de fond du bouton DELETE */
-  color: #ffffff;
-  border: none;
-  padding: 5px 15px;
-  border-radius: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s, box-shadow 0.3s;
-}
-
-.list-cours button:hover {
-  background-color: #00d4c9;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-.but_voir{
-  background-color: #122bbb; /* Couleur de fond du bouton DELETE */
-  color: #ffffff;
-  border: none;
-  padding: 5px 15px;
-  margin-right: 10px;
-  border-radius: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s, box-shadow 0.3s;
-}
-/* Add course styles */
 .add-cours {
   background-color: #ffffff;
-  padding: 20px;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  justify-items : start;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); /* Ombre légère */
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.add-cours h2 {
-  color: #333333;
+.add-cours input[type="text"],
+.add-cours input[type="file"],
+.add-cours button {
+  display: block;
+  width: 100%;
   margin-bottom: 15px;
-  font-weight: bold;
-  font-size: 35px;
-}
-
-.add-cours input {
-  width: calc(50% - 10px);
   padding: 10px;
-  margin: 0 5px 10px 0;
-  border: 1px solid #dddfe2;
-  border-radius: 6px;
-  background-color: #f5f6f7;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.add-cours input:focus {
-  border-color: #4267b2;
-  outline: none;
-}
-
-.add-cours input:last-child {
-  margin-right: 0;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
 }
 
 .add-cours button {
-  background-color: #3038ad; /* Couleur de fond du bouton AJOUTER */
-  color: #ffffff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 20px;
+  background-color: #0018f0;
+  color: white;
   cursor: pointer;
-  transition: background-color 0.3s, box-shadow 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 .add-cours button:hover {
-  background-color: #36a420;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background-color: #0052cc;
 }
 
-/* Responsive styles */
-@media (max-width: 768px) {
-  .header {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-
-
-  .list-cours div {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .list-cours button {
-    align-self: flex-end;
-    margin-top: 5px;
-  }
-
-  .add-cours input {
-    width: 100%;
-    margin: 0 0 10px 0;
-  }
-}
-/*--------------forum-------------------*/
-.contenu_cht {
-  height: 15vh;
+.chats {
   display: flex;
   flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.contenu_cht {
   background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
   padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  border-bottom: 1px solid #cac7c7;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .contenu_cht:hover {
-  background-color: #e9e9e9;
+  background-color: #f5f5f5;
+  transform: scale(1.02);
 }
 
 .avatar_user_message {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  gap: 10px;
 }
 
 .avatar {
-  width: 50px;
-  height: 50px;
-  background-color: #4caf50;
+  background-color: #f0f0f0;
   border-radius: 50%;
+  width: 40px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 10px;
-  color: white;
-}
-
-.nom_messg {
-  flex-grow: 1;
+  color: #666;
 }
 
 .nom_messg h2 {
   margin: 0;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 16px;
+  color: #0018f0;
 }
 
 .nom_messg p {
@@ -326,37 +212,66 @@ body {
   color: #555;
 }
 
-.nom_messg .see-more {
-  color: #2196f3;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.nom_messg .see-more:hover {
-  text-decoration: underline;
-}
-
-.info-div {
-  text-align: right;
-  margin-top: 5px;
-}
-
 .info-div p {
+  margin: 0;
   font-size: 12px;
-  color: #888;
+  color: #999;
 }
 
-/*---------------------------------------*/
 .loading-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999; /* Assurez-vous qu'il soit au-dessus de tout le reste */
+  z-index: 1000;
+}
+
+.loading-overlay p {
+  font-size: 18px;
+  font-weight: bold;
+  color: #0018f0;
+}
+/*----------*/
+
+mat-button-toggle-group{
+  border: none;
+  border-radius: 50px;
+  background: #f5f5f5b2;
+  box-shadow: inset 20px 20px 60px #d0d0d0,
+              inset -20px -20px 60px #ffffff;
+
+}
+mat-button-toggle {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 20px;
+  text-transform: uppercase;
+  border-radius: 8px;
+  transition: all 0.3s ease; /* Pour des transitions douces */
+  border: none;
+}
+
+mat-button-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Changement de couleur au survol */
+  color: #0018f0; /* Change la couleur du texte en bleu clair au survol */
+}
+
+mat-button-toggle-checked {
+  background-color: #0018f0; /* Couleur de fond lorsque le bouton est sélectionné */
+  color: #fff; /* Couleur du texte en blanc */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Légère ombre autour du bouton sélectionné */
+}
+
+mat-button-toggle-checked:hover {
+  background-color: #ee4ad8; /* Change de couleur au survol du bouton sélectionné */
+}
+
+mat-button-toggle:last-child {
+  margin-right: 0; /* Retirer la marge droite du dernier bouton */
+  border: none;
 }

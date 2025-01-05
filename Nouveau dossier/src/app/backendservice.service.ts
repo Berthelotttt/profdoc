@@ -42,7 +42,7 @@ export interface Reponse {
   providedIn: 'root'
 })
 export class BackendserviceService {
- readonly API_URL =   'https://databasecti.onrender.com';
+readonly API_URL =   'https://databasecti.onrender.com';
   readonly ENDPOINT_CLE = "/cle";
  // readonly API_URL = "http://localhost:8080";
   readonly ENDPOINT_MESSAGES = "/messages";

@@ -10,22 +10,30 @@
 }
 
 .content {
+
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 60px 5%;
+  padding: 10px 5%;
   color: rgb(35, 39, 255);
   overflow: hidden;
 }
 
 .text-content {
+  position: absolute;
+  left: 7%;
   display: flex;
   flex-direction: column;
+  padding-top: 15%;
+  background: rgb(218, 201, 201);
+  height: 80%;
+  width: 60%;
+  overflow: visible;
 }
 @keyframes gradient-animation {
   0% {
-    background-position: 0% 50%;
+    color-position: 0% 50%;
   }
   50% {
     background-position: 100% 50%;
@@ -35,24 +43,8 @@
   }
 }
 
-.text-content h1 {
-  font-size: 7vw;
-  margin-bottom: 20px;
-  font-weight: bolder;
-  color: rgb(241, 241, 252);
-  background: linear-gradient(90deg, #0018f0, #ee4ad8, #240f83);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradient-animation 5s ease infinite;
-}
 
-.text-content p {
-  font-size: 1.5vmax;
-  margin-bottom: 20px;
-  width: 90%;
-  color: rgb(255, 255, 255);
-}
+
 
 .learn-more-btn {
   padding: 1rem 2rem;
@@ -76,11 +68,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 10%;
+  margin-right: 5%;
+  position: absolute;
+  right: 1%;
 }
 
 .phone-image img {
-  max-width: 20vw;
+  max-width: 25vw;
   border-radius: 20px;
 }
 
@@ -154,4 +148,103 @@
   .phone-image img {
     max-width: 60vw;
   }
+}
+
+
+/*-----------------------*/
+/* Conteneur principal pour le texte */
+.text-content {
+  text-align: center;
+  display: flex;
+  justify-content: flex-start;
+  margin: 0 auto;
+  padding: 30px;
+  max-width: 800px;
+  width: 50%;
+  height: 59%;
+  background: rgba(255, 255, 255, 0.3); /* Fond semi-transparent */
+  backdrop-filter: blur(15px); /* Effet de flou */
+  -webkit-backdrop-filter: blur(15px); /* Compatibilité Safari */
+  border-radius: 20px; /* Coins arrondis */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombre douce */
+  color: #333; /* Texte en gris foncé */
+}
+
+
+ .titre {
+  font-size: 5rem; /* Augmenter la taille du titre pour qu'il se démarque */
+  font-weight: bold; /* Texte en gras */
+  text-transform: uppercase; /* Texte en majuscules */
+  text-align: center; /* Centrer le texte */
+
+  letter-spacing: 0.1px; /* Espacement légèrement élargi entre les lettres */
+  line-height: 1.1; /* Diminuer la hauteur des lignes pour le titre */
+  height: 65%;
+}
+.titre img {
+  width: 90%; /* Largeur du logo */
+  height: 90%; /* Hauteur du logo */
+  object-fit: contain; /* Maintenir les proportions de l'image */
+  vertical-align: middle;
+  position: relative;
+  left: -35%;
+
+}.titre_texte {
+  position: relative;
+  left: -6%;
+  top: -50%;
+  font-size: 4rem; /* Taille du titre */
+  font-weight: bold;
+  background: linear-gradient(90deg, #0018f0, #ee4ad8);
+  background-size: 200% 200%; /* Permet de faire défiler le dégradé */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-animation 4s infinite; /* Applique l'animation */
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%; /* Départ */
+  }
+  50% {
+    background-position: 100% 50%; /* Milieu */
+  }
+  100% {
+    background-position: 0% 50%; /* Retour */
+  }
+}
+
+
+.text-content p {
+  font-size: 0.8rem; /* Réduire légèrement la taille des paragraphes */
+  line-height: 1; /* Réduire l'espacement entre les lignes */
+  margin: 2px 0; /* Réduire l'espacement vertical entre les paragraphes */
+  text-align: justify; /* Justifier le texte pour un alignement professionnel */
+  color: #333; /* Couleur sobre pour le texte des paragraphes */
+  margin-bottom: 10px;
+}
+/* Bouton "Commencer" */
+.text-content .learn-more-btn {
+  display: inline-block;
+  padding: 15px 30px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff; /* Texte blanc */
+  background: linear-gradient(to right, #fa289b, #45f5e6);/* Dégradé bleu */
+  border: none;
+  border-radius: 30px; /* Coins arrondis */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre douce */
+  cursor: pointer; /* Curseur interactif */
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.text-content .learn-more-btn:hover {
+  background: linear-gradient(90deg, #15c3f8, #4c67fd); /* Inversion du dégradé au survol */
+  transform: translateY(-3px); /* Soulèvement au survol */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Ombre accentuée */
+}
+
+.text-content .learn-more-btn:active {
+  transform: translateY(1px); /* Effet d'enfoncement */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Réduction de l'ombre */
 }

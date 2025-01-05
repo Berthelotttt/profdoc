@@ -1,14 +1,11 @@
 <body>
-  <div class="back">
-
-  </div>
   <div *ngIf="(loadingService.loading$ | async) === true" class="loading-overlay">
     <p>Chargement en cours...</p>
   </div>
   <div class="container">
     <mat-button-toggle-group [(value)]="selectedSegment" aria-label="Select an option" class="header">
       <mat-button-toggle (click)="LASTselect()" value="cours">COURS</mat-button-toggle>
-      <mat-button-toggle (click)="LASTselect()" value="td">T.D</mat-button-toggle>
+      <mat-button-toggle (click)="LASTselect()" value="td">TD</mat-button-toggle>
       <mat-button-toggle (click)="LASTselect()" value="forum">FORUM</mat-button-toggle>
       <mat-button-toggle (click)="cle()">CLE</mat-button-toggle>
     </mat-button-toggle-group>
@@ -53,7 +50,7 @@
     </div>
 
     <form (ngSubmit)="onSubmit_td()" class="add-cours" *ngIf="selectedSegment === 'td'">
-      <h2>Ajout des T.D</h2>
+      <h2>Ajout des TD</h2>
       <input type="text" id="titre" [(ngModel)]="titre_td" name="titre" required placeholder="Titre">
        <input type="file" id="file" (change)="onFileSelected($event)" accept="application/pdf" required placeholder="file">
        <button type="submit">AJOUTER</button>

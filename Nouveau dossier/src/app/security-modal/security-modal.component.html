@@ -1,0 +1,14 @@
+<div class="modal-container">
+  <h2 class="modal-title">Accès Sécurisé</h2>
+  <p class="modal-description">Veuillez entrer la clé de sécurité pour accéder à cette section.</p>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Clé de Sécurité</mat-label>
+    <input matInput placeholder="Entrez votre clé de sécurité" [(ngModel)]="securityKey" required/>
+  </mat-form-field>
+ <p class="message_erreur">{{errorMessage}}</p>
+  <div class="modal-actions">
+    <button mat-button color="warn" (click)="onCancel()">Annuler</button>
+    <button mat-raised-button color="primary" (click)="validate()" [disabled]="securityKey === ''">Valider</button>
+  </div>
+</div>
