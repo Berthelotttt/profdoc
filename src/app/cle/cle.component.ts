@@ -19,6 +19,8 @@ import { BackendserviceService, Cle } from '../backendservice.service';
 })
 
 export class CleComponent implements OnInit  {
+  selectedFile: File | null = null;
+  uploadMessage: string = '';
   oldKey: string = '';
   olkeyenligne:Cle | undefined;
   newKey: string = '';
@@ -69,4 +71,30 @@ async  onChangeKey() {
       console.error('Erreur lors de la récupération de la clé:', error);
     }
   }
+  //-----------APK
+
+  // Gestion de la sélection de fichier
+  onFileSelected(event: any): void {
+    if (event.target.files && event.target.files.length > 0) {
+      this.selectedFile = event.target.files[0];
+    }
+  }
+
+  // Méthode pour uploader le fichier
+  uploadFile(): void {
+    if (this.selectedFile) {
+      this.Backend.uploadApk(this.selectedFile).subscribe({
+        next: (response) => {
+          this.uploadMessage = 'Fichier uploadé avec succès !';
+          console.log(response);
+        },
+        error: (error) => {
+          this.uploadMessage = 'Erreur lors de l\'upload du fichier.';
+          console.error(error);
+        }
+      });
+    }
+  }
+
+
 }

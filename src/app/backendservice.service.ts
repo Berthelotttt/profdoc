@@ -42,7 +42,7 @@ export interface Reponse {
   providedIn: 'root'
 })
 export class BackendserviceService {
- readonly API_URL =   'https://databasecti.onrender.com';
+  readonly API_URL =   'https://databasecti.onrender.com';
   readonly ENDPOINT_CLE = "/cle";
  // readonly API_URL = "http://localhost:8080";
   readonly ENDPOINT_MESSAGES = "/messages";
@@ -51,6 +51,28 @@ export class BackendserviceService {
   readonly SUP_REPONSE = "/reponse";
 
   constructor(private httpClient: HttpClient) { }
+
+//--------------------------------apk**********************************
+
+  // Méthode pour uploader un fichier
+  uploadApk(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.httpClient.post(`${this.API_URL}/upload`, formData, { responseType: 'text' });
+  }
+
+  // Méthode pour télécharger un fichier par ID
+  downloadApk(id: number): Observable<Blob> {
+    return this.httpClient.get(`${this.API_URL}/download/${id}`, {
+      responseType: 'blob'
+    });
+  }
+
+  getLastFileId(): Observable<number> {
+    return  this.httpClient.get<number>(`${this.API_URL}/last-id`);
+  }
+
+
 //---------------------------------cle-----------------------------------------------------
   // Récupérer une clé par ID
   getCle(id: number): Observable<Cle> {

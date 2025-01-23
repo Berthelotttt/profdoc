@@ -6,12 +6,15 @@
     <p>Chargement en cours...</p>
   </div>
   <div class="container">
-    <mat-button-toggle-group [(value)]="selectedSegment" aria-label="Select an option" class="header">
-      <mat-button-toggle (click)="LASTselect()" value="cours">COURS</mat-button-toggle>
-      <mat-button-toggle (click)="LASTselect()" value="td">T.D</mat-button-toggle>
-      <mat-button-toggle (click)="LASTselect()" value="forum">FORUM</mat-button-toggle>
-      <mat-button-toggle (click)="cle()">CLE</mat-button-toggle>
-    </mat-button-toggle-group>
+    <div class="menu">
+      <mat-button-toggle-group [(value)]="selectedSegment" aria-label="Select an option" class="header">
+        <mat-button-toggle (click)="LASTselect()" value="cours">COURS</mat-button-toggle>
+        <mat-button-toggle (click)="LASTselect()" value="td">T.D</mat-button-toggle>
+        <mat-button-toggle (click)="LASTselect()" value="forum">FORUM</mat-button-toggle>
+        <mat-button-toggle (click)="cle()">PARAMETRE</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
 
 <div *ngIf="selectedSegment === 'cours'">
   <h2>Liste des cours</h2>

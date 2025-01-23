@@ -1,4 +1,7 @@
 <div class="modal-container">
+  <div *ngIf="(loadingService.loading$ | async) === true" class="loading-overlay">
+    <p>Chargement en cours...</p>
+  </div>
   <h2 class="modal-title">Accès Sécurisé</h2>
   <p class="modal-description">Veuillez entrer la clé de sécurité pour accéder à cette section.</p>
 

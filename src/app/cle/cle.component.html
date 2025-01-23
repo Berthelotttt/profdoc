@@ -1,35 +1,55 @@
 <div class="change-key-container">
-  <form (ngSubmit)="onChangeKey()">
-    <h2>Changements de Clé de Sécurité</h2>
-    <div class="form-group">
-      <label for="oldKey">Ancienne Clé</label>
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Ancienne Clé</mat-label>
-        <input matInput [(ngModel)]="oldKey" name="oldKey" placeholder="Entrez l'ancienne clé de sécurité" required/>
-      </mat-form-field>
-    </div>
-    <!-- Champ pour la nouvelle clé -->
-    <div class="form-group">
-      <label for="newKey">Nouvelle Clé</label>
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Nouvelle Clé de Sécurité</mat-label>
-        <input matInput [(ngModel)]="newKey" name="newKey" placeholder="Entrez la nouvelle clé de sécurité" required/>
-      </mat-form-field>
+  <div class="contenu_cle">
+    <form (ngSubmit)="onChangeKey()">
+      <h4>Changements de Clé de Sécurité</h4>
+      <div class="form-group">
+        <label for="oldKey">Ancienne Clé</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Ancienne Clé</mat-label>
+          <input matInput [(ngModel)]="oldKey" name="oldKey" placeholder="Entrez l'ancienne clé de sécurité" required/>
+        </mat-form-field>
+      </div>
+      <!-- Champ pour la nouvelle clé -->
+      <div class="form-group">
+        <label for="newKey">Nouvelle Clé</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nouvelle Clé de Sécurité</mat-label>
+          <input matInput [(ngModel)]="newKey" name="newKey" placeholder="Entrez la nouvelle clé de sécurité" required/>
+        </mat-form-field>
+      </div>
+
+      <!-- Bouton pour changer la clé -->
+      <button mat-raised-button color="primary" type="submit" class="btn-submit">
+        Changer la Clé
+      </button>
+    </form>
+
+    <!-- Message de confirmation -->
+    <div *ngIf="successMessage" class="alert alert-success mt-3">
+      {{ successMessage }}
     </div>
 
-    <!-- Bouton pour changer la clé -->
-    <button mat-raised-button color="primary" type="submit" class="btn-submit">
-      Changer la Clé
-    </button>
-  </form>
-
-  <!-- Message de confirmation -->
-  <div *ngIf="successMessage" class="alert alert-success mt-3">
-    {{ successMessage }}
+    <!-- Message d'erreur -->
+    <div [ngClass]="{'alert-success':succes===true , 'alert-error':succes===false , }" *ngIf="errorMessage" class="alert alert-error mt-3">
+      {{ errorMessage }}
+    </div>
   </div>
 
-  <!-- Message d'erreur -->
-  <div [ngClass]="{'alert-success':succes===true , 'alert-error':succes===false , }" *ngIf="errorMessage" class="alert alert-error mt-3">
-    {{ errorMessage }}
+
+  <!-- UPLOAD -->
+  <div class="contenue_upload">
+    <h4>Upload un fichier APK</h4>
+    <input type="file" (change)="onFileSelected($event)" />
+    <button (click)="uploadFile()" [disabled]="!selectedFile">Uploader</button>
+    <p *ngIf="uploadMessage">{{ uploadMessage }}</p>
+
   </div>
 </div>
+
+
+
+ <!-- Download AP
+ <h3>Télécharger un fichier APK</h3>
+ <input type="number" placeholder="Entrez l'ID du fichier" [(ngModel)]="fileId" />
+ <button (click)="downloadFile()">Télécharger</button>
+</div>K -->

@@ -35,6 +35,8 @@ body {
   margin-left: 10%;
   margin-right: 10%;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Légère ombre portée pour l'effet 3D */
+
+
 }
 
 
@@ -237,41 +239,46 @@ mat-button-toggle:hover {
   color: #0018f0;
 }
 /*----------*/
+.menu{
+  height: 5%;
+  mat-button-toggle-group{
+    --height: 5%;
+    border: none;
+    border-radius: 50px;
+    border:2px #0052cc;
+    background: #584f4fb2;
+    box-shadow: inset 20px 20px 60px #d0d0d0,
+                inset -20px -20px 60px #ffffff;
 
-mat-button-toggle-group{
-  border: none;
-  border-radius: 50px;
-  background: #f5f5f5b2;
-  box-shadow: inset 20px 20px 60px #d0d0d0,
-              inset -20px -20px 60px #ffffff;
+  }
+  mat-button-toggle {
+    font-size: 12px;
+    text-transform: uppercase;
+    border-radius: 50px;
+    transition: all 0.3s ease; /* Pour des transitions douces */
+    border: none;
+    background: #221e1eb2;
+    box-shadow: inset 20px 20px 60px #d0d0d0,
+                inset -20px -20px 60px #ffffff;
+  }
 
-}
-mat-button-toggle {
-  font-size: 16px;
-  font-weight: bold;
-  padding: 12px 20px;
-  text-transform: uppercase;
-  border-radius: 8px;
-  transition: all 0.3s ease; /* Pour des transitions douces */
-  border: none;
-}
+  mat-button-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Changement de couleur au survol */
+    color: #0018f0; /* Change la couleur du texte en bleu clair au survol */
+  }
 
-mat-button-toggle:hover {
-  background-color: rgba(255, 255, 255, 0.2); /* Changement de couleur au survol */
-  color: #0018f0; /* Change la couleur du texte en bleu clair au survol */
-}
+  mat-button-toggle-checked {
+    background-color: #0018f0; /* Couleur de fond lorsque le bouton est sélectionné */
+    color: #fff; /* Couleur du texte en blanc */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Légère ombre autour du bouton sélectionné */
+  }
 
-mat-button-toggle-checked {
-  background-color: #0018f0; /* Couleur de fond lorsque le bouton est sélectionné */
-  color: #fff; /* Couleur du texte en blanc */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Légère ombre autour du bouton sélectionné */
-}
+  mat-button-toggle-checked:hover {
+    background-color: #ee4ad8; /* Change de couleur au survol du bouton sélectionné */
+  }
 
-mat-button-toggle-checked:hover {
-  background-color: #ee4ad8; /* Change de couleur au survol du bouton sélectionné */
-}
-
-mat-button-toggle:last-child {
-  margin-right: 0; /* Retirer la marge droite du dernier bouton */
-  border: none;
+  mat-button-toggle:last-child {
+    margin-right: 0; /* Retirer la marge droite du dernier bouton */
+    border: none;
+  }
 }

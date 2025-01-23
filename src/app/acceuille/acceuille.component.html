@@ -1,13 +1,22 @@
-<!-- src/app/acceuille/acceuille.component.html  https://codewave.com/insights/deploy-angular-app-on-render-guide/ -->
-<div class="landing-page">
+  <!--src/app/acceuille/acceuille.component.html  https://codewave.com/insights/deploy-angular-app-on-render-guide/-->
+  <link rel="icon" type="image/x-icon" href="assets/logo.ico">
+  <div class="landing-page">
+  <div *ngIf="(loadingService.loading$ | async) === true" class="loading-overlay">
+    <p>Chargement en cours...</p>
+  </div>
   <main class="content">
     <div class="text-content">
       <div class="titre"><img src="assets/logo.ico" alt="logo" /> <div class="titre_texte">C.T.I</div></div>
       <p>Ce site est conçu pour simplifier la distribution des cours universitaires. Les enseignants peuvent facilement envoyer leurs cours ici, et les étudiants peuvent les télécharger via l'application mobile dédiée C.T.i(Cour et Travaux dirigés pour l'Informatique), Accédez à tout votre contenu éducatif en un seul endroit, où que vous soyez.</p>
-      <button class="learn-more-btn" (click)="openModal()">Commencer</button>
-    </div>
+      <div class="button">
+        <button class="learn-more-btn" (click)="openModal()">Commencer</button>
+        <button class="learn-more-btn" (click)=" downloadFile()">Télécharger</button>
+      </div>
+      </div>
     <div class="phone-image">
       <img src="assets/phone.png" alt="Mobile App" />
     </div>
   </main>
 </div>
+
+
