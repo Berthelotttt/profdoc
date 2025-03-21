@@ -1,0 +1,173 @@
+
+<div class="header">
+  <span class="title">Mise à jour</span>
+</div>
+<!----------------------Affiche ticket------------------------------>
+<div class="contenue_ticket_global" *ngIf="liste_ticket">
+  <div class="titre">
+    <div class="statut">
+      <div class="ouvert" [ngClass]="{'ticket_ouvert': ticket_ouvert}" (click)="affiche_ouvert()">Pas à jour</div>
+      <div class="en_cours"  [ngClass]="{'ticket_encour': ticket_encour}" (click)="affiche_encour()">En cours</div>
+    </div>
+  </div>
+  <table *ngIf=" ticket_ouvert" class="table_ticket">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Pc</th>
+        <th>bureau</th>
+        <th>dernière installation</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let soft of  softfiltredate ; let i = index"  >
+        <td>{{ i + 1 }}</td>
+        <td>{{ soft.name}}</td>
+        <td>{{recup_nom_pc_id(soft.id_pc)}}</td>
+        <td>{{recupbureaux(soft.id_bureau)}}</td>
+        <td>{{soft.installDate }}</td>
+      </tr>
+
+    </tbody>
+  </table>
+  <table *ngIf="ticket_encour" class="table_ticket">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Pc</th>
+        <th>Bureau</th>
+        <th>Technicien</th>
+        <th>Dernière installation</th>
+        <th>Date de prise</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let soft of logicielsFiltres; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ soft.name }}</td>
+        <td>{{ recup_nom_pc_id(toNumber(soft.idpc)) }} </td>
+        <td>{{ recupbureaux(toNumber(soft.idbureau)) }} </td>
+        <td>{{ soft.nomtechnicein }}</td>
+        <td>{{ soft.installDate }}</td>
+        <td>{{ soft.idateprise }}</td>
+
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!----------------------Ajoute ticket------------------------------->
+<div class="contenue_ajoute_ticket" *ngIf="ajoute_ticket">
+  <div class="contenu_formu">
+    <form class="ticket-form" #ticketForm="ngForm" (ngSubmit)="ajoute_tickets()">
+      <div class="formu_ticket_gauche">
+        <div class="form-group">
+          <label for="titre">Titre</label>
+          <input type="text" id="titre" name="titre" [(ngModel)]="newTicket.titre" required>
+        </div>
+
+        <div class="form-group">
+          <label for="priorite">Priorité</label>
+          <select id="priorite" name="priorite" [(ngModel)]="newTicket.priorite" required>
+            <option value="faible">Faible</option>
+            <option value="moyenne">Moyenne</option>
+            <option value="haute">Haute</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" [(ngModel)]="newTicket.description" required></textarea>
+        </div>
+      </div>
+
+      <div class="formu_ticket_droit">
+        <div class="form-group">
+          <label for="type">Type</label>
+          <select id="type" name="type" [(ngModel)]="newTicket.categorie" required>
+            <option value="Incident">Incident</option>
+            <option value="Demande">Demande</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-submit" [disabled]="ticketForm.invalid">Ajouter le ticket</button>
+      </div>
+    </form>
+
+  </div>
+
+</div>
+<!----------------------fermeture ticket------------------------------->
+<div class="contenue_fermeture_ticket" *ngIf="ferme_ticket">
+  <div class="contenu_formu">
+    <!-- Bouton de fermeture -->
+    <div class="contenu_quit">
+      <div (click)="affiche_liste_ticket()" class="quite">X</div>
+    </div>
+
+    <!-- Informations du ticket -->
+    <div class="ticket-info">
+      <table class="ticket-details">
+        <tr>
+            <th>Titre</th>
+            <td>{{ tickets_id.titre || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Priorité</th>
+            <td>{{ tickets_id.priorite || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Catégorie</th>
+            <td>{{ tickets_id.categorie || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ tickets_id.description || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Statut</th>
+            <td>{{ tickets_id.statut || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Date d'ouverture</th>
+            <td>{{ tickets_id.dateOuverture || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Date de prise en charge</th>
+            <td>{{ tickets_id.datePrise || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Date de fermeture</th>
+            <td>{{ tickets_id.dateFermeture || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Nom du demandeur</th>
+            <td>{{ tickets_id.demandeur || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Technicien</th>
+            <td>{{ tickets_id.technicien || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Type d'équipement</th>
+            <td>{{ tickets_id.typeEquipement || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Bureau</th>
+            <td>{{ recupbureaux(tickets_id.id_bureau)  || '--------' }}</td>
+        </tr>
+    </table>
+
+    </div>
+  </div>
+  <div class="contient_but">
+
+    <div  class="butn_abandonné"  *ngIf="ticket_encour" (click)="Abandonne_ticket()">Fermer le ticket</div>
+
+  </div>
+</div>
+
+

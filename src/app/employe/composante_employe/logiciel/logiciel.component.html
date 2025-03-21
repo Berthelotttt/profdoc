@@ -1,0 +1,26 @@
+<div class="contenu_general">
+<div class="header">
+  <span class="title">Logiciels Installés</span>
+</div>
+<div class="content">
+  <!-- Liste des logiciels dynamiquement générée -->
+  <div *ngFor="let software of softwareInfo" class="logiciel">
+    <div class="info_logi">
+      <div class="image_logo"></div>
+      <div class="nom_date_logi">
+        <span class="software-name">{{ software.name
+          || 'Nom du logiciel indisponible'  }}</span>
+        <span class="date">{{software.installDate}}</span>
+      </div>
+    </div>
+    <div class="miseajour">
+      <div class="titre_radio">
+        <span class="titre">Mise à jour: </span>
+        <div [ngClass]="{'activeclasse': software.update_auto === false}" class="radio_label">Manuel</div>
+        <div [ngClass]="{'activeclasse': software.update_auto === true}" class="radio_label">Automatique</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+

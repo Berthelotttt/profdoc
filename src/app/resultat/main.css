@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: cursive;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    margin-top: 60px;
+}
+header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60px; /* Ajustez cette hauteur selon vos besoins */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fafafa;
+        padding: 10px 20px;
+        box-shadow: 0 4px 4px rgba(67, 67, 238, 0.2);
+        z-index: 1000; /* Assure que l'en-tête reste au-dessus des autres éléments */
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-left .separator-vertical {
+    width: 2px;
+    height: 40px;
+    background-color: #b8b5b5;
+    margin-left: 40px;
+}
+
+.header-separator {
+    height: 200%;
+    width: 2px;
+    margin: 10 30px;
+    
+}
+
+.header-left .title {
+    font-size: 18px;
+    font-weight: bold;
+    color: blue;
+}
+
+.header-right ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.header-right ul li {
+    margin-left: 20px;
+    font-size: 16px;
+    color: #666;
+    display: flex;
+    align-items: center;
+}
+
+.header-right ul .separator-vertical {
+    width: 1px;
+    height: 20px;
+    background-color: #6b6969;
+    margin: 0 20px;
+}
+
+.sidebar {
+    width: 160px;
+    background-color: rgb(31, 31, 223, 0.8);
+    color: #ffffff;
+    padding: 20px;
+    box-sizing: border-box; 
+    height: 200vh;
+    position: fixed;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar nav ul li {
+    padding: 3px 3px;
+    text-align: center;   
+}
+
+.sidebar nav ul li a {
+    color: #ffffff;
+    font-size: 15px;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin-bottom: 10px;
+}
+
+.sidebar nav ul li a:hover {
+    background-color: #1a2739;
+}
+
+.navbar li a:hover{
+    padding-right: 50px;
+}
+.sidebar nav ul .input-box i{
+    align-items: center;   
+    padding-left: 40px;
+    font-size: 30px;
+    color: rgb(248, 207, 94);
+    margin-top: 30px;
+}
+
+.deconnect {
+    color: rgb(9, 9, 138);
+    background:  rgb(255, 187, 0);
+    width: 100%;
+    height: 30px;
+    margin-top: 25px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 3px 0 10px rgba(0, 0, 0.5);
+}
+.deconnect:hover{
+    background-color: #ffffff; 
+    color: blue;
+    font-weight: bold;
+}
+
+#chartbar{
+    width: 500px;
+}
+#chartbar2{
+    width: 500px;
+}
+#chartbar3{
+    width: 500px;
+}
+#chartbar33{
+    width: 500px;
+    
+}
+
+#chartbar6{
+    width: 500px;
+}
+
+#chartbar4{
+    width: 500px;
+}
+#chartbar5{
+    width: 500px;
+}
+
+#chartbar66{
+    width: 500px;
+}
+.container{
+    display: flex;
+}
+.panneau{
+    margin-top: 20px;
+}
+.regulateur{
+    margin-top: 20px;
+}
+
+
+main {
+    margin-left: 170px;
+    padding: 20px;
+}
+
+h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+canvas {
+    width: 100% !important;
+    max-width: 800px;
+    height: auto !important;
+}

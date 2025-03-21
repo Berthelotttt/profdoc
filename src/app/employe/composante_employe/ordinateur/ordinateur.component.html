@@ -1,0 +1,75 @@
+<!-----------------------systeme---------------------->
+ <!-- ---------------Tableau Système ---------------------->
+<table>
+  <thead>
+    <tr>
+      <th colspan="2" class="titre">
+        <div class="contenu_logo_titre">
+          <div class="image_log_ordinater "></div>
+          <div class="titre_texte">Ordinateur</div>
+        </div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="contenu" *ngFor="let attribute of systemAttributes">
+      <td><strong>{{ systemLabels[attribute] }} :</strong></td>
+      <td>{{ systemInfo[attribute] || 'Non disponible' }}</td>
+    </tr>
+  </tbody>
+</table>
+  <!-- ---------------Tableau OS ---------------------->
+  <table>
+    <thead>
+      <tr>
+        <th colspan="2" class="titre">
+          <div class="contenu_logo_titre">
+            <div class="image_log_system"></div>
+            <div class="titre_texte">Système d'exploitation</div>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="contenu" *ngFor="let attribute of osAttributes">
+        <td><strong>{{ osLabels[attribute] }} :</strong></td>
+        <td>{{ osInfo[attribute] || 'Non disponible' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ---------------Tableau Antivirus ---------------------->
+  <table>
+    <thead>
+      <tr>
+        <th colspan="2" class="titre">
+          <div class="contenu_logo_titre">
+            <div class="image_log_antivirus"></div>
+            <div class="titre_texte">Antivirus</div>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="contenu">
+        <td><strong>Nom :</strong></td>
+        <td>{{ antivirusStatus[0]?.Name || 'Non disponible' }}</td>
+      </tr>
+      <tr class="contenu">
+        <td><strong>Antivirus activé :</strong></td>
+        <td>{{ antivirusStatus[0]?.AntivirusEnabled ? 'Oui' : 'Non' }}</td>
+      </tr>
+      <tr class="contenu">
+        <td><strong>Dernière mise à jour de l'antivirus :</strong></td>
+        <td>{{  antivirusStatus[0]?.AntivirusSignatureLastUpdated || 'Non disponible' }}</td>
+      </tr>
+      <tr class="contenu">
+        <td><strong>Version de la signature antivirus :</strong></td>
+        <td>{{ antivirusStatus[0]?.AntivirusSignatureVersion || 'Non disponible' }}</td>
+      </tr>
+      <tr class="contenu">
+        <td><strong>À jour :</strong></td>
+        <td>{{verification_anjour_antivirus(antivirusStatus[0]?.AntivirusSignatureLastUpdated) ? 'Oui' : 'Non' }}</td>
+      </tr>
+    </tbody>
+  </table>

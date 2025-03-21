@@ -1,0 +1,2519 @@
+
+  <div class="batiment_bureau_insertion" *ngIf="active_affiche_bureau">
+    <div class="conteneur_batiment_bureau">
+    <div class="bureau_g">
+        <div class="titre_bureau">Bureau</div>
+        <div class="contenu_bureau">
+          <div *ngFor="let bureau of bureaux"  class="bureau">
+            <div  class="nom_bureau" (click)="affiche_equiment(bureau.id)">{{ bureau.nom }} (Étage {{ bureau.etage }})</div>
+            <div class="contenu_delete">
+              <div class="image_logo" (click)="deleteBureau(bureau.id)"></div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+    <div class="insertion">
+      <div class="insertion_bureau">
+        <form class="formul_bureau" (ngSubmit)="addBureau()">
+          <div class="form-group">
+            <label for="nom_bureau">Nom</label>
+            <input
+              type="text"
+              id="nom_bureau"
+              name="nom_bureau"
+              placeholder="Nom du bureau"
+              [(ngModel)]="newBureau.nom"
+              required
+            />
+          </div>
+          <div class="form-group_bat_bur">
+            <label for="etage">Étage :</label>
+            <select
+              id="etage"
+              name="etage"
+              [(ngModel)]="newBureau.etage"
+              required
+            >
+              <option *ngFor="let etage of etages" [value]="etage.value">
+                {{ etage.label }}
+              </option>
+            </select>
+          </div>
+          <button type="submit" class="submit-btn">Ajouter</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+  <!---------------equipement--------------->
+  <div  class="equipement_insertion" *ngIf=" active_affiche_equiment">
+    <div class="conteneur_equipement">
+      <div class="titre_equipement">
+        <div class="back" (click)="back_burreau()"></div>
+        <div class="titre">{{nom_bureau_entete}}</div>
+        <div class="butn_rappt" (click)="telecharge_pdf_global()" > Générer un rapport</div>
+      </div>
+      <!--------------------------------------------->
+      <div  *ngIf="cachebar" class="contenu_btn">
+        <div class="btn" (click)="ouvrir_Poste()">Poste de travail</div>
+        <div class="btn" (click)="ouvrir_Projecteur()">Projecteur</div>
+        <div class="btn" (click)="ouvrir_Stabilisateur()">Stabilisateur</div>
+        <div class="btn" (click)="ouvrir_routeur()">Routeur</div>
+        <div class="btn" (click)="ouvrir_commutateur()">Commutateur</div>
+        <div class="btn" (click)="ouvrir_pointacce()">Point d'accéess</div>
+        <div class="btn" (click)="ouvrir_Serveur()">Serveur</div>
+      </div>
+       <!--------------------------------------------->
+       <div  *ngIf="ouverture_Poste">
+        <div class="equipement_g">
+            <div class="contenu_equipement">
+                <!------------------------------Ordinateur--------------------------------->
+                <div class="equipement">
+                  <div class="nom_equipement">Ordinateurs</div>
+                  <div  class="insertion_moniteur">
+                        <table class="contient_equipement">
+                          <thead>
+                            <tr>
+                              <th>ID</th>
+                              <th>Nom</th>
+                              <th>Modèle</th>
+                              <th>Date acquisition</th>
+                              <th>Nom utilisateur</th>
+                              <th>Prix</th>
+                              <th>Statut</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let ordi of ordinateurs_id_bureau; let i = index" (click)="visualise_equip(ordi )">
+                              <td>{{ i + 1 }}</td> <!-- Index commence à 0, donc on ajoute +1 -->
+                              <td>{{ ordi.nom }}</td>
+                              <td>{{ ordi.ordinateur["model"]  || 'Modèle inconnu' }}</td>
+                              <td>{{ ordi.dateAcquisition }}</td>
+                              <td>{{ recupere_nom_user(ordi.id ?? -1) }}</td>
+                              <td>{{ ordi.prix }}</td>
+                              <td>{{ ordi.statut }}</td>
+                              <td>  <div (click)="supprime_ordi_id(ordi.id || -1, $event)" class="supprime"></div></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="insertion_batiment">
+                          <div class="titre">Insertion d'un Ordinateur</div>
+                          <form #f="ngForm" class="formul_insert_ordi" (ngSubmit)="onSubmit_ordi( )">
+                            <div class="contenu_nom_champ_isert_ordi">
+                              <!-- Champ pour le nom de l'ordinateur -->
+                              <div class="form-group">
+                                <label for="nom_ordi">Nom de l'ordinateur</label>
+                                <input type="text" id="nom_ordi" name="nom" [(ngModel)]="newordinateur.nom" placeholder="Nom de l'ordinateur" required>
+                              </div>
+                              <!-- Champ pour le prix -->
+                              <div class="form-group">
+                                <label for="prix">Prix</label>
+                                <input type="number" id="prix" name="prix" [(ngModel)]="newordinateur.prix" placeholder="Prix en Ar" required>
+                              </div>
+                              <!-- Champ pour la date d'acquisition -->
+                              <div class="form-group">
+                                <label for="date_acquisition">Date d'acquisition</label>
+                                <input type="date" id="date_acquisition" name="dateAcquisition" [(ngModel)]="newordinateur.dateAcquisition" required>
+                              </div>
+                            </div>
+                            <!-- Bouton de soumission -->
+                            <div class="contenu_butt">
+                              <button type="submit" class="submit-btn">Ajouter</button>
+                            </div>
+                          </form>
+                        </div>
+
+                  </div>
+              </div>
+                <!--------------------------------Monitor---------------------------------->
+                <div class="equipement">
+                  <div class="nom_equipement">Moniteur</div>
+                  <table class="contient_equipement">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Modèle</th>
+                        <th>Marque</th>
+                        <th>Date d'acquisition</th>
+                        <th>Relier au PC</th>
+                        <th>N° serie</th>
+                        <th>Prix</th>
+                        <th>État</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let monit of moniteur; let i = index"  >
+                        <td>{{ i + 1 }}</td>
+
+                        <td (dblclick)="modifierCategorie(i, 'nommonit')">
+                          <ng-container  *ngIf="!isEditing[i]?.['nommonit']" >{{ monit.nom}}</ng-container>
+                          <input type="text" *ngIf="isEditing[i]?.['nommonit']" [(ngModel)]="nom_moniteur" (keydown.enter)=" Modification_nom_moniteur(i, 'nommonit', moniteur[i].id!)"    placeholder=""/>
+                        </td>
+                         <!-- Modèle -->
+                          <td (dblclick)="modifierCategorie(i, 'modelmonit')">
+                            <ng-container *ngIf="!isEditing[i]?.['modelmonit']">{{ monit.model || 'Modèle inconnu' }}</ng-container>
+                            <input type="text" *ngIf="isEditing[i]?.['modelmonit']" [(ngModel)]="model_moniteur" (keydown.enter)="Modification_model_moniteur(i,  'modelmonit', moniteur[i].id!)">
+                          </td>
+
+                          <!-- Marque -->
+                          <td (dblclick)="modifierCategorie(i, 'marquemonit')">
+                            <ng-container *ngIf="!isEditing[i]?.['marquemonit']">{{ monit.marque }}</ng-container>
+                            <input type="text" *ngIf="isEditing[i]?.['marquemonit']" [(ngModel)]="marque_moniteur" (keydown.enter)="Modification_marque_moniteur(i,  'marquemonit', moniteur[i].id!)">
+                          </td>
+
+                          <!-- Date d'acquisition -->
+                          <td (dblclick)="modifierCategorie(i, 'datemonit')">
+                            <ng-container *ngIf="!isEditing[i]?.['datemonit']">{{ monit.dateAcquisition | date: 'dd/MM/yyyy' }}</ng-container>
+                            <input type="date" *ngIf="isEditing[i]?.['datemonit']" [(ngModel)]="dateAcquisition_moniteur" (keydown.enter)=" Modification_date_moniteur(i,  'datemonit', moniteur[i].id!)">
+
+                          </td>
+
+                          <!-- ID PC -->
+                          <td (dblclick)="modifierCategorie(i, 'idPcmonit')">
+                            <ng-container *ngIf="!isEditing[i]?.['idPcmonit']">{{ recupere_nom_ordi_idpc(monit.idPc || '-1') }}</ng-container>
+                            <select
+                            *ngIf="isEditing[i]?.['idPcmonit']" [(ngModel)]="idPc_moniteur" (keydown.enter)="Modification_reliepc_moniteur(i, 'idPcmonit', moniteur[i].id!)"
+                            id="connecter_au_pc"
+                            name="connecter_au_pc"
+                            [(ngModel)]="newmoniteur.idPc"
+                            required >
+                            <option value="">Sélectionnez une Pc</option>
+                            <option *ngFor="let ordi of ordinateurs_id_bureau" [value]="ordi.id"> {{ordi.nom}}</option>
+
+
+                          </select>
+                          </td>
+
+                          <!-- Numéro de série -->
+                          <td (dblclick)="modifierCategorie(i, 'numSeriemonit')">
+                            <ng-container *ngIf="!isEditing[i]?.['numSeriemonit']">{{ monit.numSerie }}</ng-container>
+                            <input type="text" *ngIf="isEditing[i]?.['numSeriemonit']" [(ngModel)]="numSerie_moniteur" (keydown.enter)="Modification_seri_moniteur(i,  'numSeriemonit', moniteur[i].id!)">
+                          </td>
+
+                          <!-- Prix -->
+                          <td (dblclick)="modifierCategorie(i, 'prixmonit')">
+                            <ng-container *ngIf="!isEditing[i]?.['prixmonit']">{{ monit.prix }}</ng-container>
+                            <input type="text" *ngIf="isEditing[i]?.['prixmonit']" [(ngModel)]="prix_moniteur" (keydown.enter)="Modification_prix_moniteur(i,   'prixmonit', moniteur[i].id!)">
+                          </td>
+
+                          <!-- Statut -->
+                          <td  >
+                            <ng-container  > {{ monit.statut }}</ng-container>
+                            </td>
+                        <td>  <div (click)="supprime_monit_id(monit.id || -1, $event)" class="supprime"></div></td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div  class="insertion_moniteur">
+                      <div class="insertion_batiment">
+                        <div class="titre">Insertion d'un Moniteur</div>
+                        <!-- moniteur.component.html  -->
+                        <form class="formul_insert_swicth" (ngSubmit)="onSubmitMoniteur()">
+                          <div class="contenu_nom_champ_isert_swicth">
+                            <!-- Champ gauche -->
+                            <div class="champ_gauche">
+                              <div class="form-group">
+                                <label for="nom">Nom</label>
+                                <input
+                                  type="text"
+                                  id="nom"
+                                  name="nom"
+                                  [(ngModel)]="newmoniteur.nom"
+                                  placeholder="Nom du Moniteurr"
+                                  required
+                                />
+
+                              </div>
+                              <div class="form-group">
+                                <label for="modele">Modèle</label>
+                                <input
+                                  type="text"
+                                  id="modele"
+                                  name="modele"
+                                  [(ngModel)]="newmoniteur.model"
+                                  required
+                                  placeholder="Modèle du moniteur"
+                                />
+                              </div>
+                              <div class="form-group">
+                                <label for="marque">Marque</label>
+                                <input
+                                  type="text"
+                                  id="marque"
+                                  name="marque"
+                                  [(ngModel)]="newmoniteur.marque"
+                                  required
+                                  placeholder="Marque du moniteur"
+                                />
+                              </div>
+                              <div class="form-group">
+                                <label for="connecter_au_pc">Relier au PC</label>
+                                <select
+                                  id="connecter_au_pc"
+                                  name="connecter_au_pc"
+                                  [(ngModel)]="newmoniteur.idPc"
+                                  required
+                                >
+                                  <option value="">Sélectionnez une Pc</option>
+                                  <option *ngFor="let ordi of ordinateurs_id_bureau" [value]="ordi.id"> {{ordi.nom}}</option>
+
+
+                                </select>
+                              </div>
+                            </div>
+
+                            <!-- Champ droit -->
+                            <div class="champ_droite">
+                              <div class="form-group">
+                                <label for="dateInstallation">Date d'installation</label>
+                                <input
+                                  type="date"
+                                  id="dateInstallation"
+                                  name="dateInstallation"
+                                  [(ngModel)]="newmoniteur.dateAcquisition"
+                                  required
+                                />
+                              </div>
+                              <div class="form-group">
+                                <label for="prix">Prix</label>
+                                <input
+                                  type="text"
+                                  id="prix"
+                                  name="prix"
+                                  [(ngModel)]="newmoniteur.prix"
+                                  required
+                                  placeholder="Prix du moniteur"
+                                />
+                              </div>
+                              <div class="form-group">
+                                <label for="idbureau">N° serie</label>
+                                <input
+                                  type="text"
+                                  id="idbureau"
+                                  name="idbureau"
+                                  [(ngModel)]="newmoniteur.numSerie"
+                                  required
+                                  placeholder="Numéro de Serie"
+                                />
+                              </div>
+
+                              <div style="margin-top:3%" class="contenu_butt">
+                                <button style="width: 100%;" type="submit" class="submit-btn">Ajouter</button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+
+                  </div>
+                </div>
+
+
+                </div>
+                <!--------------------------------imprimante---------------------------------->
+                <div class="equipement">
+                  <div class="nom_equipement">Imprimante</div>
+                  <table class="contient_equipement">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Modèle</th>
+                        <th>Marque</th>
+                        <th>Date d'acquisition</th>
+                        <th>N° serie</th>
+                        <th>Relier au</th>
+                        <th>Type</th>
+                        <th>Prix</th>
+                        <th>État</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let imprimante of imprimante_bureau; let i = index">
+                        <td>{{ i + 1 }}</td>
+
+                        <td (dblclick)="modifierCategorie(i, 'nomimprim')">
+                            <ng-container *ngIf="!isEditing[i]?.['nomimprim']">
+                                {{ imprimante.nom || 'Nom inconnu' }}
+                            </ng-container>
+                            <input type="text"
+                                   *ngIf="isEditing[i]?.['nomimprim']"
+                                   [(ngModel)]="nom_impri"
+                                   (keydown.enter)="Modification_nom_imprimante(i, 'nomimprim', imprimante.id!)"
+                                   placeholder="Nom de l'imprimante"/>
+                        </td>
+
+                        <!-- Modèle -->
+                        <td (dblclick)="modifierCategorie(i, 'modelimprim')">
+                            <ng-container *ngIf="!isEditing[i]?.['modelimprim']">
+                                {{ imprimante.model || 'Modèle inconnu' }}
+                            </ng-container>
+                            <input type="text"
+                                   *ngIf="isEditing[i]?.['modelimprim']"
+                                   [(ngModel)]="model_impri"
+                                   (keydown.enter)="Modification_model_imprimante(i, 'modelimprim', imprimante.id!)"
+                                   placeholder="Modèle de l'imprimante"/>
+                        </td>
+
+                        <!-- Marque -->
+                        <td (dblclick)="modifierCategorie(i, 'marqueimprim')">
+                            <ng-container *ngIf="!isEditing[i]?.['marqueimprim']">
+                                {{ imprimante.marque || 'Marque inconnue' }}
+                            </ng-container>
+                            <input type="text"
+                                   *ngIf="isEditing[i]?.['marqueimprim']"
+                                   [(ngModel)]="marque_impri"
+                                   (keydown.enter)="Modification_marque_imprimante(i, 'marqueimprim', imprimante.id!)"
+                                   placeholder="Marque de l'imprimante"/>
+                        </td>
+
+                        <!-- Date d'acquisition -->
+                        <td (dblclick)="modifierCategorie(i, 'dateimprim')">
+                          <ng-container *ngIf="!isEditing[i]?.['dateimprim']">
+                              {{ imprimante.dateAcquisition | date: 'dd/MM/yyyy' }}
+                          </ng-container>
+                          <input type="date"
+                               *ngIf="isEditing[i]?.['dateimprim']"
+                               [(ngModel)]="dateAcquisition_impri"
+                               (keydown.enter)="Modification_date_imprimante(i, 'dateimprim', imprimante.id!)"
+                               placeholder="Marque de l'imprimante"/>
+
+                        </td>
+
+                        <!-- Numéro de série -->
+                        <td (dblclick)="modifierCategorie(i, 'numSerieimprim')">
+                            <ng-container *ngIf="!isEditing[i]?.['numSerieimprim']">
+                                {{ imprimante.numSerie || 'Numéro de série inconnu' }}
+                            </ng-container>
+                            <input type="text"
+                                   *ngIf="isEditing[i]?.['numSerieimprim']"
+                                   [(ngModel)]="numSerie_impri"
+                                   (keydown.enter)="Modification_numSerie_imprimante(i, 'numSerieimprim', imprimante.id!)"
+                                   placeholder="Numéro de série"/>
+                        </td>
+
+                        <!-- Équipement relié -->
+                        <td (dblclick)="modifierCategorie(i, 'relieEquipmtimprim')">
+                            <ng-container *ngIf="!isEditing[i]?.['relieEquipmtimprim']">
+                                {{ imprimante.relieEquipmt || 'Équipement inconnu' }}
+                            </ng-container>
+                            <select  *ngIf="isEditing[i]?.['relieEquipmtimprim']" id="connecter_au_pc" name="connecter_au_pc"  (keydown.enter)="Modification_relieEquipmt_imprimante(i, 'relieEquipmtimprim', imprimante.id!,$event)" required>
+                              <option value="">Sélectionnez un équipement</option>
+                              <option *ngFor="let ordi of ordinateurs_id_bureau" [value]="ordi | json">
+                                {{ ordi.nom }}
+                              </option>
+                              <option *ngFor="let switche of switches" [value]="switche | json">
+                                {{ switche.nom }}
+                              </option>
+                            </select>
+                        </td>
+
+
+                        <td (dblclick)="modifierCategorie(i, 'nomLanimprim')">
+                              <ng-container *ngIf="!isEditing[i]?.['nomLanimprim']">{{ imprimante.nomLan || 'Nom LAN inconnu' }}</ng-container>
+
+                              <!-- Si en mode édition, afficher un select -->
+                              <select
+                                *ngIf="isEditing[i]?.['nomLanimprim']"
+                                [(ngModel)]="nomLan_impri"
+                                (keydown.enter)="Modification_type_imprimante(i, 'nomLanimprim', imprimante.id!)"
+                                placeholder="Nom LAN">
+                                <!-- Options disponibles pour le choix du type de LAN -->
+                                 <option value="">Sélectionnez un type d'imprimante</option>
+                                 <option value="Laser">Laser</option>
+                                 <option value="Jet d'encre">Jet d'encre</option>
+                                 <option value="Thermique">Thermique</option>
+                                 <option value="Matricielle">Matricielle</option>
+                                 <option value="LED">LED</option>
+                              </select>
+                        </td>
+
+                        <!-- Prix -->
+                        <td (dblclick)="modifierCategorie(i, 'priximprim')">
+                            <ng-container *ngIf="!isEditing[i]?.['priximprim']">
+                                {{ imprimante.prix || 'Prix inconnu' }}
+                            </ng-container>
+                            <input type="text"
+                                   *ngIf="isEditing[i]?.['priximprim']"
+                                   [(ngModel)]="prix_impri"
+                                   (keydown.enter)="Modification_prix_imprimante(i, 'priximprim', imprimante.id!)"
+                                   placeholder="Prix"/>
+                        </td>
+
+                        <!-- Statut -->
+                        <td>{{ imprimante.statut || 'Statut inconnu' }}</td>
+
+                        <!-- Suppression -->
+                        <td>
+                            <div (click)="supprime_imprimante_id(imprimante.id || -1, $event)" class="supprime"></div>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                  <div  class="insertion_moniteur">
+                      <div class="insertion_batiment">
+                        <div class="titre">Insertion d'Imprimante</div>
+                        <form class="formul_insert_swicth" (ngSubmit)="onSubmitimprimante()">
+                          <div class="contenu_nom_champ_isert_swicth">
+                            <!-- Champ gauche -->
+                            <div class="champ_gauche">
+                              <div class="form-group">
+                                <label for="nom">Nom</label>
+                                <input
+                                  type="text"
+                                  id="nom"
+                                  name="nom"
+                                  [(ngModel)]="newImprimante.nom"
+                                  placeholder="Nom "
+                                  required
+                                />
+                              </div>
+                              <div class="form-group">
+                                <label for="model">Modèle</label>
+                                <input
+                                  type="text"
+                                  id="model"
+                                  name="model"
+                                  [(ngModel)]="newImprimante.model"
+                                  placeholder="Modèle "
+                                  required
+                                />
+                              </div>
+                              <div class="form-group">
+                                <label for="marque">Marque</label>
+                                <input
+                                  type="text"
+                                  id="marque"
+                                  name="marque"
+                                  [(ngModel)]="newImprimante.marque"
+                                  placeholder="Marque "
+                                  required
+                                />
+                              </div>
+                              <div class="form-group">
+                                <label for="numserie">N° serie</label>
+                                <input
+                                  type="text"
+                                  id="numserie"
+                                  name="numserie"
+                                  [(ngModel)]="newImprimante.numSerie"
+                                  placeholder="N° serie "
+                                  required
+                                />
+                              </div>
+                            </div>
+
+                            <!-- Champ droit -->
+                            <div class="champ_droite">
+                              <div class="form-group">
+                                <label for="nombrePorts">Relier à l'équipement</label>
+                                <select id="connecter_au_pc" name="connecter_au_pc" (change)="setEquipement($event)" required>
+                                  <option value="">Sélectionnez un équipement</option>
+                                  <option *ngFor="let ordi of ordinateurs_id_bureau" [value]="ordi | json">
+                                    {{ ordi.nom }}
+                                  </option>
+                                  <option *ngFor="let switche of switches" [value]="switche | json">
+                                    {{ switche.nom }}
+                                  </option>
+                                </select>
+                              </div>
+
+                              <div class="form-group">
+                                <label for="Type">Type d'imprimante</label>
+                                <select   placeholder="Nom LAN" (change)="modife_type_immpr($event)">
+                                    <option value="">Sélectionnez un type d'imprimante</option>
+                                    <option value="Laser">Laser</option>
+                                    <option value="Jet d'encre">Jet d'encre</option>
+                                    <option value="Thermique">Thermique</option>
+                                    <option value="Matricielle">Matricielle</option>
+                                    <option value="LED">LED</option>
+                                </select>
+                              </div>
+                              <div class="form-group">
+                                <label for="dateInstallation">Date d'installation</label>
+                                <input
+                                  type="date"
+                                  id="dateInstallation"
+                                  name="dateInstallation"
+                                  [(ngModel)]="newImprimante.dateAcquisition"
+                                  required
+                                />
+                              </div>
+                              <div class="form-group">
+                                <label for="prix">Prix</label>
+                                <input
+                                  type="Text"
+                                  id="prix"
+                                  name="prix"
+                                  [(ngModel)]="newImprimante.prix"
+                                  required
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- Bouton de soumission -->
+                          <div class="contenu_butt">
+                            <button type="submit" class="submit-btn">Ajouter</button>
+                          </div>
+                        </form>
+                  </div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+      </div>
+         <!---------------------------------visualisation--ordi---------------------->
+      <div  class="visualisation_equipemeny" *ngIf="visualisation_ordi">
+
+        <div class="contenu_btny">
+          <div class="back" (click)="affiche_equiment_visualisation()"></div>
+          <div class="btn" (click)="ouvrir_ordinateur()">ordinateur</div>
+          <div class="btn" (click)="ouvrir_materiel()">materiel</div>
+          <div class="btn" (click)="ouvrir_logiciel()">logiciel</div>
+          <div class="btn" (click)="telecharge_pdf()">Télécharge en PDF</div>
+        </div>
+        <div class="contenu_info">
+          <div class="ordinateur" *ngIf="active_ordinateur">
+            <!-----------------------systeme---------------------->
+            <table>
+              <thead>
+                <tr>
+                  <th colspan="2" class="titre">
+                    <div class="contenu_logo_titre">
+                      <div class="image_log_ordinater"></div>
+                      <div class="titre_texte">Ordinateur</div>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="contenu">
+                  <td><strong>Fabricant :</strong></td>
+                  <td>{{ systemInfo.manufacturer || 'Non disponible' }}</td>
+                </tr>
+                <tr class="contenu">
+                  <td><strong>Modèle :</strong></td>
+                  <td>{{ systemInfo.model || 'Non disponible' }}</td>
+                </tr>
+                <tr class="contenu">
+                  <td><strong>Numéro de série :</strong></td>
+                  <td>{{ systemInfo.serial || 'Non disponible' }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- ---------------Tableau OS ---------------------->
+            <table>
+              <thead>
+                <tr>
+                  <th colspan="2" class="titre">
+                    <div class="contenu_logo_titre">
+                      <div class="image_log_system"></div>
+                      <div class="titre_texte">Système d'exploitation</div>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="contenu">
+                  <td><strong>Plateforme :</strong></td>
+                  <td>{{ osInfo.platform || 'Non disponible' }}</td>
+                </tr>
+                <tr class="contenu">
+                  <td><strong>Architecture :</strong></td>
+                  <td>{{ osInfo.arch || 'Non disponible' }}</td>
+                </tr>
+                <tr class="contenu">
+                  <td><strong>Numéro de série :</strong></td>
+                  <td>{{ osInfo.serial || 'Non disponible' }}</td>
+                </tr>
+                <tr class="contenu">
+                  <td><strong>Version :</strong></td>
+                  <td>{{ osInfo.version|| 'Non disponible' }}</td>
+                </tr>
+
+              </tbody>
+            </table>
+            <!-- ---------------Tableau Antivirus ---------------------->
+            <table>
+              <thead>
+                <tr>
+                  <th   class="titre">
+                    <div class="contenu_logo_titre">
+                      <div class="image_log_antivirus"></div>
+                      <div class="titre_texte">Antiviruss</div>
+                    </div>
+                  </th>
+                  <!-- Générer les en-têtes pour chaque antivirus -->
+                  <th *ngFor="let antivirus of antivirusStatus; let i = index">Antivirus {{ i + 1 }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Parcourir chaque clé à afficher -->
+                <tr *ngFor="let key of displayedvirusKeys">
+                  <!-- Afficher le libellé de la clé -->
+                  <td><strong>{{ virusKeyLabels[key] }}</strong></td>
+                  <!-- Afficher la valeur pour chaque antivirus -->
+                  <td *ngFor="let antivirus of antivirusStatus">
+                    {{ antivirus[key] }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="materiel"  *ngIf="active_materiel">
+            <!-- Tableau RAM -->
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    <div class="contenu_logo_titre">
+                      <div class="image_log_ram"></div>
+                      <div class="titre_texte">RAM</div>
+                    </div>
+                  </th>
+                  <th *ngFor="let ram of ramInfo; let i = index">RAM {{ i + 1 }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let key of displayedRamKeys">
+                  <td><strong>{{ ramKeyLabels[key] }}</strong></td>
+                  <td *ngFor="let ram of ramInfo">
+                    <!-- Conversion en Go si c'est 'size' -->
+                    <ng-container *ngIf="key === 'size'; else normalValue">
+                      {{ (ram[key] / (1024 * 1024 * 1024)) | number:'1.2-2' }} Go
+                    </ng-container>
+                    <ng-template #normalValue>
+                      {{ ram[key] !== undefined ? ram[key] : 'Non dispo' }}
+                    </ng-template>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Tableau Disques -->
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    <div class="contenu_logo_titre">
+                      <div class="image_log_disq"></div>
+                      <div class="titre_texte">Stockage</div>
+                    </div>
+                  </th>
+                  <th *ngFor="let disk of disks; let i = index">Disque {{ i + 1 }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let key of displayedKeys">
+                  <td><strong>{{ keyLabels[key] }}</strong></td>
+                  <td *ngFor="let disk of disks">
+                    <!-- Conversion en Go si c'est 'size' -->
+                    <ng-container *ngIf="key === 'size'; else normalValue">
+                      {{ (disk[key] / (1024 * 1024 * 1024)) | number:'1.2-2' }} Go
+                    </ng-container>
+                    <ng-template #normalValue>
+                      {{ disk[key] !== undefined ? disk[key] : 'Non dispo' }}
+                    </ng-template>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- Tableau CPU -->
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    <div class="contenu_logo_titre">
+                      <div class="image_log_cpu"></div>
+                      <div class="titre_texte">CPU</div>
+                    </div>
+                  </th>
+                  <th>CPU</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Modèle</strong></td>
+                  <td>{{ cpuInfo?.brand }} {{ cpuInfo?.model }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Fabricant</strong></td>
+                  <td>{{ cpuInfo?.manufacturer }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Nombre de cœurs </strong></td>
+                  <td>{{ cpuInfo?.cores }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Vitesse du CPU (GHz)</strong></td>
+                  <td>{{ cpuInfo?.speed }} GHz</td>
+                </tr>
+                <tr>
+                  <td><strong>Virtualisation</strong></td>
+                  <td>{{ cpuInfo?.virtualization ? 'Oui' : 'Non' }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- Tableau GPU -->
+            <table >
+              <thead>
+                <tr>
+                  <th>
+                    <div class="contenu_logo_titre">
+                      <div class="image_log_gpu"></div>
+                      <div class="titre_texte">GPU</div>
+                    </div>
+                  </th>
+                  <th *ngFor="let gpu of gpuInfo; let i = index">GPU {{ i + 1 }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let key of gpuProperties">
+                  <td><strong>{{ gpuLabels[key] }}</strong></td>
+                  <td *ngFor="let gpu of gpuInfo">
+                    {{ gpu[key] !== undefined ? gpu[key] : 'Non dispo' }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- Monitor -->
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    <div class="contenu_logo_titre">
+                      <div class="image_log_monitor"></div>
+                      <div class="titre_texte">moniteur</div>
+                    </div>
+                  </th>
+                  <th *ngFor="let display of displayMonitors; let i = index">Moniteur {{ i + 1 }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let key of monitorDisplayedKeys">
+                  <td><strong>{{ monitorKeyLabels[key] }}</strong></td>
+                  <td *ngFor="let display of displayMonitors">
+                    {{ display[key] !== undefined ? display[key] : 'Non dispo' }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!--Interfaces réseau -->
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    <div class="contenu_logo_titre">
+                      <div class="image_log_reseau"></div>
+                      <div class="titre_texte">Réseau</div>
+                    </div>
+                  </th>
+                  <th *ngFor="let network of networkDetails; let i = index">Interface {{ i + 1 }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Boucle sur les attributs réseau -->
+                <tr *ngFor="let attribute of networkAttributes">
+                  <td><strong>{{ networkLabels[attribute] }}</strong></td>
+                  <td *ngFor="let network of networkDetails">
+                    <!-- Affichage dynamique des valeurs -->
+                    <ng-container *ngIf="attribute === 'ip4'">
+                      {{ network[attribute] ? network[attribute] + ' (IPv4)' : 'Non disponible' }}
+                    </ng-container>
+                    <ng-container *ngIf="attribute === 'ip6'">
+                      {{ network[attribute] ? network[attribute] + ' (IPv6)' : 'Non disponible' }}
+                    </ng-container>
+                    <ng-container *ngIf="attribute !== 'ip4' && attribute !== 'ip6'">
+                      {{ network[attribute] !== undefined ? network[attribute] : 'Non disponible' }}
+                    </ng-container>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- ---------------Tablmeau Périphériques ---------------------->
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    <div class="contenu_logo_titre">
+                      <div class="image_log_periph"></div>
+                      <div class="titre_texte">Périphérique USB</div>
+                    </div>
+                  </th>
+                  <th *ngFor="let peripherique of peripheriques; let i = index">Périphérique {{ i + 1 }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Boucle sur les attributs des périphériques USB -->
+                <tr *ngFor="let attribute of peripheriqueAttributes">
+                  <td><strong>{{ peripheriqueLabels[attribute] }}</strong></td>
+                  <td *ngFor="let peripherique of peripheriques">
+                    <!-- Affichage dynamique des valeurs -->
+                    {{ peripherique[attribute] !== undefined ? peripherique[attribute] : 'Non disponible' }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+          <div class="logiciels"  *ngIf="active_logiciel">
+              <div class="contents">
+                <div *ngFor="let software of softwareInfo" class="logiciel">
+                  <div class="info_logi">
+                    <div class="image_logo"></div>
+                    <div class="nom_date_logi">
+                      <span class="software-name">{{ software.name
+                        || 'Nom du logiciel indisponible'  }}</span>
+                      <span class="date">{{software.installDate}}</span>
+                    </div>
+                  </div>
+                  <div class="miseajour">
+                    <div class="titre_radio">
+                      <span class="titre">Mise à jour: </span>
+                      <div [ngClass]="{'activeclasse': software.update_auto === false}" class="radio_label">Manuel</div>
+                      <div [ngClass]="{'activeclasse': software.update_auto === true}" class="radio_label">Automatique</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+          </div>
+          <div class="imprimante" *ngIf="active_imprimante">
+            <!-------------------logiciel--------------->
+            <table>
+              <thead>
+                <tr>
+                  <th>Logiciel</th>
+                  <th *ngFor="let printer of softwarePrinters; let i = index">Imprimante {{ i + 1 }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let key of printerDisplayedKeys">
+                  <td><strong>{{ printerKeyLabels[key] }}</strong></td>
+                  <td *ngFor="let printer of softwarePrinters">
+                    {{ printer[key] !== undefined ? printer[key] : 'Non dispo' }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+
+            <!--------------------materiel--------------->
+            <table>
+              <thead>
+                <tr>
+                  <th>Matériel</th>
+                  <th *ngFor="let printer of materialPrinters; let i = index">Imprimante {{ i + 1 }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let key of printerDisplayedKeys">
+                  <td><strong>{{ printerKeyLabels[key] }}</strong></td>
+                  <td *ngFor="let printer of materialPrinters">
+                    {{ printer[key] !== undefined ? printer[key] : 'Non dispo' }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+       <!--------------------------------------------->
+       <div  *ngIf="ouverture_Stabilisateur">
+        <div class="equipement_g">
+          <div class="contenu_equipement">
+            <div class="equipement">
+              <div class="nom_equipement">Stabilisateur</div>
+              <table class="contient_equipement">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Marque</th>
+                    <th>Modèle</th>
+                    <th>Puissance</th>
+                    <th>Date d'acquisition</th>
+                    <th>N° serie</th>
+                    <th>État</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let stable of Stabilisateur_bureau; let i = index">
+                    <td>{{ i + 1 }}</td> <!-- Index commence à 0, donc on ajoute +1 -->
+
+                    <!-- Nom -->
+                    <td (dblclick)="modifierCategorie(i, 'nomstabil')">
+                      <ng-container *ngIf="!isEditing[i]?.['nomstabil']">
+                        {{ stable.nom || 'Nom inconnu' }}
+                      </ng-container>
+                      <input type="text" *ngIf="isEditing[i]?.['nomstabil']" [(ngModel)]="nom_stabi"
+                             (keydown.enter)="Modification_nom_stabilisateur(i, 'nomstabil', stable.id!)" placeholder="Nom du stabilisateur" />
+                    </td>
+
+                    <!-- Marque -->
+                    <td (dblclick)="modifierCategorie(i, 'marquestabil')">
+                      <ng-container *ngIf="!isEditing[i]?.['marquestabil']">
+                        {{ stable.marque || 'Marque inconnue' }}
+                      </ng-container>
+                      <input type="text" *ngIf="isEditing[i]?.['marquestabil']" [(ngModel)]="marque_stabi"
+                             (keydown.enter)="Modification_marque_stabilisateur(i, 'marquestabil', stable.id!)" placeholder="Marque" />
+                    </td>
+
+                    <!-- Modèle -->
+                    <td (dblclick)="modifierCategorie(i, 'modelstabil')">
+                      <ng-container *ngIf="!isEditing[i]?.['modelstabil']">
+                        {{ stable.model || 'Modèle inconnu' }}
+                      </ng-container>
+                      <input type="text" *ngIf="isEditing[i]?.['modelstabil']" [(ngModel)]="model_stabi"
+                             (keydown.enter)="Modification_model_stabilisateur(i, 'modelstabil', stable.id!)" placeholder="Modèle" />
+                    </td>
+
+                    <!-- Puissance -->
+                    <td (dblclick)="modifierCategorie(i, 'puissanceStabil')">
+                      <ng-container *ngIf="!isEditing[i]?.['puissanceStabil']">
+                        {{ stable.puissance || 'Puissance inconnue' }}
+                      </ng-container>
+                      <input type="text" *ngIf="isEditing[i]?.['puissanceStabil']" [(ngModel)]="puissance_stabi"
+                             (keydown.enter)="Modification_puissance_stabilisateur(i, 'puissanceStabil', stable.id!)" placeholder="Puissance" />
+                    </td>
+
+                    <!-- Date d'acquisition -->
+                    <td (dblclick)="modifierCategorie(i, 'dateAcqStabil')">
+                      <ng-container *ngIf="!isEditing[i]?.['dateAcqStabil']">
+                        {{ stable.dateAcquisition | date: 'dd/MM/yyyy' }}
+                      </ng-container>
+                      <input type="date" *ngIf="isEditing[i]?.['dateAcqStabil']" [(ngModel)]="dateAcquisition_stabi"
+                             (keydown.enter)="Modification_dateAcquisition_stabilisateur(i, 'dateAcqStabil', stable.id!)" placeholder="Date d'acquisition" />
+                    </td>
+
+                    <!-- Numéro de série -->
+                    <td (dblclick)="modifierCategorie(i, 'numSerieStabil')">
+                      <ng-container *ngIf="!isEditing[i]?.['numSerieStabil']">
+                        {{ stable.numSerie || 'Numéro de série inconnu' }}
+                      </ng-container>
+                      <input type="text" *ngIf="isEditing[i]?.['numSerieStabil']" [(ngModel)]="numSerie_stabi"
+                             (keydown.enter)="Modification_numSerie_stabilisateur(i, 'numSerieStabil', stable.id!)" placeholder="Numéro de série" />
+                    </td>
+
+                    <!-- Statut -->
+                    <td  >
+                      <ng-container >
+                        {{ stable.statut || 'Statut inconnu' }}
+                      </ng-container>
+                     </td>
+
+                    <!-- Suppression -->
+                    <td>
+                      <div (click)="supprime_stabilisateur_id(stable.id || -1, $event)" class="supprime"></div>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+              <div  class="insertion_moniteur">
+                  <div class="insertion_batiment">
+                    <div class="titre"> Insertion d'un stabilisateur</div>
+                    <form class="formul_insert_swicth" (ngSubmit)="addstabilisateur()">
+                      <div class="contenu_nom_champ_isert_swicth">
+                        <!-- Champ gauche -->
+                        <div class="champ_gauche">
+                          <div class="form-group">
+                            <label for="nom">Nom</label>
+                            <input
+                              type="text"
+                              id="nom"
+                              name="nom"
+                              [(ngModel)]="newStabilisateur.nom"
+                              placeholder="Nom"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="model">Modèle</label>
+                            <input
+                              type="text"
+                              id="model"
+                              name="model"
+                              [(ngModel)]="newStabilisateur.model"
+                              placeholder="Modèle"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="marque">Marque</label>
+                            <input
+                              type="text"
+                              id="marque"
+                              name="marque"
+                              [(ngModel)]="newStabilisateur.marque"
+                              placeholder="Marque"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="marque">Puissance</label>
+                            <input
+                              type="text"
+                              id="marque"
+                              name="marque"
+                              [(ngModel)]="newStabilisateur.puissance"
+                              placeholder="Puissance"
+                              required
+                            />
+                          </div>
+                        </div>
+
+                        <!-- Champ droit -->
+                        <div class="champ_droite">
+                          <div class="form-group">
+                            <label for="nombrePorts">N° serie</label>
+                            <input
+                              type="number"
+                              id="nombrePorts"
+                              name="nombrePorts"
+                              [(ngModel)]="newStabilisateur.numSerie"
+                              placeholder="N° serie"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="dateInstallation">Date d'installation</label>
+                            <input
+                              type="date"
+                              id="dateInstallation"
+                              name="dateInstallation"
+                              [(ngModel)]="newStabilisateur.dateAcquisition"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="prix">Prix</label>
+                            <input
+                              type="Text"
+                              id="prix"
+                              name="prix"
+                              [(ngModel)]="newStabilisateur.prix"
+                              required
+                            />
+                          </div>
+                          <div style="margin-top:3%" class="contenu_butt">
+                            <button style="width: 100%;" type="submit" class="submit-btn">Ajouter</button>
+                          </div>
+                        </div>
+                      </div>
+
+                    </form>
+
+              </div>
+            </div>
+
+            </div>
+          </div>
+        </div>
+       </div>
+
+       <!--------------------------------------------->
+      <div  *ngIf="ouverture_routeur">
+        <div class="equipement_g">
+          <div class="contenu_equipement">
+            <div class="equipement">
+              <div class="nom_equipement">
+                <div> routeur</div>
+                <div class="plusdetait" (click)=" affiche_visual_routeur()" >PLus de détail</div>
+              </div>
+
+              <table class="contient_equipement">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Modèle</th>
+                    <th>Marque</th>
+                    <th>Date d'acquisition</th>
+                    <th>État</th>
+                    <th> </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let routeur of routeur_bureau; let i = index" >
+                    <td>{{ i + 1 }}</td> <!-- Index commence à 0, donc on ajoute +1 -->
+                    <td>{{ routeur.nom  || 'Modèle inconnu'}}</td>
+                    <td>{{ routeur.model|| 'Modèle inconnu'}}</td>
+                    <td>{{routeur.marque   }}</td>
+                    <td>{{routeur.dateInstallation  }}</td>
+                    <td>{{routeur.statut}}</td>
+                    <td>  <div (click)="supprime_routeur_id(routeur.id || -1, $event)" class="supprime"></div></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div  class="insertion_moniteur">
+                  <div class="insertion_batiment">
+                    <div class="titre">Insertion d'un routeur</div>
+                    <form class="formul_insert_swicth" (ngSubmit)="addrouteur()">
+                      <div class="contenu_nom_champ_isert_swicth">
+                        <!-- Champ gauche -->
+                        <div class="champ_gauche">
+                          <div class="form-group">
+                            <label for="nom">Nom</label>
+                            <input
+                              type="text"
+                              id="nom"
+                              name="nom"
+                              [(ngModel)]="newrouteur.nom"
+                              placeholder="Nom du routeur"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="model">Modèle</label>
+                            <input
+                              type="text"
+                              id="model"
+                              name="model"
+                              [(ngModel)]="newrouteur.model"
+                              placeholder="Modèle du routeur"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="marque">Marque</label>
+                            <input
+                              type="text"
+                              id="marque"
+                              name="marque"
+                              [(ngModel)]="newrouteur.marque"
+                              placeholder="Marque du routeur"
+                              required
+                            />
+                          </div>
+                        </div>
+
+                        <!-- Champ droit -->
+                        <div class="champ_droite">
+                          <div class="form-group">
+                            <label for="nombrePorts">N° série</label>
+                            <input
+                              type="Text"
+                              id="nombrePorts"
+                              name="nombrePorts"
+                              [(ngModel)]="newrouteur.numSerie"
+                              placeholder="N° série du routeur"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="dateInstallation">Date d'installation</label>
+                            <input
+                              type="date"
+                              id="dateInstallation"
+                              name="dateInstallation"
+                              [(ngModel)]="newrouteur.dateInstallation"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="prix">Prix</label>
+                            <input
+                              type="Text"
+                              id="prix"
+                              name="prix"
+                              [(ngModel)]="newrouteur.prix "
+                              required
+                              placeholder="Prix du routeur"
+                            />
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <!-- Bouton de soumission -->
+                      <div class="contenu_butt">
+                        <button type="submit" class="submit-btn">Ajouter</button>
+                      </div>
+                    </form>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <!-- -----------------------visualisation des routeurs ---------------------->
+      <div class="visualisation_equipemen"  *ngIf="visualisation_routeur">
+        <div class="contenu_info_rout">
+          <h2>Informations Générales des Routeurs</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Marque</th>
+                <th>Modèle</th>
+                <th>Numéro de Série</th>
+                <th>Prix (Ar)</th>
+                <th>Date d'Acquisition</th>
+                <th>Statut</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let routeur of routeur_bureau; let i = index">
+                <td>{{ i + 1 }}</td>
+
+                <!-- Édition du nom -->
+                <td (dblclick)="modifierCategorie(i, 'nom')">
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['nom']">{{ routeur.nom || 'Modèle inconnu' }}</ng-container>
+                  <input type="text" *ngIf="isEditing_routeur[i]?.['nom']" [(ngModel)]="nom_routeur" (keydown.enter)="Modificationnom_routeur(i, 'nom', routeur_bureau[i].id!)"    placeholder=""/>
+                </td>
+
+                <!-- Édition de la marque -->
+                <td (dblclick)="modifierCategorie(i, 'marque')">
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['marque']">{{ routeur.marque || 'Modèle inconnu' }}</ng-container>
+                  <input type="text" *ngIf="isEditing_routeur[i]?.['marque']" [(ngModel)]="marque_routeur" (keydown.enter)="Modificationmarque_routeur(i,'marque', routeur_bureau[i].id!)" placeholder=""/>
+                </td>
+
+                <!-- Édition du modèle -->
+                <td (dblclick)="modifierCategorie(i, 'model')">
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['model']">{{ routeur.model || 'Modèle inconnu' }}</ng-container>
+                  <input type="text" *ngIf="isEditing_routeur[i]?.['model']" [(ngModel)]="model_routeur" (keydown.enter)="Modificationmodel_routeur(i,'model', routeur_bureau[i].id!)" placeholder=""/>
+                </td>
+
+                <!-- Édition du numéro de série -->
+                <td (dblclick)="modifierCategorie(i, 'numSerie')">
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['numSerie']">{{ routeur.numSerie || 'Modèle inconnu' }}</ng-container>
+                  <input type="text" *ngIf="isEditing_routeur[i]?.['numSerie']" [(ngModel)]="numSerie_routeur" (keydown.enter)="ModificationnumSerie_routeur(i, 'numSerie', routeur_bureau[i].id!)" placeholder=""/>
+                </td>
+
+                <!-- Édition du prix -->
+                <td >
+                  <ng-container >{{ routeur.prix || 'Modèle inconnu' }}</ng-container>
+
+                </td>
+
+                <!-- Affichage de la date d'installation -->
+                <td>
+                  <ng-container>{{ routeur.dateInstallation || 'Modèle inconnu' }}</ng-container>
+                </td>
+
+                <!-- Affichage du statut -->
+                <td>
+                  <ng-container>{{ routeur.statut || 'Modèle inconnu' }}</ng-container>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+
+            <!-- Table Système d'Exploitation -->
+        <h2> Point d'accé des routeurs</h2>
+        <div  class="insertion_moniteur">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                  <th>Nom routeur</th>
+                  <th>ssid</th>
+                  <th>fréquence</th>
+                  <th>encryption	</th>
+                  <th>mot_de_passe</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr   *ngFor="let wifirouteur of wifirouteur_idbreau; let i = index">
+                <td >
+                  <ng-container  >{{i+1}}</ng-container>
+                </td>
+                <td>
+                  <ng-container  >{{recupe_nom_routeur_id_interfac( wifirouteur_idbreau[i].id_routeur!)}} </ng-container>
+                </td>
+                <td  >
+                  <ng-container   >{{ wifirouteur.ssid}}</ng-container>
+                </td>
+                <td  >
+                  <ng-container   >{{ wifirouteur.frequence}}</ng-container>
+                </td>
+                <td  >
+                  <ng-container    >{{ wifirouteur.encryption}}</ng-container>
+
+                </td>
+                <td  >
+                  <ng-container  >{{ wifirouteur.motdepasse}}</ng-container>
+
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+          <!-- Table Système d'Exploitation -->
+        <h2> Interface des routeurs</h2>
+        <div  class="insertion_moniteur">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                  <th>Nom routeur</th>
+                  <th>Nom interface</th>
+                  <th>Type interface</th>
+                  <th>adresse Ip</th>
+                  <th>Masque sous réseau</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr   *ngFor="let interfacrouteur of interfacrouteur_idrout; let i = index">
+                <td >
+                  <ng-container  >{{i+1}}</ng-container>
+                </td>
+                <td>
+                  <ng-container  >{{recupe_nom_routeur_id_interfac(interfacrouteur_idrout[i].idrouteur!)}} </ng-container>
+                </td>
+                <td  >
+                  <ng-container  >{{interfacrouteur.nom}}</ng-container>
+
+                </td>
+                <td  >
+                  <ng-container >{{interfacrouteur.typeinterface}}</ng-container>
+
+                </td>
+                <td  >
+                  <ng-container     >{{interfacrouteur.ip}}</ng-container>
+
+                </td>
+                <td >
+                  <ng-container  >{{interfacrouteur.masque}}</ng-container>
+
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        </div>
+      </div>
+       <!--------------------------------------------->
+       <div  *ngIf="ouverture_commutateur">
+        <div class="equipement_g">
+            <div class="contenu_equipement">
+                <div class="equipement">
+                  <div class="nom_equipement">
+                    <div>Switch</div>
+                    <div class="plusdetait" (click)=" affiche_visual_comuutateur()" >PLus de détail</div>
+                  </div>
+                  <table class="contient_equipement">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Modèle</th>
+                        <th>Date d'acquisition</th>
+                        <th>Nombre de Port</th>
+                        <th>Configurable</th>
+                        <th>État</th>
+                        <th> </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let swit of switches; let i = index"  >
+                        <td>{{ i + 1 }}</td> <!-- Index commence à 0, donc on ajoute +1 -->
+                        <td>{{ swit.nom  || 'Modèle inconnu'}}</td>
+                        <td>{{ swit.marque || 'Modèle inconnu'}}</td>
+                        <td>{{swit.dateInstallation   }}</td>
+                        <td>{{swit.nombrePorts   }}</td>
+                        <td>{{swit.configurable }}</td>
+                        <td>{{swit.statut}}</td>
+                        <td>  <div (click)="supprime_switch_id(swit.id || -1, $event)" class="supprime"></div></td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                  <div  class="insertion_moniteur">
+                      <div class="insertion_batiment">
+                        <div class="titre">Insertion de Swicth</div>
+                        <form class="formul_insert_swicth" (ngSubmit)="addSwicth()">
+                          <div class="contenu_nom_champ_isert_swicth">
+                            <!-- Champ gauche -->
+                            <div class="champ_gauche">
+                              <div class="form-group">
+                                <label for="nom">Nom</label>
+                                <input
+                                  type="text"
+                                  id="nom"
+                                  name="nom"
+                                  [(ngModel)]="newSwicth.nom"
+                                  placeholder="Nom du switch"
+                                  required
+                                />
+                              </div>
+                              <div class="form-group">
+                                <label for="model">Modèle</label>
+                                <input
+                                  type="text"
+                                  id="model"
+                                  name="model"
+                                  [(ngModel)]="newSwicth.model"
+                                  placeholder="Modèle du switch"
+                                  required
+                                />
+                              </div>
+                              <div class="form-group">
+                                <label for="marque">Marque</label>
+                                <input
+                                  type="text"
+                                  id="marque"
+                                  name="marque"
+                                  [(ngModel)]="newSwicth.marque"
+                                  placeholder="Marque du switch"
+                                  required
+                                />
+                              </div>
+                            </div>
+
+                            <!-- Champ droit -->
+                            <div class="champ_droite">
+                              <div class="form-group">
+                                <label for="nombrePorts">Nombre de ports</label>
+                                <input
+                                  type="number"
+                                  id="nombrePorts"
+                                  name="nombrePorts"
+                                  [(ngModel)]="newSwicth.nombrePorts"
+                                  placeholder="Nombre de ports"
+                                  required
+                                />
+                              </div>
+                              <div class="form-group">
+                                <label for="dateInstallation">Date d'installation</label>
+                                <input
+                                  type="date"
+                                  id="dateInstallation"
+                                  name="dateInstallation"
+                                  [(ngModel)]="newSwicth.dateInstallation"
+                                  required
+                                />
+                              </div>
+                              <div class="form-group">
+                                <label for="prix">Prix</label>
+                                <input
+                                  type="Text"
+                                  id="prix"
+                                  name="prix"
+                                  [(ngModel)]="newSwicth.prix"
+                                  required
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- Bouton de soumission -->
+                          <div class="contenu_butt">
+                            <button type="submit" class="submit-btn">Ajouter</button>
+                          </div>
+                        </form>
+                  </div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+      </div>
+      <!-- -----------------------visualisation des comut---------------------->
+      <div class="visualisation_equipemen" *ngIf="visualisation_commutateur">
+        <div   class="contenu_info_rout">
+          <h2>Informations  Générales des commutateurs</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Marque</th>
+                <th>Modèle</th>
+                <th>Numéro de Série</th>
+                <th>Prix (Ar)</th>
+                <th>configurable</th>
+                <th>Date d'Acquisition</th>
+                <th>Statut</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let swit of switches; let i = index">
+                <td>{{ i + 1 }}</td>
+
+                <td (dblclick)="modifierCategorie(i, 'nomswict')">
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['nomswict']">{{ swit.nom || 'Modèle inconnu' }}</ng-container>
+                  <input type="text" *ngIf="isEditing_routeur[i]?.['nomswict']" [(ngModel)]="nom_swic" (keydown.enter)="Modificationnom_swicth(i, 'nomswict', switches[i].id!)" placeholder=""/>
+                </td>
+
+                <!-- Correction des erreurs dans les commentaires ci-dessous -->
+
+                <td (dblclick)="modifierCategorie(i, 'marquewict')">
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['marquewict']">{{ swit.marque || 'Modèle inconnu' }}</ng-container>
+                  <input type="text" *ngIf="isEditing_routeur[i]?.['marquewict']" [(ngModel)]="marque_swic" (keydown.enter)="modifierMarqueSwitch(i, 'marquewict', switches[i].id!)" placeholder=""/>
+                </td>
+
+                <td (dblclick)="modifierCategorie(i, 'modelwict')">
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['modelwict']">{{ swit.model || 'Modèle inconnu' }}</ng-container>
+                  <input type="text" *ngIf="isEditing_routeur[i]?.['modelwict']" [(ngModel)]="model_swic" (keydown.enter)="modifierModeleSwitch(i, 'modelwict', switches[i].id!)" placeholder=""/>
+                </td>
+
+                <td (dblclick)="modifierCategorie(i, 'numSeriewict')">
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['numSeriewict']">{{ swit.numSerie }}</ng-container>
+                  <input type="text" *ngIf="isEditing_routeur[i]?.['numSeriewict']" [(ngModel)]="numSerie_swic" (keydown.enter)="modifierNumSerieSwitch(i, 'numSeriewict', switches[i].id!)" placeholder=""/>
+                </td>
+
+                <td (dblclick)="modifierCategorie(i, 'prixwict')" >
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['prixwict']" >{{ swit.prix || 'prixwict' }}</ng-container>
+                  <input type="text" *ngIf="isEditing_routeur[i]?.['prixwict']" [(ngModel)]="prix_swic" (keydown.enter)="modifierprixSwitch(i, 'prixwict', switches[i].id!)" placeholder=""/>
+
+                </td>
+
+                <td (dblclick)="modifierCategorie(i, 'configwict')">
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['configwict']">{{  swit.configurable  }}</ng-container>
+                  <select *ngIf="isEditing_routeur[i]?.['configwict']" [(ngModel)]="configurable_swic" (keydown.enter)="modifierConfigurationSwitch(i, 'configwict', switches[i].id!)">
+                    <option [value]="true">True</option>
+                    <option [value]="false">False</option>
+                  </select>
+                </td>
+
+                <td (dblclick)="modifierCategorie(i, 'datewict')">
+                  <ng-container  *ngIf="!isEditing_routeur[i]?.['datewict']" >{{ swit.dateInstallation || 'Modèle inconnu' }}</ng-container>
+                  <input type="date" *ngIf="isEditing_routeur[i]?.['datewict']" [(ngModel)]="dateInstallation_swic" (keydown.enter)="modifierdateSwitch(i, 'datewict', switches[i].id!)" placeholder=""/>
+
+                </td>
+
+                <td>
+                  <ng-container>{{ swit.statut || 'Modèle inconnu' }}</ng-container>
+                </td>
+              </tr>
+
+
+            </tbody>
+          </table>
+          <h2>Informations  réseau  des commutateurs</h2>
+          <table>
+            <thead>
+              <tr>
+
+                <th>Nom</th>
+                <th>Type port</th>
+                <th>Nombre port</th>
+                <th>type de switch</th>
+                <th>Adresse Ip</th>
+                <th>Adresse Mac</th>
+                <th>Masque </th>
+                <th>Passerelle</th>
+                <th>Mot de passe admin</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let swit of switches; let i = index">
+                <td  >
+                  <ng-container >{{ swit.nom || 'Modèle inconnu' }}</ng-container>
+                </td>
+
+                <!-- Correction des erreurs dans les commentaires ci-dessous -->
+
+                <td (dblclick)="modifierCategorie(i, 'tprportwict')">
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['tprportwict']">
+                    {{ swit.typePorts || 'Modèle inconnu' }}
+                  </ng-container>
+                  <select *ngIf="isEditing_routeur[i]?.['tprportwict']" [(ngModel)]="typePorts_swic" (keydown.enter)="modifiertypeportwitch(i, 'tprportwict', switches[i].id!)">
+                    <option value="Fast Ethernet">Fast Ethernet  </option>
+                    <option value="Gigabit Ethernet">Gigabit Ethernet  </option>
+                    <option value="SFP">SFP (Small Form-factor Pluggable)</option>
+                    <option value="QSFP">QSFP (40 Gbps)</option>
+                    <option value="RJ45">RJ45 (Ethernet classique)</option>
+                    <option value="PoE">PoE (Power over Ethernet)</option>
+                    <option value="Combo">Combo (RJ45/SFP)</option>
+                    <option value="Fibre optique">Fibre optique</option>
+                    <option value="Stacking">Stacking</option>
+                  </select>
+                </td>
+
+
+                <td  >
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['nbrportwict']">{{ swit.nombrePorts || 'Modèle inconnu' }}</ng-container>
+
+                </td>
+
+                <td  >
+                  <ng-container >{{ swit.masqueSousReseauipv6 }}</ng-container>
+
+                </td>
+
+
+                <td >
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['ipwict']">{{  swit.adresseIPv4Gestion }}</ng-container>
+
+                </td>
+
+                <td  >
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['macwict']">{{  swit.adresseMAC }}</ng-container>
+
+                </td>
+
+                <td  >
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['masqwict']">{{  swit.masqueSousReseaupv4 }}</ng-container>
+
+                </td>
+
+                <td  >
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['passerlwict']">{{  swit.passerelleParDefaut}}</ng-container>
+
+                </td>
+                <td  >
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['mdpwict']">{{  swit.motDePasseAdmin}}</ng-container>
+                    </td>
+              </tr>
+            </tbody>
+          </table>
+            <!-- Table Système d'Exploitation -->
+          <h2> Vlan(  Virtual Local Area Network ) des Switch</h2>
+          <div  class="insertion_moniteur">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nom du Swicht</th>
+                  <th>Nom vlan</th>
+                  <th>Numéro VLAN</th>
+                  <th>Adresse IP</th>
+                  <th>Masque sous réseau</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr   *ngFor="let  vln of vlan; let i = index">
+                  <td >
+                    <ng-container  >{{i+1}}</ng-container>
+                  </td>
+                  <td>
+                    <ng-container  >{{recupe_nom_swtch_id ( vlan[i].id_commutateur!)}} </ng-container>
+                  </td>
+                  <td >
+                    <ng-container  *ngIf="!isEditing_interfacrouteur[i]?.['nomvlan']" >{{ vln.nom}}</ng-container>
+
+                  </td>
+                  <td  >
+                    <ng-container  *ngIf="!isEditing_interfacrouteur[i]?.['numvlan']" >{{ vln.numero_vlan}}</ng-container>
+
+                  </td>
+                  <td  >
+                    <ng-container   *ngIf="!isEditing_interfacrouteur[i]?.['ipvlan']"  >{{vln.adresse_ip}}</ng-container>
+
+                  </td>
+                  <td  >
+                    <ng-container   *ngIf="!isEditing_interfacrouteur[i]?.['masqvlan']" >{{ vln.masque_sous_reseau}}</ng-container>
+                    >
+                  </td>
+
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+
+       <!--------------------------------------------->
+       <div  *ngIf="ouverture_pointacce">
+        <div class="equipement_g">
+        <div class="contenu_equipement">
+            <div class="equipement">
+              <div class="nom_equipement">
+                <div>Point d'Accès</div>
+                <div class="plusdetait" (click)="affiche_visual_pointacc()" >PLuss de détail</div>
+              </div>
+              <table class="contient_equipement">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Modèle</th>
+                    <th>Marque</th>
+                    <th>Date d'acquisition</th>
+                    <th>État</th>
+                    <th> </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let pointsAcces of pointsAcces_bureau; let i = index"  >
+                    <td>{{ i + 1 }}</td> <!-- Index commence à 0, donc on ajoute +1 -->
+                    <td>{{ pointsAcces.nom  || 'Modèle inconnu'}}</td>
+                    <td>{{pointsAcces.model|| 'Modèle inconnu'}}</td>
+                    <td>{{pointsAcces.marque   }}</td>
+                    <td>{{pointsAcces.dateInstallation  }}</td>
+                    <td>{{pointsAcces.statut}}</td>
+                    <td>  <div (click)="supprime_pointdacce_id(pointsAcces.id || -1, $event)" class="supprime"></div></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div  class="insertion_moniteur">
+                  <div class="insertion_batiment">
+                    <div class="titre">Insertion d'un Point d'Accès </div>
+                    <form class="formul_insert_swicth" (ngSubmit)="addpointdacce()">
+                      <div class="contenu_nom_champ_isert_swicth">
+                        <!-- Champ gauche -->
+                        <div class="champ_gauche">
+                          <div class="form-group">
+                            <label for="nom">Nom</label>
+                            <input
+                              type="text"
+                              id="nom"
+                              name="nom"
+                              [(ngModel)]="newpointsAcces .nom"
+                              placeholder="Nom du Point d'Accès"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="model">Modèle</label>
+                            <input
+                              type="text"
+                              id="model"
+                              name="model"
+                              [(ngModel)]="newpointsAcces .model"
+                              placeholder="Modèle du Point d'Accès"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="marque">Marque</label>
+                            <input
+                              type="text"
+                              id="marque"
+                              name="marque"
+                              [(ngModel)]="newpointsAcces .marque"
+                              placeholder="Marque du Point d'Accès"
+                              required
+                            />
+                          </div>
+                        </div>
+
+                        <!-- Champ droit -->
+                        <div class="champ_droite">
+                          <div class="form-group">
+                            <label for="nombrePorts">N° série</label>
+                            <input
+                              type="Text"
+                              id="nombrePorts"
+                              name="nombrePorts"
+                              [(ngModel)]="newpointsAcces.numSerie "
+                              placeholder="N° série du Point d'Accès"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="dateInstallation">Date d'installation</label>
+                            <input
+                              type="date"
+                              id="dateInstallation"
+                              name="dateInstallation"
+                              [(ngModel)]="newpointsAcces.dateInstallation"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="prix">Prix</label>
+                            <input
+                              type="Text"
+                              id="prix"
+                              name="prix"
+                              [(ngModel)]="newpointsAcces.prix "
+                              required
+                              placeholder="Prix du Point d'Accès"
+                            />
+                          </div>
+                <!----         <div class="form-group">
+                            <label for="statut">Statut</label>
+                            <select id="statut" name="statut" [(ngModel)]="newSwicth.statut" required>
+                              <option value="Actif">Actif</option>
+                              <option value="Inactif">Inactif</option>
+                            </select>
+                          </div>-->
+                        </div>
+                      </div>
+
+                      <!-- Bouton de soumission -->
+                      <div class="contenu_butt">
+                        <button type="submit" class="submit-btn">Ajouter</button>
+                      </div>
+                    </form>
+              </div>
+            </div>
+
+            </div>
+        </div>
+        </div>
+      </div>
+      <!-- -----------------------visualisation des point acce----------kkk------------>
+       <div class="visualisation_equipemen" *ngIf="visualisation_pointacc">
+
+        <div class="contenu_info_rout">
+            <h2>Informations Générales des Points d'Accès</h2>
+            <table>
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Marque</th>
+                    <th>Modèle</th>
+                    <th>Numéro de Série</th>
+                    <th>Prix (Ar)</th>
+                    <th>Adresse ip</th>
+                    <th>Adresse Mac</th>
+                    <th>Statut</th>
+                </thead>
+              <tbody>
+                <tr *ngFor="let pointsAcces of pointsAcces_bureau ; let i = index">
+                  <td>{{ i + 1 }}</td>
+
+                  <!-- Édition du nom -->
+                  <td (dblclick)="modifierCategorie(i, 'nompnt')">
+                    <ng-container *ngIf="!isEditing_routeur[i]?.['nompnt']">{{ pointsAcces.nom || 'Modèle inconnu' }}</ng-container>
+                    <input type="text" *ngIf="isEditing_routeur[i]?.['nompnt']" [(ngModel)]="nom_pntacc" (keydown.enter)="modifienompntacc(i, 'nompnt',  pointsAcces_bureau[i].id!)"    placeholder=""/>
+                  </td>
+
+                  <!-- Édition de la marque -->
+                  <td (dblclick)="modifierCategorie(i, 'marquepnt')">
+                    <ng-container *ngIf="!isEditing_routeur[i]?.['marquepnt']">{{ pointsAcces.marque || 'Modèle inconnu' }}</ng-container>
+                    <input type="text" *ngIf="isEditing_routeur[i]?.['marquepnt']" [(ngModel)]="marque_pntacc" (keydown.enter)="modifiemarqupntacc(i,'marquepnt',  pointsAcces_bureau[i].id!)" placeholder=""/>
+                  </td>
+
+                  <!-- Édition du modèle -->
+                  <td (dblclick)="modifierCategorie(i, 'modelpnt')">
+                    <ng-container *ngIf="!isEditing_routeur[i]?.['modelpnt']">{{ pointsAcces.model || 'Modèle inconnu' }}</ng-container>
+                    <input type="text" *ngIf="isEditing_routeur[i]?.['modelpnt']" [(ngModel)]="model_pntacc" (keydown.enter)="modifiemodelpntacc(i,'modelpnt', pointsAcces_bureau[i].id!)" placeholder=""/>
+                  </td>
+
+                  <!-- Édition du numéro de série -->
+                  <td (dblclick)="modifierCategorie(i, 'numSeriepnt')">
+                    <ng-container *ngIf="!isEditing_routeur[i]?.['numSeriepnt']">{{ pointsAcces.numSerie || 'Modèle inconnu' }}</ng-container>
+                    <input type="text" *ngIf="isEditing_routeur[i]?.['numSeriepnt']" [(ngModel)]="numSerie_pntacc" (keydown.enter)="modifienumserpntacc(i, 'numSeriepnt', pointsAcces_bureau[i].id!)" placeholder=""/>
+                  </td>
+
+                  <!-- Édition du prix -->
+                  <!-- Édition du numéro de série -->
+                  <td (dblclick)="modifierCategorie(i, 'prixpnt')">
+                    <ng-container *ngIf="!isEditing_routeur[i]?.['prixpnt']">{{ pointsAcces.prix|| 'Modèle inconnu' }}</ng-container>
+                    <input type="text" *ngIf="isEditing_routeur[i]?.['prixpnt']" [(ngModel)]="prix_pntacc" (keydown.enter)="modifieprixpntacc(i, 'prixpnt', pointsAcces_bureau[i].id!)" placeholder=""/>
+                  </td>
+
+                  <!-- Affichage de la date d'installation -->
+                  <!-- Édition du numéro de série -->
+                  <td (dblclick)="modifierCategorie(i, 'ippnt')">
+                    <ng-container *ngIf="!isEditing_routeur[i]?.['ippnt']">{{ pointsAcces.ip || 'Modèle inconnu' }}</ng-container>
+                    <input type="text" *ngIf="isEditing_routeur[i]?.['ippnt']" [(ngModel)]="ip_pntacc" (keydown.enter)=" modifieipntacc(i, 'ippnt',  pointsAcces_bureau[i].id!)" placeholder=""/>
+                  </td>
+                  <!-- Édition du numéro de série -->
+                  <td (dblclick)="modifierCategorie(i, 'macpnt')">
+                    <ng-container *ngIf="!isEditing_routeur[i]?.['macpnt']">{{ pointsAcces.macc|| 'Modèle inconnu' }}</ng-container>
+                    <input type="text" *ngIf="isEditing_routeur[i]?.['macpnt']" [(ngModel)]="macc_pntacc" (keydown.enter)="modifiemacntacc(i, 'macpnt',  pointsAcces_bureau[i].id!)" placeholder=""/>
+                  </td>
+
+                  <!-- Affichage du statut -->
+                  <td>
+                    <ng-container>{{  pointsAcces.statut || 'Modèle inconnu' }}</ng-container>
+                  </td>
+                </tr>
+              </tbody>
+           </table>
+        </div>
+      </div>
+      <!--------------------------------------------->
+      <div  *ngIf="ouverture_Serveur">
+        <div class="equipement_g">
+        <div class="contenu_equipement">
+          <div class="equipement">
+                <div class="nom_equipement">
+                  <div>Serveur</div>
+                  <div class="plusdetait" (click)="affiche_visual_serveur()" >PLuss de détail</div>
+                </div>
+                <table class="contient_equipement">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nom</th>
+                      <th>Type serveur</th>
+                      <th>Type d'Hébergement</th>
+                      <th>Date d'acquisition</th>
+                      <th>État</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let serveur of  serveur_bureau ; let i = index"  >
+                      <td>{{ i + 1 }}</td> <!-- Index commence à 0, donc on ajoute +1 -->
+                      <td>{{ serveur.nom  || 'Modèle inconnu'}}</td>
+                      <td>{{serveur.typeServeur}}</td>
+                      <td>{{serveur.typeHeberge }}</td>
+                      <td>{{serveur.dateInstallation  }}</td>
+                      <td>{{serveur.statut}}</td>
+                      <td>  <div (click)="supprime_serveur_id(serveur.id || -1, $event)" class="supprime"></div></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div  class="insertion_moniteur">
+                    <div class="insertion_batiment">
+                      <div class="titre">Insertion d'un Serveur</div>
+                      <form class="formul_insert_swicth" (ngSubmit)="addserveur()">
+                        <div class="contenu_nom_champ_isert_swicth">
+                          <!-- Champ gauche -->
+                          <div class="champ_gauche">
+                            <div class="form-group">
+                              <label for="nom">Nom</label>
+                              <input
+                                type="text"
+                                id="nom"
+                                name="nom"
+                                [(ngModel)]="newserveur.nom"
+                                placeholder="Nom du serveur"
+                                required
+                              />
+                            </div>
+                            <div class="form-group">
+                              <label for="prix">Prix</label>
+                              <input
+                                type="Text"
+                                id="prix"
+                                name="prix"
+                                [(ngModel)]="newserveur.prix "
+                                required
+                                placeholder="Prix du serveur"
+                              />
+                            </div>
+                            <div class="form-group">
+                              <label for="dateInstallation">Date d'installation</label>
+                              <input
+                                type="date"
+                                id="dateInstallation"
+                                name="dateInstallation"
+                                [(ngModel)]="newserveur.dateInstallation"
+                                required
+                              />
+                            </div>
+                          </div>
+
+                          <!-- Champ droit -->
+                          <div class="champ_droite">
+                            <div class="form-group">
+                              <label for="Type de serveur">mode de serveur</label>
+                              <select id="Type de serveur"   [(ngModel)]="newserveur.mode" name="mode de serveur"  required>
+                                <option value="">Sélectionnez le mode de serveur</option>
+                                <option value="Local">Local</option>
+                                <option value="En ligne">En ligne</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="prix">Période de paiement</label>
+
+                              <!-- Si le mode est "Local", afficher l'input avec le placeholder "Accun" -->
+                              <input *ngIf="newserveur.mode === 'Local'"
+                                    type="text"
+                                    id="prix"
+                                    name="prix"
+                                    [(ngModel)]="newserveur.periodePaiement"
+                                    required
+                                    placeholder="Accun"
+                                    [value]="'Accun'" />
+
+                              <!-- Si le mode est "En ligne", afficher l'input pour "Période de paiement" -->
+                              <input *ngIf="newserveur.mode === ''"
+                                    type="text"
+                                    id="prix"
+                                    name="prix"
+                                    [(ngModel)]="newserveur.periodePaiement"
+                                    required
+                                    placeholder="Période de paiement" />
+
+                                    <input *ngIf="newserveur.mode === 'En ligne'"
+                                    type="text"
+                                    id="prix"
+                                    name="prix"
+                                    [(ngModel)]="newserveur.periodePaiement"
+                                    required
+                                    placeholder="Période de paiement" />
+                          </div>
+                          <div class="form-group">
+                            <label for="Type de serveur">Déscription</label>
+                            <input
+                            type="text"
+                            id="prix"
+                            name="prix"
+                            [(ngModel)]="newserveur.description"
+                            required
+                            placeholder="Déscription du serveur" />
+                          </div>
+                          </div>
+                        </div>
+
+                        <!-- Bouton de soumission -->
+                        <div class="contenu_butt">
+                          <button type="submit" class="submit-btn">Ajouter</button>
+                        </div>
+                      </form>
+
+                </div>
+              </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <!------------------------------------------visual-serveur------------------------------------->
+      <div class="visualisation_equipemen" *ngIf="visualisation_serveur">
+
+        <div class="contenu_info_rout">
+          <h2>Informations Générales du Serveur</h2>
+          <table>
+            <thead>
+              <tr>
+                <tr>
+                  <th>Nom</th>
+                  <th>Système d'Exploitation</th>
+                  <th>Type Serveur</th>
+                  <th>Hébergeur</th>
+                  <th>Type d'Hébergement</th>
+                  <th>Date Installation</th>
+                  <th>Statut</th>
+                  <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let serveur of serveur_bureau; let i = index">
+                <td (dblclick)="modifierCategorie(i, 'nomserve')">
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['nomserve']">{{ serveur.nom }}</ng-container>
+                  <input *ngIf="isEditing_routeur[i]?.['nomserve']" [(ngModel)]="nom_serveur"
+                         (keydown.enter)="Modificationnom(i, 'nomserve', serveur_bureau[i].id!)" placeholder=""/>
+                </td>
+                <td (dblclick)="modifierCategorie(i, 'systemeExploitation')">
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['systemeExploitation']">{{ serveur.systemeExploitation }}</ng-container>
+                  <input *ngIf="isEditing_routeur[i]?.['systemeExploitation']" [(ngModel)]="systemeExploitation_serveur"
+                         (keydown.enter)="ModificationSystemeExploitation(i, 'systemeExploitation', serveur_bureau[i].id!)" />
+                </td>
+                <td (dblclick)="modifierCategorie(i, 'typeServeur')">
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['typeServeur']">{{ serveur.typeServeur }}</ng-container>
+                  <input *ngIf="isEditing_routeur[i]?.['typeServeur']" [(ngModel)]="typeServeur_serveur"
+                         (keydown.enter)="ModificationTypeServeur(i, 'typeServeur', serveur_bureau[i].id!)" />
+                </td>
+                <td (dblclick)="modifierCategorie(i, 'hebergeur')">
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['hebergeur']">{{ serveur.hebergeur }}</ng-container>
+                  <input *ngIf="isEditing_routeur[i]?.['hebergeur']" [(ngModel)]="hebergeur_serveur"
+                         (keydown.enter)="ModificationHebergeur(i, 'hebergeur', serveur_bureau[i].id!)" />
+                </td>
+                <td (dblclick)="modifierCategorie(i, 'typeHeberge')">
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['typeHeberge']">{{ serveur.typeHeberge }}</ng-container>
+                  <input *ngIf="isEditing_routeur[i]?.['typeHeberge']" [(ngModel)]="typeHeberge_serveur"
+                         (keydown.enter)="ModificationTypeHeberge(i, 'typeHeberge', serveur_bureau[i].id!)" />
+                </td>
+                <td>
+                  <ng-container>{{ serveur.dateInstallation }}</ng-container>
+                </td>
+                <td>
+                  <ng-container>{{ serveur.statut }}</ng-container>
+                </td>
+                <td (dblclick)="modifierCategorie(i, 'description')">
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['description']">{{ serveur.description }}</ng-container>
+                  <input *ngIf="isEditing_routeur[i]?.['description']" [(ngModel)]="description_serveur"
+                         (keydown.enter)="ModificationDescription(i, 'description', serveur_bureau[i].id!)" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <tr>
+                  <th>Emplacement</th>
+                  <th>mode</th>
+                  <th>Prix</th>
+                  <th>Période de payment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let serveur of serveur_bureau; let i = index">
+                <td *ngIf="serveur?.mode === 'Local'">
+                  <ng-container>{{ recupe_nom_bureau(serveur?.idBureau || '-1') }}</ng-container>
+                </td>
+                <td *ngIf="serveur?.mode === 'En ligne'">
+                  <ng-container>------</ng-container>
+                </td>
+
+                <td (dblclick)="modifierCategorie(i, 'mode_serve')">
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['mode_serve']">{{ serveur?.mode }}</ng-container>
+                  <input *ngIf="isEditing_routeur[i]?.['mode_serve']" [(ngModel)]="mode_serveur"
+                         (keydown.enter)="Modificationmode(i, 'mode_serve', serveur_bureau[i].id!)" />
+                </td>
+                <td (dblclick)="modifierCategorie(i, 'prix_serve')">
+                  <ng-container *ngIf="!isEditing_routeur[i]?.['prix_serve']">{{ serveur?.prix }}</ng-container>
+                  <input *ngIf="isEditing_routeur[i]?.['prix_serve']" [(ngModel)]="prix_serveur"
+                         (keydown.enter)="ModificationPrix(i, 'prix_serve', serveur_bureau[i].id!)" />
+                </td>
+                <td (dblclick)="modifierCategorie(i, 'periodePaiement_serve')">
+                  <ng-container *ngIf="serveur?.mode === 'En ligne' && !isEditing_routeur[i]?.['periodePaiement_serve']">
+                    {{ serveur?.periodePaiement }}
+                  </ng-container>
+                  <ng-container *ngIf="serveur?.mode === 'Local' && !isEditing_routeur[i]?.['periodePaiement_serve']">
+                    Accun
+                  </ng-container>
+                  <input *ngIf="serveur?.mode === 'En ligne' && isEditing_routeur[i]?.['periodePaiement_serve']"
+                         [(ngModel)]="periodePaiement_serveur"
+                         (keydown.enter)="ModificationHebergeur(i, 'periodePaiement_serve', serveur_bureau[i].id!)" />
+                </td>
+              </tr>
+
+
+            </tbody>
+          </table>
+
+          <!-- Table Configuration Matérielle -->
+          <h2> Matérielle</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Modèle CPU</th>
+                  <th>Fréquence du  CPU</th>
+                  <th>RAM Totale (Go)</th>
+                  <th>Type du RAM</th>
+                  <th>Stockage Total (Go)</th>
+                  <th>Type du Disque</th>
+                  <th>Modèle GPU</th>
+                  <th>Fréquence du GPU  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let serveur of serveur_bureau; let i = index">
+                  <td (dblclick)="modifierCategorie(i, 'modeleCPU')">
+                    <ng-container *ngIf="!isEditing_routeur[i]?.['modeleCPU']">{{ serveur?.modeleCPU }}</ng-container>
+                    <input *ngIf="isEditing_routeur[i]?.['modeleCPU']" [(ngModel)]="modeleCPU_serveur"
+                           (keydown.enter)="ModificationModeleCPU(i, 'modeleCPU', serveur_bureau[i].id!)" />
+                  </td>
+                  <td (dblclick)="modifierCategorie(i, 'frequenceCPU')">
+                    <ng-container *ngIf="!isEditing_routeur[i]?.['frequenceCPU']">{{ serveur?.frequenceCPU }}</ng-container>
+                    <input *ngIf="isEditing_routeur[i]?.['frequenceCPU']" [(ngModel)]="frequenceCPU_serveur"
+                           (keydown.enter)="ModificationFrequenceCPU(i, 'frequenceCPU', serveur_bureau[i].id!)" />
+                  </td>
+                  <td (dblclick)="modifierCategorie(i, 'ram')">
+                    <ng-container *ngIf="!isEditing_routeur[i]?.['ram']">{{ serveur?.ram }}</ng-container>
+                    <input *ngIf="isEditing_routeur[i]?.['ram']" [(ngModel)]="ram_serveur"
+                           (keydown.enter)="ModificationRAM(i, 'ram', serveur_bureau[i].id!)" />
+                  </td>
+                  <td (dblclick)="modifierCategorie(i, 'typeram')">
+                    <ng-container *ngIf="!isEditing_routeur[i]?.['typeram']">{{ serveur?.typeram }}</ng-container>
+                    <input *ngIf="isEditing_routeur[i]?.['typeram']" [(ngModel)]="typeram_serveur"
+                           (keydown.enter)="ModificationtypeRAM(i, 'typeram', serveur_bureau[i].id!)" />
+                  </td>
+                  <td (dblclick)="modifierCategorie(i, 'stockage')">
+                    <ng-container *ngIf="!isEditing_routeur[i]?.['stockage']">{{ serveur?.stockage }}</ng-container>
+                    <input *ngIf="isEditing_routeur[i]?.['stockage']" [(ngModel)]="stockage_serveur"
+                           (keydown.enter)="ModificationStockage(i, 'stockage', serveur_bureau[i].id!)" />
+                  </td>
+                  <td (dblclick)="modifierCategorie(i, 'typeDisque')">
+                    <ng-container *ngIf="!isEditing_routeur[i]?.['typeDisque']">{{ serveur?.typeDisque }}</ng-container>
+                    <input *ngIf="isEditing_routeur[i]?.['typeDisque']" [(ngModel)]="typeDisque_serveur"
+                           (keydown.enter)="ModificationTypeDisque(i, 'typeDisque', serveur_bureau[i].id!)" />
+                  </td>
+                  <td (dblclick)="modifierCategorie(i, 'gpu')">
+                    <ng-container *ngIf="!isEditing_routeur[i]?.['gpu']">{{ serveur?.gpu }}</ng-container>
+                    <input *ngIf="isEditing_routeur[i]?.['gpu']" [(ngModel)]="gpu_serveur"
+                           (keydown.enter)="ModificationGPU(i, 'gpu', serveur_bureau[i].id!)" />
+                  </td>
+                  <td (dblclick)="modifierCategorie(i, 'frequenceGPU')">
+                    <ng-container *ngIf="!isEditing_routeur[i]?.['frequenceGPU']">{{ serveur?.frequenceGPU }}</ng-container>
+                    <input *ngIf="isEditing_routeur[i]?.['frequenceGPU']" [(ngModel)]="frequenceGPU_serveur"
+                           (keydown.enter)="ModificationFrequenceGPU(i, 'frequenceGPU', serveur_bureau[i].id!)" />
+                  </td>
+                </tr>
+
+              </tbody>
+
+            </table>
+
+            <h2>Réseau</h2>
+            <!-- Table Configuration Réseau -->
+            <table>
+              <thead>
+                <tr>
+                  <th>Adresse MAC</th>
+                  <th>Adresse IP</th>
+                  <th>DNS Primaire</th>
+                  <th>DNS Secondaire</th>
+                  <th>Passerelle</th>
+                  <th>Protocole Utilisé</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let serveur of serveur_bureau; let i = index">
+                  <td >
+                    <ng-container >{{ serveur.mac }}</ng-container>
+
+                  </td>
+                  <td  >
+                    <ng-container  >{{ serveur.ip }}</ng-container>
+
+                  </td>
+                  <td  >
+                    <ng-container  >{{serveur.dnsPrimaire }}</ng-container>
+
+                  </td>
+                  <td  >
+                    <ng-container  >{{serveur.dnsSecondaire }}</ng-container>
+
+                  </td>
+                  <td  >
+                    <ng-container  >{{ serveur.passerelle }}</ng-container>
+
+                  </td>
+                  <td  >
+                    <ng-container  >{{ serveur.protocole }}</ng-container>
+
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          <!-- Table Système d'Exploitation -->
+          <h2> Services Hébergés</h2>
+          <div  class="insertion_moniteur">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                    <th>Nom Service</th>
+                    <th>Version</th>
+                    <th>Services</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr   *ngFor="let service of Service_Idserv; let i = index">
+                  <td>
+                    <ng-container  >{{i+1}}</ng-container>
+                  </td>
+                  <td >
+                    <ng-container >{{ service.nom }}</ng-container>
+                  </td>
+                  <td>
+                    <ng-container>{{ service.version }}</ng-container>
+                  </td>
+                  <td >
+                    <ng-container >{{ service.service }}</ng-container>
+
+                  </td>
+
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+    </div>
+
+       <!--------------------------------------------->
+       <div  *ngIf="ouverture_Projecteur">
+        <div class="equipement_g">
+        <div class="contenu_equipement">
+          <div class="equipement">
+                <div class="nom_equipement">Projecteur</div>
+                <table class="contient_equipement">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nom</th>
+                      <th>Résolution</th>
+                      <th>Modèle</th>
+                      <th>Marque</th>
+                      <th>Date </th>
+                      <th>Prix</th>
+                      <th>Technologie</th>
+                      <th>N° serie</th>
+                      <th>Statut</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let Projecteur of Projecteur_bureau; let i = index">
+                      <td>{{ i + 1 }}</td> <!-- Index commence à 0, donc on ajoute +1 -->
+
+                      <!-- Nom -->
+                      <td (dblclick)="modifierCategorie(i, 'nomProjecteur')">
+                        <ng-container *ngIf="!isEditing[i]?.['nomProjecteur']">{{ Projecteur.nom || 'Modèle inconnu' }}</ng-container>
+                        <input type="text" *ngIf="isEditing[i]?.['nomProjecteur']" [(ngModel)]="nom_projecteur"
+                               (keydown.enter)="Modification_nom_projecteur(i, 'nomProjecteur', Projecteur.id!)" placeholder="Nom du projecteur" />
+                      </td>
+
+                      <!-- Résolution -->
+                      <td (dblclick)="modifierCategorie(i, 'resolutionProjecteur')">
+                        <ng-container *ngIf="!isEditing[i]?.['resolutionProjecteur']">{{ Projecteur.resolution }}</ng-container>
+                        <input type="text" *ngIf="isEditing[i]?.['resolutionProjecteur']" [(ngModel)]="resolution_projecteur"
+                               (keydown.enter)="Modification_resolution_projecteur(i, 'resolutionProjecteur', Projecteur.id!)" placeholder="Résolution" />
+                      </td>
+
+                      <!-- Modèle -->
+                      <td (dblclick)="modifierCategorie(i, 'modeleProjecteur')">
+                        <ng-container *ngIf="!isEditing[i]?.['modeleProjecteur']">{{ Projecteur.modele }}</ng-container>
+                        <input type="text" *ngIf="isEditing[i]?.['modeleProjecteur']" [(ngModel)]="modele_projecteur"
+                               (keydown.enter)="Modification_modele_projecteur(i, 'modeleProjecteur', Projecteur.id!)" placeholder="Modèle" />
+                      </td>
+
+                      <!-- Marque -->
+                      <td (dblclick)="modifierCategorie(i, 'marqueProjecteur')">
+                        <ng-container *ngIf="!isEditing[i]?.['marqueProjecteur']">{{ Projecteur.marque }}</ng-container>
+                        <input type="text" *ngIf="isEditing[i]?.['marqueProjecteur']" [(ngModel)]="marque_projecteur"
+                               (keydown.enter)="Modification_marque_projecteur(i, 'marqueProjecteur', Projecteur.id!)" placeholder="Marque" />
+                      </td>
+
+                      <!-- Date d'installation -->
+                      <td (dblclick)="modifierCategorie(i, 'dateInstallationProjecteur')">
+                        <ng-container *ngIf="!isEditing[i]?.['dateInstallationProjecteur']">{{ Projecteur.dateInstallation | date: 'dd/MM/yyyy' }}</ng-container>
+                        <input type="date" *ngIf="isEditing[i]?.['dateInstallationProjecteur']" [(ngModel)]="dateInstallation_projecteur"
+                               (keydown.enter)="Modification_dateInstallation_projecteur(i, 'dateInstallationProjecteur', Projecteur.id!)" placeholder="Date d'installation" />
+                      </td>
+
+                      <!-- Prix -->
+                      <td (dblclick)="modifierCategorie(i, 'prixProjecteur')">
+                        <ng-container *ngIf="!isEditing[i]?.['prixProjecteur']">{{ Projecteur.prix }}</ng-container>
+                        <input type="text" *ngIf="isEditing[i]?.['prixProjecteur']" [(ngModel)]="prix_projecteur"
+                               (keydown.enter)="Modification_prix_projecteur(i, 'prixProjecteur', Projecteur.id!)" placeholder="Prix" />
+                      </td>
+
+                      <!-- Technologie -->
+                      <td (dblclick)="modifierCategorie(i, 'technologieProjecteur')">
+                        <ng-container *ngIf="!isEditing[i]?.['technologieProjecteur']">{{ Projecteur.technologie }}</ng-container>
+                        <input type="text" *ngIf="isEditing[i]?.['technologieProjecteur']" [(ngModel)]="technologie_projecteur"
+                               (keydown.enter)="Modification_technologie_projecteur(i, 'technologieProjecteur', Projecteur.id!)" placeholder="Technologie" />
+                      </td>
+
+                      <!-- Numéro de série -->
+                      <td (dblclick)="modifierCategorie(i, 'numSerieProjecteur')">
+                        <ng-container *ngIf="!isEditing[i]?.['numSerieProjecteur']">{{ Projecteur.numSerie }}</ng-container>
+                        <input type="text" *ngIf="isEditing[i]?.['numSerieProjecteur']" [(ngModel)]="numSerie_projecteur"
+                               (keydown.enter)="Modification_numSerie_projecteur(i, 'numSerieProjecteur', Projecteur.id!)" placeholder="Numéro de série" />
+                      </td>
+
+                      <!-- Statut -->
+                      <td  >
+                        <ng-container  >{{ Projecteur.statut }}</ng-container>
+                      </td>
+
+                      <!-- Supprimer -->
+                      <td>
+                        <div (click)="supprime_projecteur_id(Projecteur.id || -1, $event)" class="supprime"></div>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+                <div  class="insertion_moniteur">
+                    <div class="insertion_batiment">
+                      <div class="titre">Insertion d'un Projecteur</div>
+                      <form class="formul_insert_swicth" (ngSubmit)=" addprojecteur()">
+                        <div class="contenu_nom_champ_isert_swicth">
+                          <!-- Champ gauche -->
+                          <div class="champ_gauche">
+                            <div class="form-group">
+                              <label for="nom">Nom</label>
+                              <input
+                                type="text"
+                                id="nom"
+                                name="nom"
+                                [(ngModel)]="newsProjecteur.nom"
+                                placeholder="Nom du projecteur"
+                                required
+                              />
+                            </div>
+                            <div class="form-group">
+                              <label for="modele">Modèle</label>
+                              <input
+                                type="text"
+                                id="modele"
+                                name="modele"
+                                [(ngModel)]="newsProjecteur.modele"
+                                required
+                                placeholder="Modèle du projecteur"
+                              />
+                            </div>
+                            <div class="form-group">
+                              <label for="marque">Marque</label>
+                              <input
+                                type="text"
+                                id="marque"
+                                name="marque"
+                                [(ngModel)]="newsProjecteur.marque"
+                                required
+                                placeholder="Marque du projecteur"
+                              />
+                            </div>
+                            <div class="form-group">
+                              <label for="technologie">Technologie</label>
+                              <input
+                                type="text"
+                                id="technologie"
+                                name="technologie"
+                                [(ngModel)]="newsProjecteur.technologie"
+                                required
+                                placeholder="Technologie du projecteur"
+                              />
+                            </div>
+                          </div>
+
+                          <!-- Champ droit -->
+                          <div class="champ_droite">
+                            <div class="form-group">
+                              <label for="dateInstallation">Date d'installation</label>
+                              <input
+                                type="date"
+                                id="dateInstallation"
+                                name="dateInstallation"
+                                [(ngModel)]="newsProjecteur.dateInstallation"
+                                required
+                              />
+                            </div>
+                            <div class="form-group">
+                              <label for="prix">Prix</label>
+                              <input
+                                type="text"
+                                id="prix"
+                                name="prix"
+                                [(ngModel)]="newsProjecteur.prix"
+                                required
+                                placeholder="Prix du projecteur"
+                              />
+                            </div>
+                            <div class="form-group">
+                              <label for="idbureau">N° serie</label>
+                              <input
+                                type="text"
+                                id="idbureau"
+                                name="idbureau"
+                                [(ngModel)]="newsProjecteur.numSerie"
+                                required
+                                placeholder="Numéro de Serie"
+                              />
+                            </div>
+
+                            <div style="margin-top:3%" class="contenu_butt">
+                              <button style="width: 100%;" type="submit" class="submit-btn">Ajouter</button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+
+
+                </div>
+              </div>
+          </div>
+        </div>
+        </div>
+      </div>
+       <!--------------------------------------------->
+    </div>
+  </div>
+
+

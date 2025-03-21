@@ -1,0 +1,584 @@
+<div class="grph_entete">
+  <div (click)="afficherGraphique('equipement')" class="titre">Equipement</div>
+  <div (click)="afficherGraphique('ticket')" class="titre">Âge des équipements </div>
+  <div (click)="afficherGraphique('cout')" class="titre">Coût des équipements </div>
+  <div (click)="afficherGraphique('panne')" class="titre">Statut des équipements </div>
+</div>
+<div class="contenu_graph">
+  <!--------------------------------EQUIPEMENTT----------------------->
+  <div *ngIf="ouverture_Graphique_equipement" class="graphique_equipement">
+    <!------- <div class="but_titre">
+      <div class="but_preced_suiv">
+        <div class="precedent" (click)="precedent()">  &#9664; </div>
+        <div class="suivant" (click)="suivant()"> &#9654; </div>
+      </div>
+    </div>--------->
+
+    <div *ngIf="ouverture_repartition_equipement"class="contenu_graph_repart_age">
+
+      <div class="contenu_graph_repart">
+            <div class="contient_graphic_circu1">
+              <canvas baseChart
+                [data]="repartition_pieChartData"
+                [options]="pieChartOptions"
+                type="pie">
+            </canvas>
+            </div>
+            <div class="contient_champ_graphic_circu2">
+
+              <div class="graphic_circu2">
+                <canvas
+                baseChart
+                [data]="repartition_pieChartData"
+                [type]="pieChartType"
+                [options]="pieChartOptions"
+                >
+                </canvas>
+
+              </div>
+              <div class="champ">
+                <select>
+                    <option value="">Sélectionner un bureau</option>
+                    <option value="bureau1">Bureau 12</option>
+                    <option value="bureau2">Bureau 2</option>
+                    <option value="bureau3">Bureau 3</option>
+                </select>
+              </div>
+            </div>
+      </div>
+    </div>
+
+    <!--------------age equipment---------------->
+    <div *ngIf="ouverture_age_equipement" class="contenu_graph_repart_age">
+      <div class="contenu_graph_age">
+        <!-----graph---------->
+
+        <canvas class="contient_graphic_circuage"
+            baseChart
+            [data]="barChartData"
+            [options]="barChartOptions"
+            [type]="barChartType">
+        </canvas>
+
+          <!----tab---------->
+        <div class="contient_tableaux">
+              <!-- Sélection de l'âge -->
+                  <!-- Bouton pour générer un rapport -->
+              <div class="conitient_but_gener">
+                <div class="champ_age">
+                  <select id="ageSelect">
+                    <option value="0-5">0-5 ans</option>
+                    <option value="6-10">6-10 ans</option>
+                    <option value="11-15">11-15 ans</option>
+                    <option value="16-20">16-20 ans</option>
+                    <option value="20+">20+ ans</option>
+                  </select>
+                </div>
+                <button (click)="genererRapport()">Générer Rapport</button>
+              </div>
+              <!-- Tableau des équipements par âge, bâtiment et bureau-->
+              <table class="table_equipement">
+                <thead>
+                  <tr>
+                    <th>Âge</th>
+
+                    <th>Bureau</th>
+                    <th>Nom d'équipements</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let equipement of equipements">
+                    <td>{{ equipement.age }}</td>
+                    <td>{{ equipement.bureau }}</td>
+                    <td>{{ equipement.nom }}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!--------------statue equipement---------------->
+    <div *ngIf="ouverture_statu_equipement" class="contenu_graph_repart_age">
+      <div *ngIf="ouverture_liste_statu" class="contient_graphi_status">
+        <div (click)="afficherListeEquipements('disponible')" class="statu">
+          <div>
+            <h6>Disponible</h6>
+            <canvas
+                baseChart
+                [data]="pieChartDataDisponible"
+                [type]="pieChartTypestatu"
+                [options]="pieChartOptionsstatu">
+            </canvas>
+          </div>
+        </div>
+        <div (click)="afficherListeEquipements('enCoursUtilisation')" class="statu">
+          <div>
+            <h6>En cours d'utilisation</h6>
+            <canvas
+            baseChart
+            [data]="pieChartDataDisponible"
+            [type]="pieChartTypestatu"
+            [options]="pieChartOptionsstatu">
+            </canvas>
+          </div>
+        </div>
+        <div (click)="afficherListeEquipements('enMaintenance')" class="statu">
+          <div>
+            <h6>En maintenance</h6>
+            <canvas
+            baseChart
+            [data]="pieChartDataDisponible"
+            [type]="pieChartTypestatu"
+            [options]="pieChartOptionsstatu">
+            </canvas>
+          </div>
+        </div>
+        <div (click)="afficherListeEquipements('horsService')" class="statu">
+          <div>
+            <h6>Hors service</h6>
+            <canvas
+            baseChart
+            [data]="pieChartDataDisponible"
+            [type]="pieChartTypestatu"
+            [options]="pieChartOptionsstatu">
+            </canvas>
+          </div>
+        </div>
+      </div>
+      <!-- Liste des équipements disponibles -->
+      <div *ngIf="ouverture_liste_equipmnt_dispo" class="liste_equipmnt">
+        <div class="contenu_retour">
+          <div class="titre">liste equipement disponible</div>
+          <div class="precedent" (click)="retourListeStatut()">&#10006;</div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Type</th>
+              <th>Bâtiment</th>
+              <th>Bureau</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let equip of equipementss.disponible">
+              <td>{{ equip.nom }}</td>
+              <td>{{ equip.type }}</td>
+              <td>{{ equip.batiment }}</td>
+              <td>{{ equip.bureau }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="boit_but_telech">
+          <div  class="btn-pdf">Télécharger en PDF</div>
+        </div>
+      </div>
+      <!-- Liste des équipements en cours d'utilisation -->
+      <div *ngIf="ouverture_liste_equipmnt_en_cour_util" class="liste_equipmnt">
+        <div class="contenu_retour">
+          <div class="titre">liste equipement en cour d'utilisation</div>
+          <div class="precedent" (click)="retourListeStatut()">&#10006;</div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Type</th>
+              <th>Bâtiment</th>
+              <th>Bureau</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let equip of equipementss.enCoursUtilisation">
+              <td>{{ equip.nom }}</td>
+              <td>{{ equip.type }}</td>
+              <td>{{ equip.batiment }}</td>
+              <td>{{ equip.bureau }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="boit_but_telech">
+          <div  class="btn-pdf">Télécharger en PDF</div>
+        </div>
+      </div>
+      <!-- Liste des équipements en maintenance -->
+      <div *ngIf="ouverture_liste_equipmnt_enmaiten" class="liste_equipmnt">
+        <div class="contenu_retour">
+          <div class="titre">liste equipement en maintenance</div>
+          <div class="precedent" (click)="retourListeStatut()">&#10006;</div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Type</th>
+              <th>Bâtiment</th>
+              <th>Bureau</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let equip of equipementss.enMaintenance">
+              <td>{{ equip.nom }}</td>
+              <td>{{ equip.type }}</td>
+              <td>{{ equip.batiment }}</td>
+              <td>{{ equip.bureau }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="boit_but_telech">
+          <div  class="btn-pdf">Télécharger en PDF</div>
+        </div>
+      </div>
+      <!-- Liste des équipements hors service -->
+      <div *ngIf="ouverture_liste_equipmnt_horservice" class="liste_equipmnt">
+        <div class="contenu_retour">
+          <div class="titre">liste equipement hors service</div>
+          <div class="precedent" (click)="retourListeStatut()">&#10006;</div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Type</th>
+              <th>Bâtiment</th>
+              <th>Bureau</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let equip of equipementss.horsService">
+              <td>{{ equip.nom }}</td>
+              <td>{{ equip.type }}</td>
+              <td>{{ equip.batiment }}</td>
+              <td>{{ equip.bureau }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="boit_but_telech">
+          <div  class="btn-pdf">Télécharger en PDF</div>
+        </div>
+      </div>
+    </div>
+ </div>
+ <!---------------------------------TICKET----------------------------->
+  <div *ngIf="ouverture_Graphique_Ticket" class="graphique_TICKET">
+     <!---------------------ticket ouvert fermer--------------------------->
+    <div *ngIf="ouverture_ticket_ouvert" class="contenu_graph_tickets">
+      <div class="contenu_graph_tickets_ligne">
+        <!-- Graphique des tickets ouverts et fermés -->
+          <div  class="graphique_tickets" >
+            <canvas  baseChart
+              [data]="lineChartDataTickets"
+              [type]="lineChartTypeTickets"
+              [options]="lineChartOptionsTickets">
+            </canvas>
+            <div class="filtres_tickets">
+
+              <select>
+                <option  >Sélectionner une période</option>
+                <option value="semaine">Cette semaine</option>
+                <option value="mois">Ce mois-ci</option>
+                <option value="annee">Cette année</option>
+              </select>
+            </div>
+          </div>
+
+
+
+        <!-- Filtres -->
+
+
+      </div>
+    </div>
+
+    <!---------------------ticket Priorité --------------------------->
+    <div *ngIf="ouverture_ticket_priorite" class="contenu_graph_tickets">
+      <div class="contenu_graph_ticketss">
+        <div class="contient_graphic_circu1">
+          <div class="graphic_circu1">
+
+
+          </div>
+        </div>
+        <div class="contient_champ_graphic_circu2">
+          <div class="champ">
+            <div class="titre">Bâtiment</div>
+            <select >
+                <option value="">Sélectionner un bâtiment</option>
+                <option value="batiment1">Bâtiment 1</option>
+                <option value="batiment2">Bâtiment 2</option>
+                <option value="batiment3">Bâtiment 3</option>
+            </select>
+            <div class="titre">Bureau</div>
+            <select>
+                <option value="">Sélectionner un bureau</option>
+                <option value="bureau1">Bureau 1</option>
+                <option value="bureau2">Bureau 2</option>
+                <option value="bureau3">Bureau 3</option>
+            </select>
+          </div>
+          <div class="graphic_circu2">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!--------------------------------RESEAU----------------------------->
+ <!---  <div *ngIf="ouverture_Graphique_Reseau" class="graphique_reseau">
+    <div  class="contenu_graph_band_p">
+      <div class="graph1">
+        <canvas
+        baseChart
+        [data]="barChartDatabande_passant"
+        [options]="barChartOptionsbande_passant"
+        [type]="'bar'"
+      >
+      </canvas>
+      </div>
+
+    </div>
+
+
+  </div> --->
+   <!--------------------------------TECHNICIEN----------------------------->
+  <div *ngIf="ouverture_Graphique_Technicien" class="graphique_technicien">
+    <div  class="contenu_graph_tech">
+
+        <canvas class="graph1"
+        baseChart
+        [data]="barChartDataTechniciens"
+        [options]="barChartOptionsTechniciens"
+        [type]="'bar'"
+      >
+      </canvas>
+
+     <!--- <div class="boit_but_telech">
+        <div  class="btn-pdf">Télécharger en PDF</div>
+      </div>-->
+    </div>
+  </div>
+  <!--------------------------------COUT----------------------------->
+  <div *ngIf="ouverture_Graphique_Cout" class="graphique_cout">
+    <div class="but_titre">
+      <div class="but_preced_suiv">
+        <div class="precedent" (click)="precedent_cout()">&#9664;</div>
+        <div class="suivant" (click)="suivant_cout()">&#9654;</div>
+      </div>
+    </div>
+    <!-------------- Coût Matériel ---------------->
+    <div *ngIf="ouverture_cout_materiel" class="contenu_graph">
+
+        <div class="contient_graphic_circu1">
+          <div class="graphic_circu1">
+            <canvas
+            baseChart
+            [data]="dataMateriel"
+            [options]="optionsPieChart"
+            [type]="'pie'"
+          ></canvas>
+          </div>
+        </div>
+        <div class="contient_tableau">
+          <table>
+            <tr>
+              <th>Equipements</th>
+              <th>Coût (Ar)</th>
+            </tr>
+            <tr *ngFor="let label of dataMateriel.labels; let i = index">
+              <td>{{ label }}</td>
+              <td>{{ dataMateriel.datasets[0].data[i] || 0 }}</td>
+
+            </tr>
+          </table>
+
+          <div class="boit_but_telech">
+            <div  class="btn-pdf"> Générer un rapport </div>
+          </div>
+        </div>
+
+    </div>
+    <!-------------- Coût Logiciel ---------------->
+    <div *ngIf="ouverture_cout_logiciel" class="contenu_graph">
+        <div class="contient_graphic_circu1">
+          <div class="graphic_circu1">
+            <canvas
+            baseChart
+            [data]="dataLogiciel"
+            [options]="optionsPieChartlog"
+            [type]="'pie'"></canvas>
+          </div>
+        </div>
+        <div class="contient_tableau">
+          <table>
+            <tr><th>Equipements</th><th>Coût (Ar)</th></tr>
+            <tr *ngFor="let item of dataLogiciel.datasets?.[0]?.data || []; let i = index">
+              <td>{{ dataLogiciel.labels?.[i] || 'N/A' }}</td>
+              <td>{{ item }}</td>
+            </tr>
+
+          </table>
+          <div class="boit_but_telech">
+            <div  class="btn-pdf">Télécharger en PDF</div>
+          </div>
+        </div>
+
+    </div>
+   <!------------------- Depense temporel -----------
+  <div *ngIf="ouverture_cout_temp" class="contenu_graph_tmp">
+    <div class="contient_graphic_circu1">
+        <canvas
+          baseChart
+          [data]="chartDatatemp"
+          [options]="chartOptionstemp"
+          [type]="'bar'"
+        ></canvas>
+
+    </div>
+
+    <div class="contient_champs">
+      <label for="dateSelection">Période</label>
+      <select id="dateSelection" [(ngModel)]="selectedDate">
+        <option *ngFor="let option of dateOptions" [value]="option.value">{{ option.label }}</option>
+      </select>
+
+      <div class="boit_but_telech">
+        <div  class="btn-pdf">Télécharger en PDF</div>
+      </div>
+    </div>
+  </div>------->
+
+
+  </div>
+   <!-------------------------------PANNE----------------------------->
+  <div *ngIf="ouverture_Graphique_Panne" class="graphique_panne">
+    <div *ngIf="ouverture_liste_panne" class="contient_graphi_panne">
+      <div (click)="afficherpanneequipement()" class="panne">
+        <div>
+          <h6>Panne équipement</h6>
+          <canvas
+            baseChart
+            [data]="pieChartDataMaterielle"
+            [type]="pieChartTypeMaterielle"
+            [options]="pieChartOptionMaterielle">
+          </canvas>
+        </div>
+      </div>
+
+      <div (click)="afficherpannereseau()" class="panne">
+        <div>
+          <h6>Panne réseau</h6>
+          <canvas
+            baseChart
+            [data]="pieChartDataReseau"
+            [type]="pieChartTypeReseau"
+            [options]="pieChartOptionReseau">
+          </canvas>
+        </div>
+      </div>
+      <div (click)="afficherpannelogiciel()" class="panne">
+        <div>
+          <h6>Panne logiciel</h6>
+          <canvas
+          baseChart
+          [data]="pieChartDataLogicielle"
+          [type]="pieChartTypeLogicielle"
+          [options]="pieChartOptionLogicielle">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Liste des équipements disponibles -->
+    <div *ngIf="ouverture_panne_equipement" class="liste_equipmnt">
+      <div class="contenu_retour">
+        <div class="titre">Panne équipement</div>
+        <div class="precedent" (click)="retourListepanne()">&#10006;</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Type</th>
+            <th>Bâtiment</th>
+            <th>Bureau</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let equip of equipementsspanne.disponible">
+            <td>{{ equip.nom }}</td>
+            <td>{{ equip.type }}</td>
+            <td>{{ equip.batiment }}</td>
+            <td>{{ equip.bureau }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="boit_but_telech">
+        <div   class="btn-pdf">Télécharger en PDF</div>
+      </div>
+    </div>
+
+    <!-- Liste des logiciels en cours d'utilisation -->
+    <div *ngIf="ouverture_pannelogiciel" class="liste_equipmnt">
+      <div class="contenu_retour">
+        <div class="titre">Panne logiciel</div>
+        <div class="precedent" (click)="retourListepanne()">&#10006;</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Type</th>
+            <th>Ordinateur</th>
+            <th>Bâtiment</th>
+            <th>Bureau</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let logiciel of logicielpanne.enCoursUtilisation">
+            <td>{{ logiciel.nom }}</td>
+            <td>{{ logiciel.type }}</td>
+            <td>{{ logiciel.ordinateur }}</td>
+            <td>{{ logiciel.batiment }}</td>
+            <td>{{ logiciel.bureau }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="boit_but_telech">
+        <div  class="btn-pdf">Télécharger en PDF</div>
+      </div>
+    </div>
+
+    <!-- Liste des incidents de réseau -->
+    <div *ngIf="ouverture_pannereseau" class="liste_equipmnt">
+      <div class="contenu_retour">
+        <div class="titre">Panne réseau</div>
+        <div class="precedent" (click)="retourListepanne()">&#10006;</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Bâtiment</th>
+            <th>Bureau</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let incident of panneReseau.incidents">
+            <td>{{ incident.type }}</td>
+            <td>{{ incident.batiment }}</td>
+            <td>{{ incident.bureau }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="boit_but_telech">
+        <div  class="btn-pdf">Télécharger en PDF</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

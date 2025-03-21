@@ -1,0 +1,231 @@
+
+.conteint_but_user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+.contient_butt {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 15px;
+  .but {
+    background-color:rgb(48, 43, 43);;
+    color: rgb(250, 234, 12);
+    height: 55%;
+    padding: 8px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .but:hover {
+    background-color: #e0dd09;
+    color: rgb(0, 0, 0);
+  }
+}
+.contenu_general {
+  padding: 15px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow-y: scroll;
+  scrollbar-color: #fffb00 #2b2b2b; /* Couleurs pour le scroll : poignée jaune, fond sombre */
+  scrollbar-width: thin;
+  background:    #ffffff31;/* Fond semi-transparent */
+  backdrop-filter: blur(15px); /* Effet de flou */
+  -webkit-backdrop-filter: blur(10px); /* Compatibilité avec Safari */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  .entet_table{
+    margin-top: 4px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #000; /* Fond noir pour l'en-tête */
+    color: rgb(255, 217, 4);
+    font-style: italic;
+    font-weight: bolder;
+    padding: 4px;
+    text-align: left;
+    font-size: 16px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+ /* Style général du tableau */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  color: #000;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  margin-bottom: 40px;
+  overflow: hidden;
+}
+
+/* Style des titres de colonnes */
+th {
+  background-color: #000; /* Fond noir pour l'en-tête */
+  color: white;
+  padding: 4px;
+  text-align: left;
+  font-size: 16px;
+  text-transform: uppercase;
+  border-bottom: 3px solid #fcec0b; /* Séparateur visuel */
+
+}
+.contenu_logo_titre{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  .titre_texte{
+    font-size: 17px;
+    color: #f1e979;
+  }
+}
+/* Style des cellules */
+td {
+  padding: 12px;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Alternance des couleurs pour les lignes */
+tr:nth-child(odd) {
+  background-color: #222;
+  color: #fdf986;
+}
+
+tr:nth-child(even) {
+  background-color: #2c2a2a;
+  color: #fdf986;
+}
+
+/* Effet hover pour dynamiser */
+tr:hover {
+  background-color: #3b3b3b;
+  transition: background-color 0.3s ease;
+}
+
+}
+.contenu_valide{
+  padding: 15px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 95%;
+  background:    #ffee0228;/* Fond semi-transparent */
+  backdrop-filter: blur(50px); /* Effet de flou */
+  -webkit-backdrop-filter: blur(10px); /* Compatibilité avec Safari */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre douce */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Bordure blanche semi-transparente */
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow:hidden ;
+  .contenucle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff46;
+    box-shadow: inset 8px 8px 33px #666666,
+            inset -8px -8px 33px #ffffff;
+            backdrop-filter: blur(10px); /* Effet de flou */
+            -webkit-backdrop-filter: blur(10px); /* Compatibilité avec Safari */
+    padding: 15px;
+    border-radius: 5px;
+    width: 90%;
+    height: 80%;
+    overflow-y: scroll;
+    scrollbar-color: #fffb00 #2b2b2b; /* Couleurs pour le scroll : poignée jaune, fond sombre */
+    scrollbar-width: thin;
+    overflow-x: hidden;
+    .cleemploye  {
+      padding: 15px;
+      background: #222;
+      color: white;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+      width: 94%;
+      height:75px;
+      .contenu_log_info{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        width: 80%;
+
+      }
+      .image_logo {
+        width: 54px;
+        height: 54px;
+        background-color: #222222; /* Couleur de fond */
+        background-image: url('contact.svg');
+        background-size: cover;
+        background-position: center;
+        border-radius: 50%;
+        margin: 0 10px 0 15px; /* Regroupement des marges */
+        box-shadow:
+          inset 5px 5px 10px #0e0e0e,
+          inset -5px -5px 10px #363636;
+      }
+
+
+      .info_user {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 7px;
+        padding-left: 10px;
+        font-size: clamp(14px, 2vw, 16px);
+        .nom{
+          color: #fdf986;
+          font-size: 19px;
+          font-style: italic;
+          font-weight: bold;
+        }
+        .matricule{
+          color: #fdf986;
+          font-size: 14px;
+        }
+      }
+
+
+      .but {
+        background-color: #fffb00;
+        color: rgb(27, 27, 12);
+        width: 10%;
+        padding: 8px 15px;
+        border-radius: 5px;
+        text-align: center;
+        margin-right: 15px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .but:hover {
+        background-color: #b38300;
+      }
+
+
+    }
+  }
+}
+
+ color: rgb(10, 10, 1);
+
+}

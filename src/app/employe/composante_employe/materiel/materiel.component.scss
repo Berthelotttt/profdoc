@@ -1,0 +1,113 @@
+/* Style général du tableau */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: #fff;
+  color: #000;
+  border-radius: 10px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+/* Style des titres de colonnes */
+th {
+  background-color: #000; /* Fond noir pour l'en-tête */
+  color: white;
+  padding: 4px;
+  text-align: left;
+  font-size: 16px;
+  text-transform: uppercase;
+  border-bottom: 3px solid #fcec0b; /* Séparateur visuel */
+
+}
+.contenu_logo_titre{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  .titre_texte{
+    font-size: 17px;
+    color: #f1e979;
+  }
+}
+/* Icône RAM */
+.image_log_ram {
+  width: 40px; /* Taille de l'icône */
+  height: 40px;
+  background-image: url('ram.svg'); /* Assurez-vous que l'image est bien placée */
+  background-size: cover; /* Ajuste l'image pour couvrir le div */
+  background-position: center; /* Centre l'image dans le div */
+  border-radius: 50%; /* Pour rendre l'icône ronde */
+}
+.image_log_disq{
+  width: 40px; /* Taille de l'icône */
+  height: 40px;
+  background-image: url('disq.svg'); /* Assurez-vous que l'image est bien placée */
+  background-size: cover; /* Ajuste l'image pour couvrir le div */
+  background-position: center; /* Centre l'image dans le div */
+  border-radius: 50%; /* Pour rendre l'icône ronde */
+}
+.image_log_cpu {
+  width: 40px; /* Taille de l'icône */
+  height: 40px;
+  background-image: url('cpu.svg'); /* Assurez-vous que l'image est bien placée */
+  background-size: cover; /* Ajuste l'image pour couvrir le div */
+  background-position: center; /* Centre l'image dans le div */
+  border-radius: 50%; /* Pour rendre l'icône ronde */
+}
+.image_log_gpu {
+  width: 40px; /* Taille de l'icône */
+  height: 40px;
+  background-image: url('cpu.svg'); /* Assurez-vous que l'image est bien placée */
+  background-size: cover; /* Ajuste l'image pour couvrir le div */
+  background-position: center; /* Centre l'image dans le div */
+  border-radius: 50%; /* Pour rendre l'icône ronde */
+}
+.image_log_monitor {
+  width: 40px; /* Taille de l'icône */
+  height: 40px;
+  background-image: url('monitor.svg'); /* Assurez-vous que l'image est bien placée */
+  background-size: cover; /* Ajuste l'image pour couvrir le div */
+  background-position: center; /* Centre l'image dans le div */
+  border-radius: 50%; /* Pour rendre l'icône ronde */
+}
+.image_log_reseau {
+  width: 40px; /* Taille de l'icône */
+  height: 40px;
+  background-image: url('rese.svg'); /* Assurez-vous que l'image est bien placée */
+  background-size: cover; /* Ajuste l'image pour couvrir le div */
+  background-position: center; /* Centre l'image dans le div */
+  border-radius: 50%; /* Pour rendre l'icône ronde */
+}
+.image_log_periph {
+  width: 40px; /* Taille de l'icône */
+  height: 40px;
+  background-image: url('usb.svg'); /* Assurez-vous que l'image est bien placée */
+  background-size: cover; /* Ajuste l'image pour couvrir le div */
+  background-position: center; /* Centre l'image dans le div */
+  border-radius: 50%; /* Pour rendre l'icône ronde */
+}
+/* Style des cellules */
+td {
+  padding: 12px;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Alternance des couleurs pour les lignes */
+tr:nth-child(odd) {
+  background-color: #222;
+  color: #fdf986;
+}
+
+tr:nth-child(even) {
+  background-color: #2c2a2a;
+  color: #fdf986;
+}
+
+/* Effet hover pour dynamiser */
+tr:hover {
+  background-color: #3b3b3b;
+  transition: background-color 0.3s ease;
+}

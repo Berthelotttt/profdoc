@@ -1,0 +1,128 @@
+
+  .contenu_graphic{
+    margin-top: 8px;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 10px;
+    height: 30%;
+    .graphic{
+      background: rgb(48, 43, 43);
+      border-radius: 10px;
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+      height: 100%;
+    }
+  }
+  .contenu_ticket {
+    font-family: Arial, sans-serif;
+    padding: 20px ;
+    color: #e9e9e9; /* Texte clair */
+    height: 50vh;
+    border-radius: 5px;
+    width: 93%;
+    height: 68%;
+    overflow-y: scroll;
+    margin-left: 2%;
+    scrollbar-color: #fffb00 #2b2b2b; /* Couleurs pour le scroll : poignée jaune, fond sombre */
+    scrollbar-width: thin; /* Scroll fin */
+
+  /* Statut du ticket */
+  .statu_ticket {
+    margin-bottom: 20px;
+  }
+
+  .titre_statut {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #414036; /* Jaune Binance */
+  }
+
+
+  /* Tableau des tickets */
+  .ticket {
+    margin-top: 20px;
+    .titre {
+      color: #2c2c28; /* Jaune Binance */
+      display: flex;
+      flex-direction: row;
+      padding-top: 3px;
+      padding-left: 3px;
+      align-items: center;
+      justify-content: space-between;
+
+    }
+  }
+  .titre_ticket{
+    font-size: 20px;
+  }
+
+  .statut {
+    display: flex;
+    gap: 15px;
+    padding: 5px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background-color: #2b2b2b;
+  }
+
+  .statut div {
+    font-size: 14px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    color: #1a1717; /* Texte sombre */
+  }
+
+  .ouvert {
+    background-color: #3ea53e; /* Vert */
+  }
+
+  .en_cours {
+    background-color: #f0ad4e; /* Jaune-orange */
+  }
+
+  .ferme {
+    background-color: #d9534f; /* Rouge */
+  }
+  .table_ticket {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #1c1c1c; /* Fond sombre du tableau */
+    border-top-left-radius:  8px;
+    border-bottom-right-radius : 8px;
+    border-bottom-left-radius: 8px;
+    overflow: hidden;
+  }
+
+  .table_ticket th,
+  .table_ticket td {
+    text-align: left;
+    padding: 12px 15px;
+    border-bottom: 1px solid #2e2e2e; /* Bordure discrète */
+     background-color: #2b2b2b;
+  }
+
+  .table_ticket th {
+    background-color: #2b2b2b; /* Tête de tableau plus sombre */
+    color: #cfcd48; /* Texte jaune */
+    font-size: 14px;
+  }
+
+  .table_ticket tr:hover {
+    background-color: #292929; /* Légère surbrillance */
+  }
+
+  .table_ticket td {
+    font-size: 14px;
+    color: #e9e9e9;
+  }
+
+  .table_ticket tr:last-child td {
+    border-bottom: none;
+  }
+
+  }
+
+

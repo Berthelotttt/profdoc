@@ -1,22 +1,97 @@
-  <!--src/app/acceuille/acceuille.component.html  https://codewave.com/insights/deploy-angular-app-on-render-guide/-->
-  <link rel="icon" type="image/x-icon" href="assets/logo.ico">
-  <div class="landing-page">
-  <div *ngIf="(loadingService.loading$ | async) === true" class="loading-overlay">
-    <p>Chargement en cours...</p>
-  </div>
-  <main class="content">
-    <div class="text-content">
-      <div class="titre"><img src="assets/logo.ico" alt="logo" /> <div class="titre_texte">C.T.I</div></div>
-      <p>Ce site est conçu pour simplifier la distribution des cours universitaires. Les enseignants peuvent facilement envoyer leurs cours ici, et les étudiants peuvent les télécharger via l'application mobile dédiée C.T.i(Cour et Travaux dirigés pour l'Informatique), Accédez à tout votre contenu éducatif en un seul endroit, où que vous soyez.</p>
-      <div class="button">
-        <button class="learn-more-btn" (click)="openModal()">Commencer</button>
-        <button class="learn-more-btn" (click)=" downloadFile()">Télécharger</button>
-      </div>
-      </div>
-    <div class="phone-image">
-      <img src="assets/phone.png" alt="Mobile App" />
-    </div>
-  </main>
-</div>
 
+
+<div class="general">
+  <div class="hero">
+    <div   class="content" [ngClass]="{'content_scroll':valeur_scroll}">
+      <h1  >Bienvenue dans GPI</h1>
+      <p>Une solution professionnelle pour la gestion des parcs informatiques.</p>
+
+      <!-- Formulaire de connexion -->
+      <form  (ngSubmit)="connexion()" *ngIf="valeur_inscription === false" class="login-form"   method="POST">
+        <div class="form-group">
+          <label for="matricule">N° matricule</label>
+          <input [(ngModel)]="num_matricule_connx" type="matricule" id="matricule" name="matricule" placeholder="Entrez votre N° matricule" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <input  [(ngModel)]="mot_pass_connx"  type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
+        </div>
+        <div *ngIf="!plateformeDifferentDeNavigateur" class="form-group  ">
+          <label for="role">Profession</label>
+          <select id="role" name="role" required [(ngModel)]="roleSelectionne">
+            <option value="" disabled selected>Choisissez votre profession</option>
+            <option value="Administrateur parc informatique">Administrateur du parc informatique</option>
+            <option value="Administrateur réseau">Administrateur réseau</option>
+            <option value="Technicien">Technicien</option>
+            <option value="Autres professions">Autres professions</option>
+        </select>
+
+            </div>
+        <button type="submit" class="submit-btn">Se connecter</button>
+        <p>Pas encore inscrit ? <a class="texte_Inscrivez_vous" (click)="Affiche_inscription()"  >Inscrivez-vous ici</a></p>
+      </form>
+
+      <!-- Formulaire de inscription -->
+      <form (ngSubmit)="inscription()" *ngIf="valeur_inscription === true" class="login-form" method="POST">
+        <div class="form-group">
+          <label for="nom">Nom</label>
+          <input type="text" id="nom" [(ngModel)]="newutilisateur.nom" name="nom" placeholder="Nom" required>
+        </div>
+
+        <div class="form-group">
+          <label for="prenom">Prénom</label>
+          <input type="text" id="prenom" name="prenom" [(ngModel)]="newutilisateur.prenom" placeholder="Prénom" required>
+        </div>
+
+        <div class="form-group">
+          <label for="matricule">N° matricule</label>
+          <input type="text" id="matricule" name="matricule" [(ngModel)]="newutilisateur.nMatricule" placeholder="N° matricule" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" [(ngModel)]="newutilisateur.email" placeholder="Entrez votre email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="role">Profession</label>
+          <select id="role" name="role" [(ngModel)]="newutilisateur.profession" required>
+            <option value="" disabled selected>Choisissez une profession</option>
+            <option value="Administrateur réseau">Administrateur réseau</option>
+            <option value="Technicien">Technicien</option>
+            <option value="Autres professions">Autres professions</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="Bureau">Bureau</label>
+          <select id="Bureau" name="Bureau" [(ngModel)]="newutilisateur.idBureau" required (change)="recup_ord_idburau($event)">
+            <option value="" disabled selected>Choisissez un Bureau</option>
+            <option *ngFor="let bureau of bureaux" [value]="bureau.id">{{ bureau.nom }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="Ordinateur">Ordinateur</label>
+          <select id="Ordinateur" name="Ordinateur" [(ngModel)]="newutilisateur.idPc" required>
+            <option value="" disabled selected>Choisissez un Ordinateur</option>
+            <option *ngFor="let ordi of ordinateurs_id_bureau" [value]="ordi.id">{{ ordi.nom }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password" name="password" [(ngModel)]="newutilisateur.motPasse" placeholder="Entrez votre mot de passe" required>
+        </div>
+
+        <button type="submit" class="submit-btn">S'inscrire</button>
+        <p>Vous avez déjà un compte ?
+          <a class="texte_Inscrivez_vous" (click)="connexio_ici()">Connectez-vous ici</a>
+        </p>
+      </form>
+
+
+    </div>
+  </div>
+</div>
 

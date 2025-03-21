@@ -1,0 +1,82 @@
+<div class="general">
+  <div class="entete">
+    <div class="logo_nom">
+      <div class="logo"></div>
+    </div>
+    <div class="menu_entete">
+      <div (click)=" recupe_data_local()" class="titre_menu_Deconnexion">Récupération des données</div>
+      <div (click)="ouvrir_deconnexion()" class="titre_menu_Deconnexion">Déconnexion </div>
+     </div>
+  </div>
+
+  <div class="corp">
+    <div *ngIf="isLoading" class="loading-spinner">
+      <!-- Spinner (optionnel) -->
+      <div class="spinner"></div>
+      <!-- Message de chargement -->
+      <p>Récupération des données sur le matériel et le logiciel...</p>
+      <!-- Barre de chargement -->
+      <div class="barre_chargement">
+        <div class="barre_remplissage" [style.width]="niveau_barre_chargement"></div>
+      </div>
+      <!-- Affichage du pourcentage -->
+      <p class="pourcentage">{{ niveau_barre_chargement }}</p>
+    </div>
+    <div class="nav_lateral">
+      <div class="entete">Menu</div>
+      <div class="contenu_nav">
+        <div (click)="ouvrir_equipement()" class="titrex" >
+          <div class="image_logox"></div>
+          <span>Ordinateur</span>
+        </div>
+
+        <div (click)="ouvrir_logiciel()"class="titrex" >
+          <div class="image_logox"></div>
+          <span>Logiciels</span>
+        </div>
+        <div (click)="ouvrir_Materiel()" class="titrex" >
+          <div class="image_logox"></div>
+          <span>Matériels</span>
+        </div>
+        <div (click)="ouvrir_ticket()" class="titrex" >
+          <div class="image_logox"></div>
+          <span>Tickets</span>
+        </div>
+        <div (click)="ouvrir_profil()" class="titrex" >
+          <div class="image_logox"></div>
+          <span>Profil</span>
+        </div>
+        <div (click)="ouvrir_deconnexion()" class="titrex" >
+          <div class="image_logox"></div>
+          <span>Déconnexion</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div *ngIf="ouverture_accueil" class="acceuille">
+      <app-acceuille ></app-acceuille>
+    </div>
+    <div *ngIf="ouverture_ordinateur" class="ordinateur">
+      <app-ordinateur [ordinateurs]="ordinateurs"></app-ordinateur>
+    </div>
+    <div *ngIf="ouverture_logiciel" class="logiciel">
+      <app-logiciel [logiciels]="logiciels"></app-logiciel>
+    </div>
+    <div *ngIf="ouverture_materiel" class="materiel">
+      <app-materiel [materiels]="materiels"></app-materiel>
+    </div>
+    <div *ngIf="ouverture_imprimante" class="imprimante">
+      <app-imprimante></app-imprimante>
+    </div>
+    <div *ngIf="ouverture_ticket" class="ticket">
+      <app-ticket></app-ticket>
+    </div>
+    <div *ngIf="ouverture_profil" class="profil">
+      <app-profil></app-profil>
+    </div>
+  </div>
+
+</div>
+
+

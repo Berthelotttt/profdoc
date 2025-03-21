@@ -1,0 +1,273 @@
+
+<div class="header">
+  <span class="title">Tickets</span>
+</div>
+
+<!----------------------Affiche ticket------------------------------>
+<div class="contenue_ticket_global" *ngIf="liste_ticket">
+  <div class="titre">
+    <div class="statut">
+      <div class="ouvert" [ngClass]="{'ticket_ouvert': ticket_ouvert}" (click)="affiche_ouvert()">Ouvert</div>
+      <div class="en_cours"  [ngClass]="{'ticket_encour': ticket_encour}" (click)="affiche_encour()">En cours</div>
+      <div class="ferme"  [ngClass]="{'ticket_fermer': ticket_fermer}" (click)="affiche_fermer()">Fermé</div>
+    </div>
+  </div>
+  <table class="table_ticket">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Titre</th>
+        <th>Catégorie</th>
+        <th>Priorité</th>
+        <th>Bureau</th>
+        <th>Demandeur</th>
+        <th>Date Ouverture</th>
+      </tr>
+    </thead>
+    <tbody>
+ <tr *ngFor="let tic of tickets ; let i = index" (click)="fermeture_ticket(tic.id || -1, $event)" >
+        <td>{{ i + 1 }}</td>
+        <td>{{ tic.titre}}</td>
+        <td>{{ tic.categorie}}</td>
+        <td>{{tic.priorite }}</td>
+       <td>{{ recupbureaux(tic.id_bureau || -1 ) }}</td>
+        <td>{{tic.demandeur}}</td>
+        <td>{{tic.dateOuverture }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!----------------------fermeture ticket------------------------------->
+<div class="contenue_fermeture_ticket" *ngIf="ferme_ticket">
+  <div class="contenu_formu">
+    <!-- Bouton de fermeture -->
+    <div class="contenu_quit">
+      <div (click)="affiche_liste_ticket()" class="quite">X</div>
+    </div>
+
+    <!-- Informations du ticket -->
+    <div class="ticket-info">
+      <table class="ticket-details">
+        <tr>
+            <th>Titre</th>
+            <td>{{ tickets_id.titre || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Priorité</th>
+            <td>{{ tickets_id.priorite || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Catégorie</th>
+            <td>{{ tickets_id.categorie || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ tickets_id.description || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Statut</th>
+            <td>{{ tickets_id.statut || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Date d'ouverture</th>
+            <td>{{ tickets_id.dateOuverture || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Date de prise en charge</th>
+            <td>{{ tickets_id.datePrise || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Date de fermeture</th>
+            <td>{{ tickets_id.dateFermeture || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Nom du demandeur</th>
+            <td>{{ tickets_id.demandeur || '--------' }}</td>
+        </tr>
+        <tr>
+            <th>Technicien</th>
+            <td>{{ tickets_id.technicien || '--------' }}</td>
+        </tr>
+
+        <tr>
+            <th>Bureau</th>
+            <td>{{ recupbureaux(tickets_id.id_bureau)  || '--------' }}</td>
+        </tr>
+        <tr *ngIf="ticket_fermer">
+          <th>Panne</th>
+          <td>{{  tickets_id.panne  || '--------' }}</td>
+        </tr>
+        <tr *ngIf="ticket_fermer">
+          <th>Type d'équipement</th>
+          <td>{{  tickets_id.typeEquipement  || '--------' }}</td>
+        </tr>
+        <tr  *ngIf="ticket_encour" >
+          <th>Panne </th>
+          <select name="panne" id="panne" (change)="modife_ticket_panne($event)">
+            <option value="">Choisissez le type de panne</option>
+            <optgroup label="--------------------Logiciel-------------------">
+                <option value="systeme_exploitation">Système d'exploitation</option>
+                <option value="pilotes">Pilotes</option>
+                <option value="installations_incompletes">Installations logiciels incomplètes</option>
+                <option value="infections_virus">Infections par virus</option>
+                <option value="parametrages_inadaptés">Paramétrages système inadaptés</option>
+                <option value="problemes_connexion">Problèmes de connexion</option>
+                <option value="autres_logiciels">Autres logiciel</option>
+            </optgroup>
+
+            <optgroup label="--------------------Matériel sur Pc------------------">
+                <option value="processeur">Processeur (CPU)</option>
+                <option value="memoire_vive">Mémoire vive (RAM)</option>
+                <option value="stockage">Stockage (Disque dur / SSD)</option>
+                <option value="carte_mere">Carte mère</option>
+                <option value="carte_graphique">Carte graphique (GPU)</option>
+                <option value="alimentation">Alimentation électrique</option>
+                <option value="chargeur">Chargeur</option>
+                <option value="refroidissement">Systèmes de refroidissement</option>
+                <option value="peripheriques">Périphériques</option>
+                <option value="autres_composants">Autres composants</option>
+            </optgroup>
+
+            <optgroup label="-------------------Imprimante-------------------">
+                <option value="probleme_impression">Problème d'impression</option>
+                <option value="bourrage_papier">Bourrage de papier</option>
+                <option value="cartouche_vide">Cartouche d'encre vide</option>
+                <option value="tete_impression_bouchee">Tête d'impression bouchée</option>
+                <option value="probleme_connexion_imprimante">Problème de connexion</option>
+                <option value="autres_pannes_imprimante">Autres pannes</option>
+            </optgroup>
+
+            <optgroup label="--------------------Stabilisateur-------------------">
+                <option value="probleme_tension">Problème de tension</option>
+                <option value="surchauffe">Surchauffe</option>
+                <option value="defaillance_composants">Défaillance des composants internes</option>
+                <option value="autres_pannes_stabilisateur">Autres pannes</option>
+            </optgroup>
+
+            <optgroup label="--------------------Routeur-------------------">
+                <option value="probleme_connexion_internet">Problème de connexion Internet</option>
+                <option value="redemarrage_frequent">Redémarrage fréquent</option>
+                <option value="signal_faible">Signal Wi-Fi faible</option>
+                <option value="configuration_incorrecte">Configuration incorrecte</option>
+                <option value="autres_pannes_routeur">Autres pannes</option>
+            </optgroup>
+
+            <optgroup label="--------------------Commutateur-------------------">
+                <option value="probleme_connexion_reseau">Problème de connexion réseau</option>
+                <option value="port_defectueux">Port défectueux</option>
+                <option value="surchauffe_commutateur">Surchauffe</option>
+                <option value="autres_pannes_commutateur">Autres pannes</option>
+            </optgroup>
+
+            <optgroup label="--------------------Point d'accès-------------------">
+                <option value="probleme_connexion_wifi">Problème de connexion Wi-Fi</option>
+                <option value="port_defectueux_point_acces">Port défectueux</option>
+                <option value="signal_faible_point_acces">Signal Wi-Fi faible</option>
+                <option value="autres_pannes_point_acces">Autres pannes</option>
+            </optgroup>
+
+            <optgroup label="--------------------Serveur-------------------">
+                <option value="probleme_demarrage">Problème de démarrage</option>
+                <option value="panne_disque_dur">Panne de disque dur</option>
+                <option value="probleme_reseau_serveur">Problème de réseau</option>
+                <option value="surchauffe_serveur">Surchauffe</option>
+                <option value="autres_pannes_serveur">Autres pannes</option>
+            </optgroup>
+        </select>
+        </tr>
+        <tr *ngIf="ticket_encour">
+          <th>Type équipement</th>
+          <select name="equipement" id="equipement" (change)="modife_ticket_typeequipement($event)">
+            <option value="" disabled selected>Choisissez l'équipement</option>
+            <option value="Ordinateur">Ordinateur</option>
+            <option value="Moniteur">Moniteur</option>
+            <option value="Imprimante">Imprimante</option>
+            <option value="Projecteur">Projecteur</option>
+            <option value="Stabilisateur">Stabilisateur</option>
+            <option value="Routeur">Routeur</option>
+            <option value="Commutateur">Commutateur</option>
+            <option value="PointAcces">Point d'accès</option>
+            <option value="Serveur">Serveur</option>
+          </select>
+        </tr>
+        <tr  *ngIf="ticket_encour" >
+          <th>équipement</th>
+          <select name="panne" id="panne" (change)="recuperation_id_equipement($event)">
+            <option value="">Choisissez l'équipement</option>
+
+            <optgroup label="-------------------- Ordinateur -------------------">
+              <option *ngFor="let ordinateur of ordinateurs_id_bureau; let i = index" [value]="ordinateur.id">
+                {{ ordinateur.nom }}
+              </option>
+            </optgroup>
+
+            <optgroup label="-------------------- Imprimante -------------------">
+              <option *ngFor="let imprimante of imprimante_idburea; let i = index" [value]="imprimante.id">
+                {{ imprimante.nom }}
+              </option>
+            </optgroup>
+
+            <optgroup label="-------------------- Moniteur -------------------">
+              <option *ngFor="let moni of moniteur; let i = index" [value]="moni.id">
+                {{ moni.nom }}
+              </option>
+            </optgroup>
+
+            <optgroup label="-------------------- Stabilisateur -------------------">
+              <option *ngFor="let Stabilisateur of Stabilisateur_bureau; let i = index" [value]="Stabilisateur.id">
+                {{ Stabilisateur.nom }}
+              </option>
+            </optgroup>
+
+            <optgroup label="-------------------- Projecteur -------------------">
+              <option *ngFor="let Projecteur of Projecteur_bureau; let i = index" [value]="Projecteur.id">
+                {{ Projecteur.nom }}
+              </option>
+            </optgroup>
+
+            <optgroup label="-------------------- Commutateur -------------------">
+              <option *ngFor="let swit of switches; let i = index" [value]="swit.id">
+                {{ swit.nom }}
+              </option>
+            </optgroup>
+
+            <optgroup label="-------------------- Routeur -------------------">
+              <option *ngFor="let routeur of routeur_bureau; let i = index" [value]="routeur.id">
+                {{ routeur.nom }}
+              </option>
+            </optgroup>
+
+            <optgroup label="-------------------- Point d'Accès -------------------">
+              <option *ngFor="let pointsAcces of pointsAcces_bureau; let i = index" [value]="pointsAcces.id">
+                {{ pointsAcces.nom }}
+              </option>
+            </optgroup>
+
+            <optgroup label="-------------------- Serveur -------------------">
+              <option *ngFor="let serveur of serveur_bureau; let i = index" [value]="serveur.id">
+                {{ serveur.nom }}
+              </option>
+            </optgroup>
+          </select>
+
+        </tr>
+        <tr  *ngIf="ticket_encour" >
+          <th>Action</th>
+          <select name="panne" id="panne" (change)="modifie_ticket_ferme_rempl_equipm($event)">
+            <option value="">Choisissez le type d'action</option>
+            <option value="reparation">Réparation</option>
+            <option value="remplacement">Remplacement</option>
+          </select>
+        </tr>
+    </table>
+
+    </div>
+  </div>
+  <div class="contient_but">
+    <div class="butn_prendre"  *ngIf="ticket_ouvert" (click)="prendre_ticket()">Prendre le ticket</div>
+    <div  class="butn_abandonné"  *ngIf="ticket_encour" (click)="Abandonne_ticket()">Abandonner le ticket</div>
+    <div class="butn_prendre"  *ngIf="ticket_encour" (click)="fermet_ticket()">Fermer le ticket</div>
+  </div>
+</div>
+
+

@@ -1,0 +1,687 @@
+<div class="batiment_g">
+  <div class="contenu_batiment">
+
+      <div *ngFor="let bureau of bureaux" (click)="affiche_equiment(bureau.id)" class="batiment">
+        <div  class="nom_bureau" >{{ bureau.nom }} </div>
+        <div  class="nom_bureau" > (Étage {{ bureau.etage }})</div>
+      </div>
+      <div (click)="telecharge_pdf()" class="batimentrapp">Générer un rapport</div>
+
+  </div>
+</div>
+<div class="contenu_btn">
+  <div class="btn" (click)="ouvrir_routeur()">Router</div>
+  <div class="btn" (click)="ouvrir_commutateur()">Commutateur</div>
+  <div class="btn" (click)="ouvrir_pointacce()">Point d'accées</div>
+</div>
+
+
+<div  *ngIf="ouverturerouteur"class="contienttable">
+  <h2>Informations Générales des Routeurs</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nom</th>
+        <th>Marque</th>
+        <th>Modèle</th>
+        <th>Numéro de Série</th>
+        <th>Prix (Ar)</th>
+        <th>Date d'Acquisition</th>
+        <th>Statut</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let routeur of routeur_bureau; let i = index">
+        <td>{{ i + 1 }}</td>
+
+        <!-- Édition du nom -->
+        <td (dblclick)="modifierCategorie(i, 'nom')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['nom']">{{ routeur.nom || 'Modèle inconnu' }}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['nom']" [(ngModel)]="nom_routeur" (keydown.enter)="Modificationnom_routeur(i, 'nom', routeur_bureau[i].id!)"    placeholder=""/>
+        </td>
+
+        <!-- Édition de la marque -->
+        <td (dblclick)="modifierCategorie(i, 'marque')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['marque']">{{ routeur.marque || 'Modèle inconnu' }}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['marque']" [(ngModel)]="marque_routeur" (keydown.enter)="Modificationmarque_routeur(i,'marque', routeur_bureau[i].id!)" placeholder=""/>
+        </td>
+
+        <!-- Édition du modèle -->
+        <td (dblclick)="modifierCategorie(i, 'model')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['model']">{{ routeur.model || 'Modèle inconnu' }}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['model']" [(ngModel)]="model_routeur" (keydown.enter)="Modificationmodel_routeur(i,'model', routeur_bureau[i].id!)" placeholder=""/>
+        </td>
+
+        <!-- Édition du numéro de série -->
+        <td (dblclick)="modifierCategorie(i, 'numSerie')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['numSerie']">{{ routeur.numSerie || 'Modèle inconnu' }}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['numSerie']" [(ngModel)]="numSerie_routeur" (keydown.enter)="ModificationnumSerie_routeur(i, 'numSerie', routeur_bureau[i].id!)" placeholder=""/>
+        </td>
+
+        <!-- Édition du prix -->
+        <td >
+          <ng-container >{{ routeur.prix || 'Modèle inconnu' }}</ng-container>
+
+        </td>
+
+        <!-- Affichage de la date d'installation -->
+        <td>
+          <ng-container>{{ routeur.dateInstallation || 'Modèle inconnu' }}</ng-container>
+        </td>
+
+        <!-- Affichage du statut -->
+        <td>
+          <ng-container>{{ routeur.statut || 'Modèle inconnu' }}</ng-container>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+    <!-- Table Système d'Exploitation -->
+<h2> Point d'accé des routeurs</h2>
+<div  class="insertion_moniteur">
+  <table class="table1">
+    <thead>
+      <tr>
+        <th>ID</th>
+          <th>Nom routeur</th>
+          <th>ssid</th>
+          <th>fréquence</th>
+          <th>encryption	</th>
+          <th>mot_de_passe</th>
+          <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr   *ngFor="let wifirouteur of wifirouteur_idbreau; let i = index">
+        <td >
+          <ng-container  >{{i+1}}</ng-container>
+        </td>
+        <td>
+          <ng-container  >{{recupe_nom_routeur_id_interfac( wifirouteur_idbreau[i].id_routeur!)}} </ng-container>
+        </td>
+        <td (dblclick)="modifierCategorieinterfacrouteur(i, 'ssid')">
+          <ng-container  *ngIf="!isEditing_interfacrouteur[i]?.['ssid']" >{{ wifirouteur.ssid}}</ng-container>
+          <input type="text" *ngIf="isEditing_interfacrouteur[i]?.['ssid']" [(ngModel)]="ssid_wifi_routeur" (keydown.enter)="Modificationssid_wifirout(i, 'ssid',  wifirouteur_idbreau[i].id!)"    placeholder=""/>
+        </td>
+        <td (dblclick)="modifierCategorieinterfacrouteur(i, 'frequence')">
+          <ng-container  *ngIf="!isEditing_interfacrouteur[i]?.['frequence']" >{{ wifirouteur.frequence}}</ng-container>
+          <input type="text" *ngIf="isEditing_interfacrouteur[i]?.['frequence']" [(ngModel)]="frequence_wifi_routeur" (keydown.enter)=" Modificationfreqnc_wifirout(i, 'frequence',  wifirouteur_idbreau[i].id!)"    placeholder=""/>
+        </td>
+        <td (dblclick)="modifierCategorieinterfacrouteur(i, 'encry')">
+          <ng-container   *ngIf="!isEditing_interfacrouteur[i]?.['encry']"  >{{ wifirouteur.encryption}}</ng-container>
+          <input type="text" *ngIf="isEditing_interfacrouteur[i]?.['encry']" [(ngModel)]="encryption_wifi_routeur" (keydown.enter)="Modificationencry_wifirout(i, 'encry',  wifirouteur_idbreau[i].id!)"    placeholder=""/>
+        </td>
+        <td (dblclick)="modifierCategorieinterfacrouteur(i, 'mdp')">
+          <ng-container   *ngIf="!isEditing_interfacrouteur[i]?.['mdp']" >{{ wifirouteur.motdepasse}}</ng-container>
+          <input type="text" *ngIf="isEditing_interfacrouteur[i]?.['mdp']" [(ngModel)]="motdepasse_wifi_routeur" (keydown.enter)="Modificationmdp_wifirout(i, 'mdp', wifirouteur_idbreau[i].id!)"    placeholder=""/>
+        </td>
+        <td><div  (click)="supprime_wifi_routeur(wifirouteur.id || -1, $event)" class="supprime"></div></td>
+
+      </tr>
+    </tbody>
+  </table>
+  <div class="insertion_batiment">
+    <div class="titre">Ajout d'un nouveau point d'accée routeur</div>
+    <form class="formul_insert_ordi" (ngSubmit)="addwifirouteur()">
+      <div class="contenu_nom_champ_isert_swicth">
+        <!-- Champ gauche -->
+        <div class="champ_gauche">
+          <div class="form-group">
+            <label for="nom_ordi">Routeur</label>
+            <select
+              id="etage"
+              name="etage"
+              [(ngModel)]="newWifirouteur.id_routeur"
+              required
+            >
+              <option [value]="">Sélectionne le routeur</option>
+              <option *ngFor="let routeur of routeur_bureau; let i = index" [value]="routeur_bureau[i].id">
+                {{ recupe_nom_routeur_id_rout(routeur.id!) }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="prix">SSID</label>
+            <input
+              type="text"
+              id="prix"
+              name="prix"
+              [(ngModel)]="newWifirouteur.ssid"
+              placeholder="Nom interface"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="date_acquisition">Fréquence</label>
+            <input
+              type="text"
+              id="date_acquisition"
+              name="dateAcquisition"
+              [(ngModel)]=" newWifirouteur.frequence"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Champ droit -->
+        <div class="champ_droite">
+
+          <div class="form-group">
+            <label for="date_acquisition">Encryption</label>
+            <input
+              type="text"
+              id="date_acquisition"
+              name="dateAcquisition"
+              [(ngModel)]="newWifirouteur.encryption"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="date_acquisition">Mot de passe</label>
+            <input
+              type="text"
+              id="date_acquisition"
+              name="dateAcquisition"
+              [(ngModel)]=" newWifirouteur.motdepasse"
+              required
+            />
+          </div>
+          <div class="contenu_butt">
+            <button type="submit" class="submit-btn">Ajouter</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bouton de soumission -->
+
+    </form>
+
+  </div>
+</div>
+
+  <!-- Table Système d'Exploitation -->
+<h2> Interface des routeurs</h2>
+<div  class="insertion_moniteur">
+  <table class="table1">
+    <thead>
+      <tr>
+        <th>ID</th>
+          <th>Nom routeur</th>
+          <th>Nom interface</th>
+          <th>Type interface</th>
+          <th>adresse Ip</th>
+          <th>Masque sous réseau</th>
+          <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr   *ngFor="let interfacrouteur of interfacrouteur_idrout; let i = index">
+        <td >
+          <ng-container  >{{i+1}}</ng-container>
+        </td>
+        <td>
+          <ng-container  >{{recupe_nom_routeur_id_interfac(interfacrouteur_idrout[i].idrouteur!)}} </ng-container>
+        </td>
+        <td (dblclick)="modifierCategorieinterfacrouteur(i, 'nomrout')">
+          <ng-container  *ngIf="!isEditing_interfacrouteur[i]?.['nomrout']" >{{interfacrouteur.nom}}</ng-container>
+          <input type="text" *ngIf="isEditing_interfacrouteur[i]?.['nomrout']" [(ngModel)]="nom_interfrouteur" (keydown.enter)="Modificationnom_interfrout(i, 'nomrout', interfacrouteur_idrout[i].id!)"    placeholder=""/>
+        </td>
+        <td (dblclick)="modifierCategorieinterfacrouteur(i, 'typerout')">
+          <ng-container  *ngIf="!isEditing_interfacrouteur[i]?.['typerout']" >{{interfacrouteur.typeinterface}}</ng-container>
+          <input type="text" *ngIf="isEditing_interfacrouteur[i]?.['typerout']" [(ngModel)]="typeinterface_routeur" (keydown.enter)="Modificationtype_interfrout(i, 'typerout', interfacrouteur_idrout[i].id!)"    placeholder=""/>
+        </td>
+        <td (dblclick)="modifierCategorieinterfacrouteur(i, 'iprout')">
+          <ng-container   *ngIf="!isEditing_interfacrouteur[i]?.['iprout']"  >{{interfacrouteur.ip}}</ng-container>
+          <input type="text" *ngIf="isEditing_interfacrouteur[i]?.['iprout']" [(ngModel)]="ip_interfcerout" (keydown.enter)="Modificationip_interfrout(i, 'iprout', interfacrouteur_idrout[i].id!)"    placeholder=""/>
+        </td>
+        <td (dblclick)="modifierCategorieinterfacrouteur(i, 'masqrout')">
+          <ng-container   *ngIf="!isEditing_interfacrouteur[i]?.['masqrout']" >{{interfacrouteur.masque}}</ng-container>
+          <input type="text" *ngIf="isEditing_interfacrouteur[i]?.['masqrout']" [(ngModel)]="masqueinterfrout" (keydown.enter)="Modificationmasq_interfrout(i, 'masqrout', interfacrouteur_idrout[i].id!)"    placeholder=""/>
+        </td>
+        <td><div (click)="supprime_interfacrouteur_id(interfacrouteur.id || -1, $event)"  class="supprime"></div></td>
+
+      </tr>
+    </tbody>
+  </table>
+  <div class="insertion_batiment">
+    <div class="titre">Insertion d'un interface routeur</div>
+    <form class="formul_insert_ordi" (ngSubmit)="addinterfarouteur()">
+      <div class="contenu_nom_champ_isert_swicth">
+        <!-- Champ gauche -->
+        <div class="champ_gauche">
+          <div class="form-group">
+            <label for="nom_ordi">Routeur</label>
+            <select
+              id="etage"
+              name="etage"
+              [(ngModel)]=" newinterfacerouteur_id.idrouteur"
+              required
+            >
+              <option [value]="">Sélectionne le routeur</option>
+              <option *ngFor="let routeur of routeur_bureau; let i = index" [value]="routeur_bureau[i].id">
+                {{ recupe_nom_routeur_id_rout(routeur.id!) }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="prix">Nom interface</label>
+            <input
+              type="text"
+              id="prix"
+              name="prix"
+              [(ngModel)]=" newinterfacerouteur_id.nom"
+              placeholder="Nom interface"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="date_acquisition">Type interface</label>
+            <input
+              type="text"
+              id="date_acquisition"
+              name="dateAcquisition"
+              [(ngModel)]=" newinterfacerouteur_id.typeinterface"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Champ droit -->
+        <div class="champ_droite">
+
+          <div class="form-group">
+            <label for="date_acquisition">Ip</label>
+            <input
+              type="text"
+              id="date_acquisition"
+              name="dateAcquisition"
+              [(ngModel)]=" newinterfacerouteur_id.ip"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="date_acquisition">Masque</label>
+            <input
+              type="text"
+              id="date_acquisition"
+              name="dateAcquisition"
+              [(ngModel)]=" newinterfacerouteur_id.masque"
+              required
+            />
+          </div>
+          <div class="contenu_butt">
+            <button type="submit" class="submit-btn">Ajouter</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bouton de soumission -->
+
+    </form>
+
+  </div>
+</div>
+
+
+</div>
+<div *ngIf="ouverturecommut">
+  <h2>Informations  Générales des commutateurs</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nom</th>
+        <th>Marque</th>
+        <th>Modèle</th>
+        <th>Numéro de Série</th>
+        <th>Prix (Ar)</th>
+        <th>configurable</th>
+        <th>Date d'Acquisition</th>
+        <th>Statut</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let swit of switches; let i = index">
+        <td>{{ i + 1 }}</td>
+
+        <td (dblclick)="modifierCategorie(i, 'nomswict')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['nomswict']">{{ swit.nom || 'Modèle inconnu' }}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['nomswict']" [(ngModel)]="nom_swic" (keydown.enter)="Modificationnom_swicth(i, 'nomswict', switches[i].id!)" placeholder=""/>
+        </td>
+
+        <!-- Correction des erreurs dans les commentaires ci-dessous -->
+
+        <td (dblclick)="modifierCategorie(i, 'marquewict')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['marquewict']">{{ swit.marque || 'Modèle inconnu' }}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['marquewict']" [(ngModel)]="marque_swic" (keydown.enter)="modifierMarqueSwitch(i, 'marquewict', switches[i].id!)" placeholder=""/>
+        </td>
+
+        <td (dblclick)="modifierCategorie(i, 'modelwict')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['modelwict']">{{ swit.model || 'Modèle inconnu' }}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['modelwict']" [(ngModel)]="model_swic" (keydown.enter)="modifierModeleSwitch(i, 'modelwict', switches[i].id!)" placeholder=""/>
+        </td>
+
+        <td (dblclick)="modifierCategorie(i, 'numSeriewict')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['numSeriewict']">{{ swit.numSerie }}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['numSeriewict']" [(ngModel)]="numSerie_swic" (keydown.enter)="modifierNumSerieSwitch(i, 'numSeriewict', switches[i].id!)" placeholder=""/>
+        </td>
+
+        <td  >
+          <ng-container  >{{ swit.prix || 'Modèle inconnu' }}</ng-container>
+
+        </td>
+
+        <td (dblclick)="modifierCategorie(i, 'configwict')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['configwict']">{{  swit.configurable  }}</ng-container>
+          <select *ngIf="isEditing_routeur[i]?.['configwict']" [(ngModel)]="configurable_swic" (keydown.enter)="modifierConfigurationSwitch(i, 'configwict', switches[i].id!)">
+            <option [value]="true">True</option>
+            <option [value]="false">False</option>
+          </select>
+        </td>
+
+        <td>
+          <ng-container>{{ swit.dateInstallation || 'Modèle inconnu' }}</ng-container>
+        </td>
+
+        <td>
+          <ng-container>{{ swit.statut || 'Modèle inconnu' }}</ng-container>
+        </td>
+      </tr>
+
+
+    </tbody>
+  </table>
+
+  <h2>Informations  réseau  des commutateurs</h2>
+  <table>
+    <thead>
+      <tr>
+
+        <th>Nom</th>
+        <th>Type port</th>
+        <th>Nombre port</th>
+        <th>type de switch</th>
+        <th>Adresse Ip</th>
+        <th>Adresse Mac</th>
+        <th>Masque </th>
+        <th>Passerelle</th>
+        <th>Mot de passe admin</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let swit of switches; let i = index">
+        <td  >
+          <ng-container >{{ swit.nom || 'Modèle inconnu' }}</ng-container>
+        </td>
+
+        <!-- Correction des erreurs dans les commentaires ci-dessous -->
+
+        <td (dblclick)="modifierCategorie(i, 'tprportwict')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['tprportwict']">
+            {{ swit.typePorts || 'Modèle inconnu' }}
+          </ng-container>
+          <select *ngIf="isEditing_routeur[i]?.['tprportwict']" [(ngModel)]="typePorts_swic" (keydown.enter)="modifiertypeportwitch(i, 'tprportwict', switches[i].id!)">
+            <option value="Fast Ethernet">Fast Ethernet  </option>
+            <option value="Gigabit Ethernet">Gigabit Ethernet  </option>
+            <option value="SFP">SFP (Small Form-factor Pluggable)</option>
+            <option value="QSFP">QSFP (40 Gbps)</option>
+            <option value="RJ45">RJ45 (Ethernet classique)</option>
+            <option value="PoE">PoE (Power over Ethernet)</option>
+            <option value="Combo">Combo (RJ45/SFP)</option>
+            <option value="Fibre optique">Fibre optique</option>
+            <option value="Stacking">Stacking</option>
+          </select>
+        </td>
+
+
+        <td (dblclick)="modifierCategorie(i, 'nbrportwict')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['nbrportwict']">{{ swit.nombrePorts || 'Modèle inconnu' }}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['nbrportwict']" [(ngModel)]="nombrePorts_swic" (keydown.enter)="modifiernmbreportwitch (i, 'nbrportwict', switches[i].id!)" placeholder=""/>
+        </td>
+
+        <td (dblclick)="modifierCategorie(i, 'typSeriewict')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['typSeriewict']">{{ swit.masqueSousReseauipv6 }}</ng-container>
+          <select *ngIf="isEditing_routeur[i]?.['typSeriewict']" [(ngModel)]="masqueSousReseauipv6_swic" (keydown.enter)="modifiertypelayer(i, 'typSeriewict', switches[i].id!)">
+            <option value="Couche 1">Couche 1 - Physique</option>
+            <option value="Couche 2">Couche 2 - Liaison de données</option>
+            <option value="Couche 3">Couche 3 - Réseau</option>
+            <option value="Couche 4">Couche 4 - Transport</option>
+            <option value="Couche 5">Couche 5 - Session</option>
+            <option value="Couche 6">Couche 6 - Présentation</option>
+            <option value="Couche 7">Couche 7 - Application</option>
+          </select>
+        </td>
+
+
+        <td (dblclick)="modifierCategorie(i, 'ipwict')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['ipwict']">{{  swit.adresseIPv4Gestion }}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['ipwict']" [(ngModel)]="adresseIPv4Gestion_swic" (keydown.enter)="modifierAdresseIPv4Switch(i, 'ipwict', switches[i].id!)" placeholder=""/>
+
+        </td>
+
+        <td (dblclick)="modifierCategorie(i, 'macwict')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['macwict']">{{  swit.adresseMAC }}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['macwict']" [(ngModel)]="adresseMAC_swic" (keydown.enter)="modifierAdresseMACSwitch(i, 'macwict', switches[i].id!)" placeholder=""/>
+
+        </td>
+
+        <td (dblclick)="modifierCategorie(i, 'masqwict')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['masqwict']">{{  swit.masqueSousReseaupv4 }}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['masqwict']" [(ngModel)]="masqueSousReseaupv4_swic" (keydown.enter)="modifiermasqIPv4Switch(i, 'masqwict', switches[i].id!)" placeholder=""/>
+
+        </td>
+
+        <td (dblclick)="modifierCategorie(i, 'passerlwict')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['passerlwict']">{{  swit.passerelleParDefaut}}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['passerlwict']" [(ngModel)]="passerelleParDefaut_swic" (keydown.enter)="modifiePasserelSwitch(i, 'passerlwict', switches[i].id!)" placeholder=""/>
+
+        </td>
+        <td (dblclick)="modifierCategorie(i, 'mdpwict')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['mdpwict']">{{  swit.motDePasseAdmin}}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['mdpwict']" [(ngModel)]="motDePasseAdmin_swic" (keydown.enter)="modifiePasserelSwitch(i, 'mdpwict', switches[i].id!)" placeholder=""/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+    <!-- Table Système d'Exploitation -->
+<h2> Vlan(  Virtual Local Area Network ) des Switch</h2>
+<div  class="insertion_moniteur">
+  <table class="table1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom du Swicht</th>
+        <th>Nom vlan</th>
+        <th>Numéro VLAN</th>
+        <th>Adresse IP</th>
+        <th>Masque sous réseau</th>
+          <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr   *ngFor="let  vln of vlan; let i = index">
+        <td >
+          <ng-container  >{{i+1}}</ng-container>
+        </td>
+        <td>
+          <ng-container  >{{recupe_nom_swtch_id ( vlan[i].id_commutateur!)}} </ng-container>
+        </td>
+        <td (dblclick)="modifierCategorieinterfacrouteur(i, 'nomvlan')">
+          <ng-container  *ngIf="!isEditing_interfacrouteur[i]?.['nomvlan']" >{{ vln.nom}}</ng-container>
+          <input type="text" *ngIf="isEditing_interfacrouteur[i]?.['nomvlan']" [(ngModel)]="nom_vln" (keydown.enter)="modifienomvlan(i, 'nomvlan', vlan[i].id!)"    placeholder=""/>
+        </td>
+        <td (dblclick)="modifierCategorieinterfacrouteur(i, 'numvlan')">
+          <ng-container  *ngIf="!isEditing_interfacrouteur[i]?.['numvlan']" >{{ vln.numero_vlan}}</ng-container>
+          <input type="text" *ngIf="isEditing_interfacrouteur[i]?.['numvlan']" [(ngModel)]="numero_vlan" (keydown.enter)=" modifienumvlan(i, 'numvlan', vlan[i].id!)"    placeholder=""/>
+        </td>
+        <td (dblclick)="modifierCategorieinterfacrouteur(i, 'ipvlan')">
+          <ng-container   *ngIf="!isEditing_interfacrouteur[i]?.['ipvlan']"  >{{vln.adresse_ip}}</ng-container>
+          <input type="text" *ngIf="isEditing_interfacrouteur[i]?.['ipvlan']" [(ngModel)]="adresse_ip_vln" (keydown.enter)="modifieipvlan(i, 'ipvlan',  vlan[i].id!)"    placeholder=""/>
+        </td>
+        <td (dblclick)="modifierCategorieinterfacrouteur(i, 'masqvlan')">
+          <ng-container   *ngIf="!isEditing_interfacrouteur[i]?.['masqvlan']" >{{ vln.masque_sous_reseau}}</ng-container>
+          <input type="text" *ngIf="isEditing_interfacrouteur[i]?.['masqvlan']" [(ngModel)]="masque_sous_reseau_vln" (keydown.enter)="modifiemasqvlan(i, 'masqvlan', vlan[i].id!)"    placeholder=""/>
+        </td>
+        <td><div  (click)="supprime_vlan(vln.id || -1, $event)" class="supprime"></div></td>
+
+      </tr>
+    </tbody>
+  </table>
+  <div class="insertion_batiment">
+    <div class="titre">Ajout d'un nouveau vlan</div>
+    <form class="formul_insert_ordi" (ngSubmit)="addvlan()">
+      <div class="contenu_nom_champ_isert_swicth">
+        <!-- Champ gauche -->
+        <div class="champ_gauche">
+          <div class="form-group">
+            <label for="nom_ordi">Switch</label>
+            <select
+              id="etage"
+              name="etage"
+              [(ngModel)]="newvlan .id_commutateur"
+              required
+            >
+              <option [value]="">Sélectionne le Switch</option>
+              <option *ngFor="let switc of switches; let i = index" [value]="switches[i].id">
+                {{recupe_nom_swtch_id_number( switc.id!) }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="prix">Nom vlan</label>
+            <input
+              type="text"
+              id="prix"
+              name="prix"
+              [(ngModel)]="newvlan.nom"
+              placeholder="Nom interface"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="date_acquisition">Numéro vlan</label>
+            <input
+              type="text"
+              id="date_acquisition"
+              name="dateAcquisition"
+              [(ngModel)]="newvlan .numero_vlan"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Champ droit -->
+        <div class="champ_droite">
+
+          <div class="form-group">
+            <label for="date_acquisition">Adresse Ip</label>
+            <input
+              type="text"
+              id="date_acquisition"
+              name="dateAcquisition"
+              [(ngModel)]="newvlan.adresse_ip"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="date_acquisition">Masque sous réseau</label>
+            <input
+              type="text"
+              id="date_acquisition"
+              name="dateAcquisition"
+              [(ngModel)]="newvlan.masque_sous_reseau"
+              required
+            />
+          </div>
+          <div class="contenu_butt">
+            <button type="submit" class="submit-btn">Ajouter</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bouton de soumission -->
+
+    </form>
+
+  </div>
+</div>
+
+
+</div>
+<div *ngIf="ouverturepointacc">
+  <h2>Informations Générales des Points d'Accès</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nom</th>
+        <th>Marque</th>
+        <th>Modèle</th>
+        <th>Numéro de Série</th>
+        <th>Prix (Ar)</th>
+        <th>Adresse ip</th>
+        <th>Adresse Mac</th>
+        <th>Statut</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pointsAcces of pointsAcces_bureau ; let i = index">
+        <td>{{ i + 1 }}</td>
+
+        <!-- Édition du nom -->
+        <td (dblclick)="modifierCategorie(i, 'nompnt')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['nompnt']">{{ pointsAcces.nom || 'Modèle inconnu' }}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['nompnt']" [(ngModel)]="nom_pntacc" (keydown.enter)="modifienompntacc(i, 'nompnt',  pointsAcces_bureau[i].id!)"    placeholder=""/>
+        </td>
+
+        <!-- Édition de la marque -->
+        <td (dblclick)="modifierCategorie(i, 'marquepnt')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['marquepnt']">{{ pointsAcces.marque || 'Modèle inconnu' }}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['marquepnt']" [(ngModel)]="marque_pntacc" (keydown.enter)="modifiemarqupntacc(i,'marquepnt',  pointsAcces_bureau[i].id!)" placeholder=""/>
+        </td>
+
+        <!-- Édition du modèle -->
+        <td (dblclick)="modifierCategorie(i, 'modelpnt')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['modelpnt']">{{ pointsAcces.model || 'Modèle inconnu' }}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['modelpnt']" [(ngModel)]="model_pntacc" (keydown.enter)="modifiemodelpntacc(i,'modelpnt', pointsAcces_bureau[i].id!)" placeholder=""/>
+        </td>
+
+        <!-- Édition du numéro de série -->
+        <td (dblclick)="modifierCategorie(i, 'numSeriepnt')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['numSeriepnt']">{{ pointsAcces.numSerie || 'Modèle inconnu' }}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['numSeriepnt']" [(ngModel)]="numSerie_pntacc" (keydown.enter)="modifienumserpntacc(i, 'numSeriepnt', pointsAcces_bureau[i].id!)" placeholder=""/>
+        </td>
+
+        <!-- Édition du prix -->
+        <!-- Édition du numéro de série -->
+        <td (dblclick)="modifierCategorie(i, 'prixpnt')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['prixpnt']">{{ pointsAcces.prix|| 'Modèle inconnu' }}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['prixpnt']" [(ngModel)]="prix_pntacc" (keydown.enter)="modifieprixpntacc(i, 'prixpnt', pointsAcces_bureau[i].id!)" placeholder=""/>
+        </td>
+
+        <!-- Affichage de la date d'installation -->
+        <!-- Édition du numéro de série -->
+        <td (dblclick)="modifierCategorie(i, 'ippnt')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['ippnt']">{{ pointsAcces.ip || 'Modèle inconnu' }}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['ippnt']" [(ngModel)]="ip_pntacc" (keydown.enter)=" modifieipntacc(i, 'ippnt',  pointsAcces_bureau[i].id!)" placeholder=""/>
+        </td>
+        <!-- Édition du numéro de série -->
+        <td (dblclick)="modifierCategorie(i, 'macpnt')">
+          <ng-container *ngIf="!isEditing_routeur[i]?.['macpnt']">{{ pointsAcces.macc|| 'Modèle inconnu' }}</ng-container>
+          <input type="text" *ngIf="isEditing_routeur[i]?.['macpnt']" [(ngModel)]="macc_pntacc" (keydown.enter)="modifiemacntacc(i, 'macpnt',  pointsAcces_bureau[i].id!)" placeholder=""/>
+        </td>
+
+        <!-- Affichage du statut -->
+        <td>
+          <ng-container>{{  pointsAcces.statut || 'Modèle inconnu' }}</ng-container>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+

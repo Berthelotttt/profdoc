@@ -1,0 +1,57 @@
+
+<div class="general">
+  <div class="entete">
+    <div class="logo_nom">
+      <div class="logo"></div>
+    </div>
+    <div class="menu_entete">
+      <div (click)="ouvrir_deconnexion()" class="titre_menu_Deconnexion">Déconnexion</div>
+    </div>
+  </div>
+
+  <div class="corp">
+    <div class="nav_lateral">
+      <div class="entete">Menu</div>
+      <div class="contenu_nav">
+        <div (click)="ouvrir_mise_jour()" class="titrex" >
+          <div class="image_logox"></div>
+          <span>Mise à jour des logiciels</span>
+        </div>
+
+        <div   (click)="ouvrir_antivirus()"class="titrex" >
+          <div class="image_logox"></div>
+          <span>Mise à jour des Antivirus</span>
+        </div>
+        <div (click)="ouvrir_ticket()"class="titrex" >
+          <div class="image_logox"></div>
+          <span>Ticket</span>
+        </div>
+        <div (click)="ouvrir_profil()" class="titrex" >
+          <div class="image_logox"></div>
+          <span>Profil</span>
+        </div>
+        <div (click)="ouvrir_deconnexion()" class="titrex" >
+          <div class="image_logox"></div>
+          <span>Déconnexion</span>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div *ngIf="ouverture_serveur" class="serveur">
+         <app-reseau></app-reseau>
+    </div>
+    <div *ngIf="ouverture_antivirus" class="serveur">
+      <app-misejourpc></app-misejourpc>
+    </div>
+    <div *ngIf="ouverture_ticket" class="ticket">
+      <app-ticket></app-ticket>
+    </div>
+    <div *ngIf="ouverture_profil" class="profil">
+      <app-profil></app-profil>
+    </div>
+  </div>
+</div>
+
+

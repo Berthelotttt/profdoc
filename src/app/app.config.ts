@@ -1,30 +1,33 @@
-// src/app/app.config.ts
 import { provideHttpClient } from '@angular/common/http';
-import { importProvidersFrom } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // Importer FormsModule
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, Routes, withRouterConfig } from '@angular/router';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { AcceuilleComponent } from './acceuille/acceuille.component';
-import { HomeComponent } from './home/home.component'; // Importez HomeComponent
-import { ReponseComponent } from './reponse/reponse.component';
+import { AdminComponent } from './admin/admin.component';
+import { AdminReseauComponent } from './admin_reseau/admin_reseau.component';
+import { EmployeComponent } from './employe/employe.component';
+import { TechnicienComponent } from './technicien/technicien.component';
 
-export const routes: Routes = [
-  { path: '', redirectTo: 'acceuille', pathMatch: 'full' },  // Redirection vers /acceuille
-  { path: 'acceuille', component: AcceuilleComponent },  // Route pour AcceuilleComponent
-  { path: 'home', component: HomeComponent },  // Ajoutez la route pour HomeComponent
-  { path: 'reponse', component: ReponseComponent  },
-  // Ajoutez d'autres routes si nécessaire
+const routes: Routes = [
+  { path: '', redirectTo: 'acceuille', pathMatch: 'full' },
+  { path: 'acceuille', component: AcceuilleComponent },
+  { path: 'technicien/:id', component: TechnicienComponent },
+  { path: 'employe/:id', component: EmployeComponent },
+  { path: 'admin/:id', component: AdminComponent },
+   { path: 'admin_reseau/:id', component: AdminReseauComponent },
 ];
 
-export const appConfig = {
+export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes, withRouterConfig({ onSameUrlNavigation: 'reload' })),  // Recharger la route
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes, withRouterConfig({ onSameUrlNavigation: 'reload' })),
     provideHttpClient(),
-    importProvidersFrom(BrowserAnimationsModule)
-  ],
-  imports: [
-    MatProgressSpinnerModule,
-    FormsModule,
+    provideCharts(withDefaultRegisterables()),
+    importProvidersFrom(BrowserAnimationsModule, MatProgressSpinnerModule, FormsModule), // Déplacez ici les modules
+    provideClientHydration(withEventReplay()),
   ],
 };

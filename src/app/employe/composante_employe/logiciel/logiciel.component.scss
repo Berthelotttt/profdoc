@@ -1,0 +1,307 @@
+/* Style de l'en-tête */
+.contenu_general{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  width: 98%;
+  height: 95%;
+  overflow: hidden;
+  .header {
+    background: linear-gradient(to bottom, #fffb00, #e9e62d);
+    font-style: italic;
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+    color: #2b2929;
+    font-size: 18px;
+    border-radius: 5px;
+  }
+
+  /* Style du conteneur principal */
+  .content {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 98%;
+    height:80% ;
+    border-radius: 12px;
+    border-radius: 12px;
+    background: #f4f4f4;
+    box-shadow: inset 5px 5px 18px #a3a3a3,
+                inset -5px -5px 18px #ffffff;
+    border-radius: 5px;
+    overflow-y: scroll;
+    scrollbar-color: #fffb00 hsl(0, 0%, 17%); /* Couleurs pour le scroll : poignée jaune, fond sombre */
+    scrollbar-width: thin;
+    /* Bloc logiciel */
+    .logiciel {
+      background: #222;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+      height: 80%;
+      flex-wrap: wrap; /* Permet de passer en colonne sur mobile */
+
+    }
+    .image_logo {
+      width: 50px; /* Taille de l'icône */
+      height: 50px;
+      background-image: url('icone1.svg'); /* Utilisation d'un chemin relatif */
+      background-size: cover; /* Ajuste l'image pour couvrir le div */
+      background-position: center; /* Centre l'image dans le div */
+      border-radius: 50%; /* Pour rendre l'icône ronde */
+      margin-right: 10px;
+    }
+    /* Bloc Informations Logiciel */
+    .info_logi {
+      display: flex;
+      flex: 1;
+      min-width: 250px; /* Empêche l’écrasement */
+      justify-content: flex-start;
+      align-items: center;
+      margin: 15px;
+    }
+
+    /* Icône */
+    .info_logi mat-icon {
+      color: white;
+      font-size: clamp(24px, 3vw, 35px); /* Ajuste la taille selon la largeur de l’écran */
+      margin-right: 10px;
+      margin-left: 10px;
+      width: 8%;
+      height: auto;
+
+    }
+
+    /* Nom & Date */
+    .nom_date_logi {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .software-name {
+      font-weight: bold;
+      font-size: clamp(14px, 2vw, 16px);
+    }
+
+    .date {
+      font-size: clamp(12px, 1.8vw, 14px);
+      color: #ccc;
+    }
+
+    /* Bloc Mise à Jour */
+    .miseajour {
+      display: flex;
+      flex-direction: column;
+      justify-content:center ;
+      align-items: flex-start;
+      height: 80%;
+      flex: 1;
+      min-width: 250px; /* Empêche l’écrasement */
+      background-color: #232200;
+      padding: 6px 10px;
+       /* Titre & Radio */
+    .titre_radio {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      .titre {
+        font-weight: bold;
+        font-size: clamp(16px, 2.5vw, 18px);
+        font-style: italic;
+        padding: 5px;
+        border-radius: 5px;
+      }
+
+      .radio_label {
+        font-weight: bold;
+        font-size: clamp(12px, 1.8vw, 14px);
+        padding: 5px 10px;
+      }
+
+      .activeclass{
+        background: linear-gradient(to bottom, #fffb00, #e9e62d);
+      }/* Style de base pour les labels de radio */
+      .radio_label {
+        font-weight: bold;
+        font-size: clamp(12px, 1.8vw, 14px);
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+
+      /* Style pour l'élément actif */
+      .activeclasse {
+        background: linear-gradient(to bottom, #fffb00, #e9e62d);
+        color: black; /* Optionnel : change la couleur du texte lorsque l'élément est actif */
+        border-radius: 5px; /* Optionnel : ajoute un arrondi */
+      }
+
+    }
+
+    }
+
+
+
+    /* Boutons & Contenu */
+    .contenu_bouton_misejr {
+      margin-top: 5px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      .nom {
+        color: #50fc00;
+        font-weight: bold;
+        cursor: pointer;
+        margin-right: 10px;
+        font-size: clamp(12px, 2vw, 14px);
+      }
+
+      .butn {
+        background: linear-gradient(to bottom, #fffb00, #e9e62d);
+        padding: 5px 10px;
+        border-radius: 5px;
+        color: rgb(20, 14, 1);
+        display: inline-block;
+        font-size: clamp(12px, 2vw, 14px);
+        cursor: pointer;
+      }
+    }
+
+
+
+    /* ✅ Responsive Design */
+    @media (max-width: 768px) {
+      .logiciel {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+      }
+
+      .info_logi {
+        width: 100%;
+      }
+
+      .miseajour {
+        width: 100%;
+      }
+
+      .contenu_bouton_misejr {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .butn {
+        width: 100%;
+        text-align: center;
+        margin-top: 5px;
+      }
+    }
+
+
+  }
+
+
+
+
+  /* Lien fichier */
+
+
+  /* Bouton Envoyé */
+  .footer {
+    text-align: right;
+    margin-top: 10px;
+    .submit-button {
+      /* Forme et structure */
+      display: inline-block;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 50px; /* Effet pill button */
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+
+      /* Couleurs et dégradé */
+      background: linear-gradient(
+        to bottom,
+        #fffb00, /* Jaune doré clair en haut */
+        #d4c437  /* Jaune doré foncé en bas */
+      );
+      color: #000; /* Texte noir */
+
+      /* Effets de lumière et ombres */
+      box-shadow:
+        0 4px 6px rgba(0, 0, 0, 0.1), /* Ombre portée externe */
+        inset 0 2px 4px rgba(255, 255, 255, 0.3), /* Brillance blanche en haut */
+        inset 0 -2px 4px rgba(0, 0, 0, 0.2); /* Ombre intérieure en bas */
+
+      /* Effet de bordure inférieure lumineuse */
+      &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.5); /* Halo lumineux interne */
+        z-index: 1;
+      }
+
+      /* Effet de brillance supplémentaire */
+      &::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.4) 10%,
+          transparent 70%
+        );
+        transform: rotate(45deg);
+        transition: opacity 0.3s ease;
+        opacity: 0;
+      }
+
+      /* Interaction au survol */
+      &:hover {
+        background: linear-gradient(
+          to bottom,
+          #FFE55C, /* Jaune plus clair en haut */
+          #D4AF37  /* Jaune doré foncé en bas */
+        );
+        box-shadow:
+          0 6px 8px rgba(0, 0, 0, 0.2), /* Ombre portée plus marquée */
+          inset 0 2px 4px rgba(255, 255, 255, 0.4), /* Brillance plus intense */
+          inset 0 -2px 4px rgba(0, 0, 0, 0.3); /* Ombre intérieure plus sombre */
+
+        &::after {
+          opacity: 1; /* Activation de la brillance supplémentaire */
+        }
+      }
+
+      /* Interaction au clic */
+      &:active {
+        transform: scale(0.98); /* Effet de pression */
+        box-shadow:
+          0 2px 4px rgba(0, 0, 0, 0.2), /* Ombre réduite */
+          inset 0 2px 4px rgba(255, 255, 255, 0.2), /* Brillance réduite */
+          inset 0 -2px 4px rgba(0, 0, 0, 0.4); /* Ombre intérieure plus marquée */
+      }
+    }
+
+  }
+
+}

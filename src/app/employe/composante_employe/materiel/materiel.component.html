@@ -1,0 +1,190 @@
+
+<!-- Tableau RAM -->
+<table>
+  <thead>
+    <tr>
+      <th>
+        <div class="contenu_logo_titre">
+          <div class="image_log_ram"></div>
+          <div class="titre_texte">RAM</div>
+        </div>
+      </th>
+      <th *ngFor="let ram of ramInfo; let i = index">RAM {{ i + 1 }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let key of displayedRamKeys">
+      <td><strong>{{ ramKeyLabels[key] }}</strong></td>
+      <td *ngFor="let ram of ramInfo">
+        <!-- Conversion en Go si c'est 'size' -->
+        <ng-container *ngIf="key === 'size'; else normalValue">
+          {{ (ram[key] / (1024 * 1024 * 1024)) | number:'1.2-2' }} Go
+        </ng-container>
+        <ng-template #normalValue>
+          {{ ram[key] !== undefined ? ram[key] : 'Non dispo' }}
+        </ng-template>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Tableau Disques -->
+<table>
+  <thead>
+    <tr>
+      <th>
+        <div class="contenu_logo_titre">
+          <div class="image_log_disq"></div>
+          <div class="titre_texte">Stockage</div>
+        </div>
+      </th>
+      <th *ngFor="let disk of disks; let i = index">Disque {{ i + 1 }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let key of displayedKeys">
+      <td><strong>{{ keyLabels[key] }}</strong></td>
+      <td *ngFor="let disk of disks">
+        <!-- Conversion en Go si c'est 'size' -->
+        <ng-container *ngIf="key === 'size'; else normalValue">
+          {{ (disk[key] / (1024 * 1024 * 1024)) | number:'1.2-2' }} Go
+        </ng-container>
+        <ng-template #normalValue>
+          {{ disk[key] !== undefined ? disk[key] : 'Non dispo' }}
+        </ng-template>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- Tableau CPU -->
+<table>
+  <thead>
+    <tr>
+      <th>
+        <div class="contenu_logo_titre">
+          <div class="image_log_cpu"></div>
+          <div class="titre_texte">CPU</div>
+        </div>
+      </th>
+      <th>CPU</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Modèle</strong></td>
+      <td>{{ cpuInfo?.brand }} {{ cpuInfo?.model }}</td>
+    </tr>
+    <tr>
+      <td><strong>Fabricant</strong></td>
+      <td>{{ cpuInfo?.manufacturer }}</td>
+    </tr>
+    <tr>
+      <td><strong>Nombre de cœurs </strong></td>
+      <td>{{ cpuInfo?.cores }}</td>
+    </tr>
+    <tr>
+      <td><strong>Vitesse du CPU (GHz)</strong></td>
+      <td>{{ cpuInfo?.speed }} GHz</td>
+    </tr>
+  </tbody>
+</table>
+<!-- Tableau GPU -->
+<table >
+  <thead>
+    <tr>
+      <th>
+        <div class="contenu_logo_titre">
+          <div class="image_log_gpu"></div>
+          <div class="titre_texte">GPU</div>
+        </div>
+      </th>
+      <th *ngFor="let gpu of gpuInfo; let i = index">GPU {{ i + 1 }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let key of gpuProperties">
+      <td><strong>{{ gpuLabels[key] }}</strong></td>
+      <td *ngFor="let gpu of gpuInfo">
+        {{ gpu[key] !== undefined ? gpu[key] : 'Non dispo' }}
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- Monitor -->
+<table>
+  <thead>
+    <tr>
+      <th>
+        <div class="contenu_logo_titre">
+          <div class="image_log_monitor"></div>
+          <div class="titre_texte">moniteur</div>
+        </div>
+      </th>
+      <th *ngFor="let display of displayMonitors; let i = index">Moniteur {{ i + 1 }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let key of monitorDisplayedKeys">
+      <td><strong>{{ monitorKeyLabels[key] }}</strong></td>
+      <td *ngFor="let display of displayMonitors">
+        {{ display[key] !== undefined ? display[key] : 'Non dispo' }}
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!--Interfaces réseau -->
+<table>
+  <thead>
+    <tr>
+      <th>
+        <div class="contenu_logo_titre">
+          <div class="image_log_reseau"></div>
+          <div class="titre_texte">Réseau</div>
+        </div>
+      </th>
+      <th *ngFor="let network of networkDetails; let i = index">Interface {{ i + 1 }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Boucle sur les attributs réseau -->
+    <tr *ngFor="let attribute of networkAttributes">
+      <td><strong>{{ networkLabels[attribute] }}</strong></td>
+      <td *ngFor="let network of networkDetails">
+        <!-- Affichage dynamique des valeurs -->
+        <ng-container *ngIf="attribute === 'ip4'">
+          {{ network[attribute] ? network[attribute] + ' (IPv4)' : 'Non disponible' }}
+        </ng-container>
+        <ng-container *ngIf="attribute === 'ip6'">
+          {{ network[attribute] ? network[attribute] + ' (IPv6)' : 'Non disponible' }}
+        </ng-container>
+        <ng-container *ngIf="attribute !== 'ip4' && attribute !== 'ip6'">
+          {{ network[attribute] !== undefined ? network[attribute] : 'Non disponible' }}
+        </ng-container>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- ---------------Tablmeau Périphériques ---------------------->
+<table>
+  <thead>
+    <tr>
+      <th>
+        <div class="contenu_logo_titre">
+          <div class="image_log_periph"></div>
+          <div class="titre_texte">Périphérique USB</div>
+        </div>
+      </th>
+      <th *ngFor="let peripherique of peripheriques; let i = index">Périphérique {{ i + 1 }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Boucle sur les attributs des périphériques USB -->
+    <tr *ngFor="let attribute of peripheriqueAttributes">
+      <td><strong>{{ peripheriqueLabels[attribute] }}</strong></td>
+      <td *ngFor="let peripherique of peripheriques">
+        <!-- Affichage dynamique des valeurs -->
+        {{ peripherique[attribute] !== undefined ? peripherique[attribute] : 'Non disponible' }}
+      </td>
+    </tr>
+  </tbody>
+</table>

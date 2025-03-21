@@ -1,0 +1,1113 @@
+
+.grph_entete {
+  display: flex;
+  flex-direction: row;
+ align-items: center;
+  justify-content: space-around;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  height: 5%;
+  .titre{
+    height: 45px;
+    width: 130px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #f3f2e1;
+    border-radius: 30px;
+    font-weight: 300;
+    background-color: #070706;
+  }
+  .titre:hover{
+    background-color: #ffffff;
+    color: #131311;
+
+  }
+}
+.contenu_graph {
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /*--------GRAPH EQUIPMNT------*/
+  .graphique_equipement {
+    margin: 0 50px;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    border-radius: 8px;
+    .but_titre {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      padding: 10px 20px;
+      font-family: Arial, sans-serif;
+      position: relative; /* Permet d'ajuster les boutons */
+      width: 100%;
+      margin-bottom: 3%;
+
+    .but_preced_suiv {
+      position: absolute;
+      left: 20px; /* Place les boutons à gauche */
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .precedent, .suivant {
+      cursor: pointer;
+      font-size: 20px;
+      padding: 8px 12px;
+      background-color: #333;
+      border-radius: 50%;
+      transition: background 0.3s ease, transform 0.2s;
+    }
+
+    .precedent:hover, .suivant:hover {
+      background-color: #e9b818;
+      transform: scale(1.1);
+    }
+
+    .titre_repartition {
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: center;
+      flex-grow: 1;
+      color: #1b1807;
+    }
+    }
+    /*------------------------------.contenu_graph_repart_age------------------------*/
+    .contenu_graph_repart_age {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      padding: 0 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 95%;
+      height: 90%;
+      overflow-x: hidden;
+      .titre_repartition {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        color: #333;
+        padding: 10px;
+        background: #e9b818;
+        border-radius: 5px;
+        width: 100%;
+      }
+
+
+      /*------------ repart-----------------*/
+      .contenu_graph_repart {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        width: 100%;
+        height: 350px;
+        .contient_graphic_circu1 {
+          backdrop-filter: blur(20px);
+         // background: rgba(15, 15, 5, 0.623);
+         background: rgba(241, 241, 236, 0.233);
+         backdrop-filter: blur(20px);
+         border-radius: 10px;
+         box-shadow: 0 8px 10px 5px rgba(0, 0, 0, 0.4);
+          width: 50%;
+          height: 370px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow:visible;
+
+      }
+        .contient_champ_graphic_circu2 {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 5px;
+          background: rgba(241, 241, 236, 0.233);
+          backdrop-filter: blur(20px);
+          border-radius: 10px;
+          box-shadow: 0 8px 10px 5px rgba(0, 0, 0, 0.4);
+          width: 50%;
+          height: 370px;
+          overflow: hidden;
+          border-radius: 10px;
+          .champ {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            .titre {
+              color: #fcfcfc;
+            }
+            select {
+              width: 80%;
+              padding: 8px;
+              border: 1px solid #ccc;
+              border-radius: 5px;
+              text-align: center;
+            }
+          }
+          canvas {
+            width: 325px;  /* Augmentation de la largeur */
+            height: 325px;     /* Augmentation de la hauteur */
+          }
+        }
+      }
+       /*------------ age-----------------*/
+       .contenu_graph_age {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        overflow: hidden;
+        gap: 20px;
+        width: 100%;
+        height: 320px;
+        padding: 20px;
+        .contient_graphic_circuage {
+          background: rgba(241, 241, 236, 0.233);
+          backdrop-filter: blur(20px);
+          border-radius: 10px;
+          box-shadow: 0 8px 10px 5px rgba(0, 0, 0, 0.4);
+          width: 20%;
+          height: 258px;
+          overflow: hidden;
+
+        }
+        .contient_tableaux {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-around;
+          background: rgba(241, 241, 236, 0.233);
+          backdrop-filter: blur(20px);
+          border-radius: 10px;
+          box-shadow: 0 8px 10px 5px rgba(0, 0, 0, 0.4);
+          width: 60%;
+          height: 280px;
+          padding: 20px;
+          color: white;
+          gap: 5px;
+          overflow: hidden;
+          overflow-y: scroll;
+
+        /* Sélection de l'âge */
+          .champ_age {
+            width: 50%;
+            font-size: 18px;
+            label {
+              margin-right: 10px;
+            }
+            select {
+              width: 100%;
+              padding: 8px;
+              border-radius: 5px;
+              border: 1px solid #ccc;
+              background: white;
+              color: black;
+            }
+        }
+        /* Tableau */
+        .table_equipement {
+          width: 100%;
+          border-collapse: collapse;
+          width: 100%;
+          border-collapse: collapse;
+          background-color: #fff;
+          color: #000;
+          border-radius: 10px;
+          box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+          overflow: hidden;
+
+
+          /* Style des titres de colonnes */
+          th {
+            background-color: #000; /* Fond noir pour l'en-tête */
+            color: white;
+            padding: 4px;
+            text-align: left;
+            font-size: 16px;
+            text-transform: uppercase;
+            border-bottom: 3px solid rgb(252, 236, 11); /* Séparateur visuel */
+
+          }
+          .contenu_logo_titre{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            .titre_texte{
+              font-size: 17px;
+              color: #f1e979;
+            }
+          }
+          /* Style des cellules */
+          td {
+            padding: 12px;
+            text-align: left;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          }
+
+          /* Alternance des couleurs pour les lignes */
+          tr:nth-child(odd) {
+            background-color: #222;
+            color: #fdf986;
+          }
+
+          tr:nth-child(even) {
+            background-color: #2c2a2a;
+            color: #fdf986;
+          }
+
+          /* Effet hover pour dynamiser */
+          tr:hover {
+            background-color: #3b3b3b;
+            transition: background-color 0.3s ease;
+          }
+
+        }
+        /* Bouton */
+        .conitient_but_gener {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          text-align: center;
+          width: 100%;
+          button {
+            background: #e9b818;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+          }
+          button:hover {
+            background: #d4a117;
+          }
+
+        }
+
+        }
+
+      }
+      /*------------ statut-----------------*/
+      .contient_graphi_status {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start; /* Alignement des éléments au début */
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        width: 100%;
+        height: 90%;
+        border-radius: 30px;
+        background: #1c1c1c;
+        box-shadow: inset 9px 9px 10px #131313,
+          inset -9px -9px 10px #252525;
+        overflow-x:scroll; /* Permet le scroll horizontal */
+        overflow-y: hidden;
+        scrollbar-color: #fffb00 #2b2b2b; /* Couleurs pour le scroll : poignée jaune, fond sombre */
+        scrollbar-width: thin;
+        white-space: nowrap; /* Empêche le retour à la ligne */
+        padding-bottom: 10px; /* Ajout d'un petit espace en bas pour l'esthétique */
+        .statu {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          border-radius: 20px;
+          background: #302B2B;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Ombre subtile */
+          padding: 20px;
+          width: 300px; /* Largeur fixe pour bien gérer le scroll */
+          height: 85%;
+          min-width: 250px; /* Empêche les cartes d'être trop petites */
+          text-align: center;
+          color: white;
+          flex-shrink: 0; /* Empêche les cartes de se réduire */
+          cursor: pointer;
+          h6{
+            color: #e9b818;
+            margin-bottom: 10px;
+          }
+
+          /* Assure une taille uniforme des graphiques */
+          canvas {
+            width: 300px !important;
+            height: 300px !important;
+          }
+        }
+
+      }
+      .liste_equipmnt {
+        padding: 20px;
+        border-radius: 10px;
+        background: #302B2B;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+
+
+        .contenu_retour {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 20px;
+          .titre {
+            text-align: center;  /* Centrer le titre */
+            font-size: 18px;
+            flex: 1;  /* Pour occuper tout l'espace disponible */
+            color: rgb(255, 251, 0);
+          }
+          .precedent {
+            cursor: pointer;
+            font-size: 20px;
+            color: rgb(218, 90, 5);
+            display: inline-block;
+            margin-bottom: 10px;
+          }
+        }
+        table {
+          width: 100%;
+          border-collapse: collapse;
+
+          th, td {
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            color: white;
+          }
+
+          th {
+            background-color: #807474;
+             color: #f2f2f2;
+            font-weight: bold;
+          }
+        }
+        .boit_but_telech {
+          width: 100%;
+          display: flex;
+          justify-content: flex-end;
+          padding: 10px;
+          .btn-pdf {
+            background-color: #4CAF50; /* Couleur de fond verte */
+            color: white;              /* Texte en blanc */
+            padding: 10px 20px;        /* Espacement interne */
+            border: none;              /* Suppression des bordures */
+            border-radius: 5px;        /* Bords arrondis */
+            cursor: pointer;          /* Curseur pointer au survol */
+            font-size: 16px;           /* Taille de la police */
+            transition: background-color 0.3s, transform 0.2s; /* Animation de la couleur et du survol */
+          }
+
+          .btn-pdf:hover {
+            background-color: #45a049; /* Couleur de fond au survol */
+            transform: translateY(-2px); /* Légère élévation au survol */
+          }
+
+        }
+      }
+    }
+  }
+  /*------TICKET----------------*/
+  .graphique_TICKET{
+      padding: 2px 20px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      border-radius: 8px;
+      .but_titre {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        padding: 10px 20px;
+        font-family: Arial, sans-serif;
+        position: relative; /* Permet d'ajuster les boutons */
+        width: 100%;
+        margin-bottom: 3%;
+
+      .but_preced_suiv {
+        position: absolute;
+        left: 20px; /* Place les boutons à gauche */
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .precedent, .suivant {
+        cursor: pointer;
+        font-size: 20px;
+        padding: 8px 12px;
+        background-color: #333;
+        border-radius: 50%;
+        transition: background 0.3s ease, transform 0.2s;
+      }
+
+      .precedent:hover, .suivant:hover {
+        background-color: #e9b818;
+        transform: scale(1.1);
+      }
+
+      .titre_repartition {
+        font-size: 18px;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-align: center;
+        flex-grow: 1;
+        color: #1b1807;
+      }
+      }
+      .contenu_graph_tickets {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 90%;
+        height: auto;
+
+        .contenu_graph_tickets_ligne {
+          display: flex;
+          justify-content: space-between;
+          gap: 20px;
+          width: 100%;
+          height: 400px;
+
+
+          .graphique_tickets {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            width: 95%;
+            height: auto;
+            padding: 20px;
+            overflow: hidden;
+            background: rgba(241, 241, 236, 0.233);
+            backdrop-filter: blur(20px);
+            border-radius: 10px;
+            box-shadow: 0 8px 10px 5px rgba(0, 0, 0, 0.4);
+
+            }
+
+
+          .filtres_tickets {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(241, 241, 236, 0.37);
+            width:100%;
+            height: 50px;
+
+            select {
+              width: 100%;
+              padding: 8px;
+              border: 1px solid #ccc;
+              text-align: center;
+            }
+          }
+        }
+        .contenu_graph_ticketss {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          overflow: hidden;
+          gap: 20px;
+          width: 100%;
+          height: 400px;
+          .contient_graphic_circu1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgb(48, 43, 43);
+            border-radius: 10px;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+            color: #e3e8ec;
+            width: 50%;
+            height: 80%;
+            overflow: hidden;
+            canvas{
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 325px;  /* Augmentation de la largeur */
+              height: 325px;
+            }
+          }
+          .contient_champ_graphic_circu2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgb(48, 43, 43);
+            border-radius: 10px;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+            width: 50%;
+            height: 120%;
+            overflow: hidden;
+            .champ {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 10px;
+              width: 100%;
+              .titre {
+                color: #fcfcfc;
+              }
+              select {
+                width: 80%;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                text-align: center;
+              }
+            }
+            canvas {
+              width: 325px;  /* Augmentation de la largeur */
+              height: 325px;     /* Augmentation de la hauteur */
+            }
+          }
+        }
+      }
+  }
+  /*------RESEAU-----------------*/
+  .graphique_reseau{
+    margin: 0 50px ;
+    padding: 2px 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    border-radius: 8px;
+    .but_titre {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      padding: 10px 20px;
+      font-family: Arial, sans-serif;
+      position: relative; /* Permet d'ajuster les boutons */
+      width: 100%;
+      margin-bottom: 3%;
+
+    .but_preced_suiv {
+      position: absolute;
+      left: 20px; /* Place les boutons à gauche */
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .precedent, .suivant {
+      cursor: pointer;
+      font-size: 20px;
+      padding: 8px 12px;
+      background-color: #333;
+      border-radius: 50%;
+      transition: background 0.3s ease, transform 0.2s;
+    }
+
+    .precedent:hover, .suivant:hover {
+      background-color: #e9b818;
+      transform: scale(1.1);
+    }
+
+    .titre_repartition {
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: center;
+      flex-grow: 1;
+    }
+    }
+    .contenu_graph_band_p {
+      width: 90%;
+      height: 90%;
+      overflow-x: auto; /* Ajoute un scroll horizontal si nécessaire */
+      background: rgb(48, 43, 43);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+      margin-right: 10%;
+      margin-left: 10%;
+      .graph1{
+        width: 90%;
+        height: 100%;
+      }
+    }
+  }
+  /*-------TECHNICIEN-------------*/
+  .graphique_technicien {
+    margin: 0 50px ;
+    padding: 2px 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    height: 90%;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    border-radius: 8px;
+    .contenu_graph_tech {
+      width: 100%;
+      height: 400px;
+      padding: 15px;
+      background: rgba(241, 241, 236, 0.233);
+      backdrop-filter: blur(20px);
+      border-radius: 10px;
+      box-shadow: 0 8px 10px 5px rgba(0, 0, 0, 0.4);
+      .graph1 {
+        width: 100%;
+        height: 250px; /* Ajuste la hauteur du graphique */
+      }
+      .boit_but_telech {
+        margin-top: 10px;
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        .btn-pdf {
+          padding: 8px 15px;
+          background: #e91e63;
+          color: white;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 14px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          transition: background 0.3s ease;
+        }
+
+        .btn-pdf:hover {
+          background: #c2185b;
+        }
+      }
+
+
+    }
+
+  }
+  /*-----------COUT---------------*/
+  .graphique_cout {
+    margin: 0 50px ;
+    padding: 2px 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    border-radius: 8px;
+    .but_titre {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      padding: 10px 20px;
+      font-family: Arial, sans-serif;
+      position: relative; /* Permet d'ajuster les boutons */
+      width: 100%;
+      margin-bottom: 3%;
+      .but_preced_suiv {
+        position: absolute;
+        left: 20px; /* Place les boutons à gauche */
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .precedent, .suivant {
+        cursor: pointer;
+        font-size: 20px;
+        padding: 8px 12px;
+        background-color: #333;
+        border-radius: 50%;
+        transition: background 0.3s ease, transform 0.2s;
+      }
+
+      .precedent:hover, .suivant:hover {
+        background-color: #e9b818;
+        transform: scale(1.1);
+      }
+
+      .titre_repartition {
+        font-size: 18px;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-align: center;
+        flex-grow: 1;
+      }
+    }
+    .contenu_graph{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      width: 90%;
+      height: 90%;
+      gap: 15px;
+      .contient_graphic_circu1{
+        width: 50%;
+        height: 80%;
+        background: rgba(241, 241, 236, 0.233);
+        backdrop-filter: blur(20px);
+        border-radius: 10px;
+        box-shadow: 0 8px 10px 5px rgba(0, 0, 0, 0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .graphic_circu1{
+          width: 350px;
+          height: 350px;
+        }
+      }
+      .contient_tableau {
+        width: 50%;
+        height: 80%;
+        background: rgba(241, 241, 236, 0.233);
+        backdrop-filter: blur(20px);
+        border-radius: 10px;
+        box-shadow: 0 8px 10px 5px rgba(0, 0, 0, 0.4);
+        overflow-x: auto; /* Pour la compatibilité avec les petits écrans */
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          text-align: left;
+
+        td {
+          padding: 10px 15px;
+          border-top: 1px solid #fffb00;
+        }
+
+        th {
+          background-color: #d5d8d8;
+          color: rgb(24, 23, 12);
+          font-weight: bold;
+          padding: 10px;
+        }
+
+        td {
+          color: rgb(19, 16, 0);
+          font-weight:200;
+        }
+
+        /* Responsivité - sur petits écrans */
+        @media (max-width: 600px) {
+          th, td {
+            padding: 8px;
+            font-size: 14px;
+          }
+        }
+        }
+        .boit_but_telech {
+          margin-top: 10px;
+          display: flex;
+          justify-content: flex-end;
+          width: 100%;
+          .btn-pdf {
+            padding: 8px 15px;
+            background: #e91e63;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s ease;
+          }
+
+          .btn-pdf:hover {
+            background: #c2185b;
+          }
+        }
+      }
+      .contient_champs{
+        width: 50%;
+        height: 30%;
+        background: rgb(48, 43, 43);
+        border-radius: 10px;
+        margin-top: 0px;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+        .boit_but_telech {
+          margin-top: 10px;
+          display: flex;
+          justify-content: flex-end;
+          width: 100%;
+          .btn-pdf {
+            padding: 8px 15px;
+            background: #e91e63;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s ease;
+          }
+
+          .btn-pdf:hover {
+            background: #c2185b;
+          }
+        }
+      }
+    }
+    .contenu_graph_tmp{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      width: 90%;
+      height: 90%;
+      gap: 15px;
+      .contient_graphic_circu1{
+        width: 50%;
+        height: 80%;
+        background: rgb(48, 43, 43);
+        border-radius: 10px;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .graphic_circu1{
+          width: 350px;
+          height: 350px;
+        }
+      }
+      .contient_champs{
+        width: 30%;
+        height: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        background: rgb(48, 43, 43);
+        border-radius: 10px;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+
+        /* Style de l'étiquette */
+        label[for="dateSelection"] {
+          font-size: 16px;
+          font-weight: 500;
+          display: block;
+          color: #e7e4e4;
+          text-align: left;
+        }
+
+        /* Style du champ de sélection */
+        select#dateSelection {
+          width: 90%;
+          padding: 8px 12px;
+          font-size: 16px;
+          color: #555;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          background-color: #f9f9f9;
+          margin-bottom: 20px;
+          transition: border-color 0.3s ease;
+        }
+
+        /* Ajout d'un effet au survol du champ de sélection */
+        select#dateSelection:hover {
+          border-color: #007bff;
+        }
+
+        /* Style de l'option sélectionnée */
+        select#dateSelection option {
+          padding: 8px;
+        }
+
+        /* Style du champ de sélection lorsqu'il est focalisé */
+        select#dateSelection:focus {
+          outline: none;
+          border-color: #007bff;
+          box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+        .boit_but_telech {
+          margin-top: 10px;
+          padding-right: 15px;
+          display: flex;
+          justify-content: flex-end;
+          width: 100%;
+          .btn-pdf {
+            padding: 8px 15px;
+            background: #e91e63;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s ease;
+          }
+
+          .btn-pdf:hover {
+            background: #c2185b;
+          }
+        }
+      }
+    }
+
+
+
+
+  }
+  /*-----------PANNE-------------*/
+  .graphique_panne{
+    width: 95%;
+    height: 90%;
+    .contient_graphi_panne {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 20px;
+      padding: 10px;
+      width: 100%;
+      height: 90%;
+      border-radius: 30px;
+      backdrop-filter: blur(20px);
+      border-radius: 13px;
+background: #222222;
+box-shadow: inset 5px 5px 12px #121212,
+          inset -5px -5px 12px #323232;
+      overflow-x:scroll; /* Permet le scroll horizontal */
+      overflow-y: hidden;
+      scrollbar-color: #fffb00 #2b2b2b; /* Couleurs pour le scroll : poignée jaune, fond sombre */
+      scrollbar-width: thin;
+      padding-bottom: 10px; /* Ajout d'un petit espace en bas pour l'esthétique */
+        .panne {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 5px;
+          border-radius: 20px;
+          backdrop-filter: blur(20px);
+          border-radius: 9px;
+          background: linear-gradient(45deg, #fae100, #fffdfd);
+          box-shadow:  5px 5px 10px #292626,
+          -5px -5px 10px #222020;
+          padding: 20px;
+          width: 30%; /* Largeur fixe pour bien gérer le scroll */
+          height:80%;
+          min-width: 250px; /* Empêche les cartes d'être trop petites */
+          text-align: center;
+          color: white;
+          flex-shrink: 0; /* Empêche les cartes de se réduire */
+          cursor: pointer;
+
+          h6 {
+            color: #e9b818;
+            margin-bottom: 10px;
+          }
+
+          canvas {
+            width: 300px !important;
+            height: 300px !important;
+          }
+
+          &:hover {
+            transform: scale(1.05);
+          }
+        }
+      }
+
+
+
+    .liste_equipmnt {
+      width: 100%;
+      padding: 20px;
+      background: #1c1c1c;
+      border-radius: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Ombre subtile */
+      .contenu_retour {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        .titre {
+          color: white;
+          font-size: 1.5rem;
+        }
+
+        .precedent {
+          color: #e9b818;
+          cursor: pointer;
+          font-size: 1.5rem;
+        }
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        th, td {
+          padding: 10px;
+          text-align: left;
+          border-bottom: 1px solid #ddd;
+        }
+
+        th {
+          background-color: #302B2B;
+          color: #e9b818;
+        }
+
+        tbody tr:hover {
+          background-color: #444141;
+        }
+      }
+
+
+
+      .boit_but_telech {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        .btn-pdf {
+          background-color: #e9b818;
+          padding: 10px 20px;
+          color: #1c1c1c;
+          font-size: 1.1rem;
+          cursor: pointer;
+          border-radius: 5px;
+          transition: background-color 0.3s;
+        }
+
+        .btn-pdf:hover {
+          background-color: #d39b17;
+        }
+      }
+    }
+  }
+  /*-----------USER------------*/
+
+  }

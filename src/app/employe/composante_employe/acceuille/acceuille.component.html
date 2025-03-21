@@ -1,0 +1,72 @@
+<div class="contenu_graphic">
+  <div class="graphic">
+    <canvas baseChart
+    [data]="bandwidthChartData"
+    [options]="chartOptions"
+    [type]="'line'">
+    </canvas>
+  </div>
+</div>
+
+<div class="contenu_ticket">
+  <div class="ticket">
+    <div class="titre">
+      <div class="titre_ticket">Liste des Tickets </div>
+      <div class="statut">
+        <div class="ouvert">Ouvert</div>
+        <div class="en_cours">En cours</div>
+        <div class="ferme">Fermé</div>
+      </div>
+    </div>
+    <table class="table_ticket">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Titre</th>
+          <th>Catégorie</th>
+          <th>Date Ouverture</th>
+          <th>Date Fermeture</th>
+          <th>Date Prise</th>
+          <th>Statut</th>
+          <th>Bâtiment</th>
+          <th>Bureau</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Problème réseau</td>
+          <td>IT</td>
+          <td>2025-01-20</td>
+          <td>2025-01-21</td>
+          <td>2025-01-20</td>
+          <td>Ouvert</td>
+          <td>Bâtiment A</td>
+          <td>Bureau 101</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Climatisation défectueuse</td>
+          <td>Maintenance</td>
+          <td>2025-01-19</td>
+          <td>2025-01-22</td>
+          <td>2025-01-19</td>
+          <td>En cours</td>
+          <td>Bâtiment B</td>
+          <td>Bureau 203</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Réapprovisionnement</td>
+          <td>Logistique</td>
+          <td>2025-01-18</td>
+          <td>2025-01-18</td>
+          <td>2025-01-18</td>
+          <td>Fermé</td>
+          <td>Bâtiment C</td>
+          <td>Bureau 304</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

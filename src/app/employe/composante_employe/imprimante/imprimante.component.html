@@ -1,0 +1,36 @@
+<!-------------------logiciel--------------->
+<table>
+  <thead>
+    <tr>
+      <th>Logiciel</th>
+      <th *ngFor="let printer of softwarePrinters; let i = index">Imprimante {{ i + 1 }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let key of printerDisplayedKeys">
+      <td><strong>{{ printerKeyLabels[key] }}</strong></td>
+      <td *ngFor="let printer of softwarePrinters">
+        {{ printer[key] !== undefined ? printer[key] : 'Non dispo' }}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!--------------------materiel--------------->
+<table>
+  <thead>
+    <tr>
+      <th>Matériel</th>
+      <th *ngFor="let printer of materialPrinters; let i = index">Imprimante {{ i + 1 }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let key of printerDisplayedKeys">
+      <td><strong>{{ printerKeyLabels[key] }}</strong></td>
+      <td *ngFor="let printer of materialPrinters">
+        {{ printer[key] !== undefined ? printer[key] : 'Non dispo' }}
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,249 @@
+<div class="batiment_g">
+  <div class="contenu_batiment">
+    <div   *ngFor="let serveur of All_serveur; let i = index" (click)="recupere_serveur_id(serveur.id || -1)"  class="batiment"> {{ serveur.nom  || ' inconnu'}}</div>
+    <div     class="batiment_rpp"   (click)="telecharge_pdf()">Générer un rapport  </div>
+  </div>
+</div>
+<div class="contienttable">
+<h2>Informations Générales du Serveur</h2>
+<table>
+  <thead>
+    <tr>
+      <tr>
+        <th>Nom</th>
+        <th>Système d'Exploitation</th>
+
+        <th>Hébergeur</th>
+        <th>Type d'Hébergement</th>
+        <th>Date Installation</th>
+        <th>Statut</th>
+        <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td (dblclick)="modifierCategorie(1)">
+        <ng-container *ngIf="!isEditing[1]">{{ serveur_id?.nom}} </ng-container>
+      <input *ngIf="isEditing[1]" [(ngModel)]="nom_serveur" (keydown.enter)="Modificationnom(1)" placeholder=""/>
+
+      </td>
+      <td (dblclick)="modifierCategorie(2)">
+          <ng-container *ngIf="!isEditing[2]">{{ serveur_id?.systemeExploitation }}</ng-container>
+          <input *ngIf="isEditing[2]" [(ngModel)]="systemeExploitation_serveur" (keydown.enter)="  ModificationSystemeExploitation(2)" />
+      </td>
+      <td (dblclick)="modifierCategorie(4)">
+        <ng-container *ngIf="!isEditing[4]">{{serveur_id?.hebergeur }}</ng-container>
+        <input *ngIf="isEditing[4]" [(ngModel)]="hebergeur_serveur" (keydown.enter)="ModificationHebergeur (4)" />
+      </td>
+      <td (dblclick)="modifierCategorie(5)">
+        <ng-container *ngIf="!isEditing[5]">{{serveur_id?.typeHeberge }}</ng-container>
+        <input *ngIf="isEditing[5]" [(ngModel)]="typeHeberge_serveur" (keydown.enter)="ModificationTypeHeberge (5)" />
+      </td>
+      <td  >
+        <ng-container >{{ serveur_id?.dateInstallation   }}</ng-container>
+      </td>
+      <td  >
+        <ng-container >{{serveur_id?.statut}}</ng-container>
+      </td>
+      <td (dblclick)="modifierCategorie(8)">
+        <ng-container *ngIf="!isEditing[8]">{{serveur_id?.description}}</ng-container>
+        <input *ngIf="isEditing[8]" [(ngModel)]="description_serveur" (keydown.enter)="ModificationDescription (8)" />
+      </td>
+
+    </tr>
+  </tbody>
+</table>
+<table>
+  <thead>
+    <tr>
+      <tr>
+        <th  *ngIf="serveur_id?.mode==='Local'" >Emplacement</th>
+        <th>mode</th>
+        <th>Prix</th>
+        <th>Période de payment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td  *ngIf="serveur_id?.mode==='Local'"  >
+        <ng-container>{{recupe_nom_bureau( serveur_id?.idBureau || '-1' )}} </ng-container>
+
+
+      </td>
+      <td (dblclick)="modifierCategorie(23)">
+          <ng-container *ngIf="!isEditing[23]">{{ serveur_id?.mode }}</ng-container>
+          <input *ngIf="isEditing[23]" [(ngModel)]="mode_serveur" (keydown.enter)=" Modificationmode(23)" />
+      </td>
+      <td (dblclick)="modifierCategorie(24)">
+        <ng-container *ngIf="!isEditing[24]">{{ serveur_id?.prix }}</ng-container>
+        <input *ngIf="isEditing[24]" [(ngModel)]="prix_serveur" (keydown.enter)=" ModificationPrix (24)" />
+      </td>
+      <td (dblclick)="modifierCategorie(25)">
+        <ng-container   *ngIf="serveur_id?.mode === 'En ligne' && !isEditing[25]">{{serveur_id?.periodePaiement }}</ng-container>
+        <ng-container *ngIf="serveur_id?.mode==='Local' && !isEditing[25] ">Accun </ng-container>
+        <input  *ngIf="serveur_id?.mode === 'En ligne' && isEditing[25]" [(ngModel)]="periodePaiement_serveur" (keydown.enter)="ModificationHebergeur (25)" />
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Table Configuration Matérielle -->
+ <h2> Matérielle</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Modèle CPU</th>
+        <th>Fréquence du  CPU</th>
+        <th>RAM Totale (Go)</th>
+        <th>Type du RAM</th>
+        <th>Stockage Total (Go)</th>
+        <th>Type du Disque</th>
+        <th>Modèle GPU</th>
+        <th>Fréquence du GPU  </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td (dblclick)="modifierCategorie(9)">
+          <ng-container *ngIf="!isEditing[9]">{{ serveur_id?.modeleCPU }}</ng-container>
+          <input *ngIf="isEditing[9]" [(ngModel)]="modeleCPU_serveur" (keydown.enter)="ModificationModeleCPU (9)" />
+        </td>
+        <td (dblclick)="modifierCategorie(10)">
+          <ng-container *ngIf="!isEditing[10]">{{ serveur_id?.frequenceCPU }}</ng-container>
+          <input *ngIf="isEditing[10]" [(ngModel)]="frequenceCPU_serveur" (keydown.enter)="ModificationFrequenceCPU(10)" />
+        </td>
+        <td (dblclick)="modifierCategorie(11)">
+          <ng-container *ngIf="!isEditing[11]">{{ serveur_id?.ram}}</ng-container>
+          <input *ngIf="isEditing[11]" [(ngModel)]="ram_serveur" (keydown.enter)="ModificationRAM(11)" />
+        </td>
+        <td (dblclick)="modifierCategorie(12)">
+          <ng-container *ngIf="!isEditing[12]">{{ serveur_id?.typeram}}</ng-container>
+          <input *ngIf="isEditing[12]" [(ngModel)]="typeram_serveur" (keydown.enter)="ModificationtypeRAM(12)" />
+        </td>
+        <td (dblclick)="modifierCategorie(13)">
+          <ng-container *ngIf="!isEditing[13]">{{ serveur_id?.stockage}}</ng-container>
+          <input *ngIf="isEditing[13]" [(ngModel)]="stockage_serveur" (keydown.enter)="ModificationStockage(13)" />
+        </td>
+        <td (dblclick)="modifierCategorie(14)">
+          <ng-container *ngIf="!isEditing[14]">{{ serveur_id?.typeDisque}}</ng-container>
+          <input *ngIf="isEditing[14]" [(ngModel)]="typeDisque_serveur" (keydown.enter)="ModificationTypeDisque(14)" />
+        </td>
+        <td (dblclick)="modifierCategorie(15)">
+          <ng-container *ngIf="!isEditing[15]">{{ serveur_id?.gpu}}</ng-container>
+          <input *ngIf="isEditing[15]" [(ngModel)]="gpu_serveur" (keydown.enter)="ModificationGPU(15)" />
+        </td>
+        <td (dblclick)="modifierCategorie(16)">
+          <ng-container *ngIf="!isEditing[16]">{{ serveur_id?.frequenceGPU}}</ng-container>
+          <input *ngIf="isEditing[16]" [(ngModel)]="frequenceGPU_serveur" (keydown.enter)="ModificationFrequenceGPU(16)" />
+        </td>
+      </tr>
+  </table>
+
+  <h2>Réseau</h2>
+  <!-- Table Configuration Réseau -->
+  <table>
+    <thead>
+      <tr>
+        <th>Adresse MAC</th>
+        <th>Adresse IP</th>
+        <th>DNS Primaire</th>
+        <th>DNS Secondaire</th>
+        <th>Passerelle</th>
+        <th>Protocole Utilisé</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td (dblclick)="modifierCategorie(17)">
+          <ng-container *ngIf="!isEditing[17]">{{ serveur_id?.mac }}</ng-container>
+          <input *ngIf="isEditing[17]" [(ngModel)]="mac_serveur" (keydown.enter)="ModificationMAC(17)" />
+        </td>
+        <td (dblclick)="modifierCategorie(18)">
+          <ng-container *ngIf="!isEditing[18]">{{ serveur_id?.ip }}</ng-container>
+          <input *ngIf="isEditing[18]" [(ngModel)]="ip_serveur" (keydown.enter)="ModificationIP(18)" />
+        </td>
+        <td (dblclick)="modifierCategorie(19)">
+          <ng-container *ngIf="!isEditing[19]">{{ serveur_id?.dnsPrimaire }}</ng-container>
+          <input *ngIf="isEditing[19]" [(ngModel)]="dnsPrimaire_serveur" (keydown.enter)="ModificationDNSPrimaire(19)" />
+        </td>
+        <td (dblclick)="modifierCategorie(20)">
+          <ng-container *ngIf="!isEditing[20]">{{ serveur_id?.dnsSecondaire }}</ng-container>
+          <input *ngIf="isEditing[20]" [(ngModel)]="dnsSecondaire_serveur" (keydown.enter)="ModificationDNSSecondaire(20)" />
+        </td>
+        <td (dblclick)="modifierCategorie(21)">
+          <ng-container *ngIf="!isEditing[21]">{{ serveur_id?.passerelle }}</ng-container>
+          <input *ngIf="isEditing[21]" [(ngModel)]="passerelle_serveur" (keydown.enter)="ModificationPasserelle(21)" />
+        </td>
+        <td (dblclick)="modifierCategorie(22)">
+          <ng-container *ngIf="!isEditing[22]">{{ serveur_id?.protocole }}</ng-container>
+          <input *ngIf="isEditing[22]" [(ngModel)]="protocole_serveur" (keydown.enter)="ModificationProtocole(22)" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+<!-- Table Système d'Exploitation -->
+<h2> Services Hébergés</h2>
+<div  class="insertion_moniteur">
+  <table class="table1">
+    <thead>
+      <tr>
+        <th>ID</th>
+          <th>Nom Service</th>
+          <th>Version</th>
+          <th>Services</th>
+          <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr   *ngFor="let service of service_idserveur; let i = index">
+        <td>
+          <ng-container  >{{i+1}}</ng-container>
+        </td>
+        <td >
+          <ng-container >{{ service.nom }}</ng-container>
+        </td>
+        <td>
+          <ng-container>{{ service.version }}</ng-container>
+        </td>
+        <td >
+          <ng-container >{{ service.service }}</ng-container>
+
+        </td>
+        <td>  <div (click)="supprime_service_id(service.id || -1, $event)" class="supprime"></div></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="insertion_batiment">
+    <div class="titre">Insertion d'un Service</div>
+      <!--<form #f="ngForm" class="formul_insert_ordi" (ngSubmit)="onSubmit_service( )">-->
+    <form #f="ngForm" class="formul_insert_ordi" (ngSubmit)="addservice()" >
+      <div class="contenu_nom_champ_isert_ordi">
+
+        <div class="form-group">
+          <label for="nom_ordi">Nom du service</label>
+          <input type="text" id="nom_ordi" name="nom" [(ngModel)]="newserviceserveur.nom" placeholder="Nom de l'ordinateur" required>
+        </div>
+
+        <div class="form-group">
+          <label for="prix">Version du service</label>
+          <input type="text"  id="prix" name="prix" [(ngModel)]="newserviceserveur.version" placeholder="Version" required>
+        </div>
+
+        <div class="form-group">
+          <label for="date_acquisition">Service</label>
+          <input type="text"  id="date_acquisition" name="dateAcquisition" [(ngModel)]="newserviceserveur.service" required>
+        </div>
+        <div style="margin-top: 2%;height:30% ;" class="contenu_butt">
+          <button type="submit" class="submit-btn">Ajouter</button>
+        </div>
+      </div>
+
+
+    </form>
+  </div>
+</div>
+
+
+
+</div>

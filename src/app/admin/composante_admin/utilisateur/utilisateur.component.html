@@ -1,0 +1,94 @@
+<div class="conteint_but_user">
+  <div class="contient_butt">
+    <div class="but" (click)="afficherUtilisateur()">Liste des utilisateurs</div>
+    <div class="but" (click)=" affichervalidation()">Validation des inscriptions</div>
+    <div class="but" (click)=" telecharge_pdf()">Générer un rapport</div>
+  </div>
+  <!---------------------liste---------------------------->
+  <div *ngIf="affichageUtilisateur" class="contenu_general">
+    <div class="entet_table">Administrateur reseau</div>
+    <table>
+      <thead>
+
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>N° matricule</th>
+          <th>Bureau</th>
+          <th>Ordinateur</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let admin of Admin_reseau">
+          <td>{{ admin.nom }}</td>
+          <td>{{ admin.prenom }}</td>
+          <td>{{ admin.nMatricule }}</td>
+          <td>{{ getNomBureau(admin.idBureau, admin.profession) }}</td>
+          <td>{{ getNomOrdi(admin.idPc, admin.profession) }}</td>
+        </tr>
+
+
+      </tbody>
+    </table>
+
+    <div class="entet_table">Téchnicien</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>N° matricule</th>
+          <th>Bureau</th>
+          <th>Ordinateur</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tech of Technicien">
+          <td>{{ tech.nom }}</td>
+          <td>{{ tech.prenom }}</td>
+          <td>{{ tech.nMatricule }}</td>
+          <td>{{ getNomBureau(tech.idBureau,tech.profession) }}</td>
+          <td>{{ getNomOrdi(tech.idPc, tech.profession) }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="entet_table">Autre Employé</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>N° matricule</th>
+          <th>Bureau</th>
+          <th>Ordinateur</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employe of Autre_Profession">
+          <td>{{ employe.nom }}</td>
+          <td>{{ employe.prenom }}</td>
+          <td>{{ employe.nMatricule }}</td>
+          <td>{{ getNomBureau(employe.idBureau,employe.profession) }}</td>
+          <td>{{ getNomOrdi(employe.idPc,employe.profession) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!------------------cle--------------------------------->
+  <div *ngIf="affichagecle" class="contenu_valide">
+      <div class="contenucle">
+      <div class="cleemploye" *ngFor=" let user of utilisateur">
+        <div class="contenu_log_info">
+          <div class="image_logo"></div>
+          <div class="info_user">
+            <div class="nom ">{{user.nom}} {{user.prenom}}</div>
+            <div class="matricule">{{user.profession}} {{user.nMatricule}}</div>
+          </div>
+        </div>
+          <div class="but" (click)="validation(user.id || -1, user.nom || 'Invalide',  user.prenom || 'Inconnu',user.nMatricule || '0000', user.email || 'email@inconnu.com', user.motPasse || 'defaultPassword',user.dateNaissance || '01-01-2000',user.telephone || '0000000000', user.profession || 'Non défini', user.idPc || 'Aucun', user.idBureau || 'Aucun')">Valider</div>
+      </div>
+      </div>
+  </div>
+</div>

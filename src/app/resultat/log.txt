@@ -1,0 +1,1 @@
+Données reçues : {"created_at":"2024-10-05T18:49:24Z","entry_id":28,"field1":"-1.07","field2":"0.27","field3":"17.51","field4":"0.07","field5":"26.40","field6":"220.00","field7":"-87.49","field8":"414.01"}
