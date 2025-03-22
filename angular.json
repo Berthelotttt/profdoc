@@ -15,7 +15,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:prerender",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/gpi",
             "index": "src/index.html",
@@ -39,8 +39,7 @@
             "outputMode": "server",
             "ssr": {
               "entry": "src/server.ts"
-            },
-            "routes": []
+            }
           },
           "configurations": {
             "production": {
