@@ -407,7 +407,8 @@ async verifie_mise_jour(directoryPath: string): Promise<boolean | null> {
   }
 //----------------------------api---------------------------------------------
  // Définir l'URL de l'API et l'entité "bureaux"
-private apiUrl = 'http://localhost:8080/';
+//private apiUrl = 'http://localhost:8080/';
+private apiUrl =  'https://databasecti.onrender.com/'
  private entite_priseantivirus = 'api/priseantivirus';
 private entite_prisemisejour ="prisemiseajourlogiciels"
 private entite_projecteur = 'projecteurs';
