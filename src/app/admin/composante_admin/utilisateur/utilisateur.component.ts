@@ -173,38 +173,20 @@ export class UtilisateurComponent implements OnInit{
     //mettre a jour l affichage
      this.recupe_user_validation()
   }
+  user: Utilisateur[] = [];
   //------------------liste-------------------------
   async recupe_user_profession(){
-    //-------Administrateur Réseau--------
-   await this.backend.getUtilisateursParProfession("Administrateur Réseau").subscribe({
-     next: (data) => {
-       this.Admin_reseau = data;
-       console.log(   this.Admin_reseau)
-       },
-     error: (err) => {
-       alert("Ce compte n'existe pas")
-     }
-   });
-   //-------technicien--------
-   await this.backend.getUtilisateursParProfession("Technicien").subscribe({
-     next: (data) => {
-       this.Technicien = data;
-       console.log(   this.Technicien)
-       },
-     error: (err) => {
-       alert("Ce compte n'existe pas")
-     }
-   });
-   //-------Autres professions--------
-   await this.backend.getUtilisateursParProfession("Autres professions").subscribe({
-     next: (data) => {
-       this.Autre_Profession = data;
-       console.log( this.Autre_Profession)
-       },
-     error: (err) => {
-       alert("Ce compte n'existe pas")
-     }
-   });
+    await this.backend.getTousLesUtilisateurs().subscribe({
+      next: (data) => {
+        this.user=data
+        console.log(  this.user)
+        this.Admin_reseau = this.user.filter(u => u.profession === "Administrateur réseau");
+        this.Technicien = this.user.filter(u => u.profession === "Technicien");
+        this.Autre_Profession = this.user.filter(u => u.profession === "Autres professions");
+        console.log(  this.Technicien )
+      },
+
+    });
  }
   recupe_all_bureau() {
     this.backend.getAllBureaux().subscribe({

@@ -1,7 +1,8 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { BackendserviceService } from '../../backendservice.service';
+import { BackendserviceService } from '../../../backendservice.service';
 export interface Utilisateur {
   id?: number;
   nom: string;
@@ -23,11 +24,11 @@ export interface Utilisateur {
     FormsModule,
   ],
   selector: 'app-profil',
-
   templateUrl: './profil.component.html',
   styleUrl: './profil.component.scss'
 })
-export class ProfilComponent  implements OnInit {
+export class ProfilComponent   implements OnInit{
+
   constructor(private route: ActivatedRoute, private backend: BackendserviceService) {}
 
   user_id: Utilisateur = {
@@ -117,3 +118,4 @@ export class ProfilComponent  implements OnInit {
     });
   }
 }
+

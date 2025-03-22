@@ -21,12 +21,21 @@
           <select id="role" name="role" required [(ngModel)]="roleSelectionne">
             <option value="" disabled selected>Choisissez votre profession</option>
             <option value="Administrateur parc informatique">Administrateur du parc informatique</option>
-            <option value="Administrateur réseau">Administrateur réseau</option>
             <option value="Technicien">Technicien</option>
-            <option value="Autres professions">Autres professions</option>
         </select>
 
             </div>
+            <div *ngIf="plateformeDifferentDeNavigateur" class="form-group  ">
+              <label for="role">Profession</label>
+              <select id="role" name="role" required [(ngModel)]="roleSelectionne">
+                <option value="" disabled selected>Choisissez votre profession</option>
+                <option value="Administrateur parc informatique">Administrateur du parc informatique</option>
+                <option value="Administrateur réseau">Administrateur réseau</option>
+                <option value="Technicien">Technicien</option>
+                <option value="Autres professions">Autres professions</option>
+            </select>
+
+                </div>
         <button type="submit" class="submit-btn">Se connecter</button>
         <p>Pas encore inscrit ? <a class="texte_Inscrivez_vous" (click)="Affiche_inscription()"  >Inscrivez-vous ici</a></p>
       </form>

@@ -2013,7 +2013,7 @@ recupere_serveurmodi_id(id: number) {
   backequipemnt_bureau(){
     this. visualisation_routeur =false;
     this. visualisation_commutateur =false;
-    this. visualisation_pointacce =false;
+    this. visualisation_pointacc =false;
     this. visualisation_serveur =false;
     this. visualisation_ordi =false;
 
@@ -2810,7 +2810,7 @@ recupe_stabilisateur_bureau(){
 
   // Recherche  nom l'ordinateur
   this.Stabilisateur_bureau = this.All_Stabilisateur.filter(u => u.idbureau === id_br);
- // Assurez-vous que idPc est une chaîne de caractères 
+ // Assurez-vous que idPc est une chaîne de caractères
 
 }
 async addstabilisateur(){
@@ -3143,11 +3143,11 @@ async supprime_routeur_id(id: number, event: MouseEvent) {
         alert('Erreur lors de l\'ajout du newinterfacerouteu .');
       },
     });
-  } 
+  }
   async supprime_wifi_routeur(id: number, event: MouseEvent) {
 
     // Empêcher la propagation de l'événement pour éviter de déclencher visualise_equip()
-    event.stopPropagation(); 
+    event.stopPropagation();
     if (id === -1) {
       console.error('ID invalide pour la suppression');
       return;

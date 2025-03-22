@@ -111,7 +111,65 @@
         border-radius: 5px;
         width: 100%;
       }
+      .contient_tableau {
+        width: 50%;
+        height: 105%;
+        background: rgba(241, 241, 236, 0.233);
+        backdrop-filter: blur(20px);
+        border-radius: 10px;
+        box-shadow: 0 8px 10px 5px rgba(0, 0, 0, 0.4);
+        overflow-x: auto; /* Pour la compatibilité avec les petits écrans */
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          text-align: left;
 
+        td {
+          padding: 10px 15px;
+          border-top: 1px solid #fffb00;
+        }
+
+        th {
+          background-color: #d5d8d8;
+          color: rgb(24, 23, 12);
+          font-weight: bold;
+          padding: 10px;
+        }
+
+        td {
+          color: rgb(19, 16, 0);
+          font-weight:200;
+        }
+
+        /* Responsivité - sur petits écrans */
+        @media (max-width: 600px) {
+          th, td {
+            padding: 8px;
+            font-size: 14px;
+          }
+        }
+        }
+        .boit_but_telech {
+          margin-top: 10px;
+          display: flex;
+          justify-content: flex-end;
+          width: 100%;
+          .btn-pdf {
+            padding: 8px 15px;
+            background: #e91e63;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s ease;
+          }
+
+          .btn-pdf:hover {
+            background: #c2185b;
+          }
+        }
+      }
 
       /*------------ repart-----------------*/
       .contenu_graph_repart {
@@ -173,7 +231,7 @@
         }
       }
        /*------------ age-----------------*/
-       .contenu_graph_age {
+       .contenu_graph_agex{
         display: flex;
         justify-content: space-between;
         flex-direction: row;
@@ -1109,5 +1167,145 @@ box-shadow: inset 5px 5px 12px #121212,
     }
   }
   /*-----------USER------------*/
+   /*------------ age-----------------*/
 
   }
+
+.contenu_graph_agex{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  overflow: hidden;
+  gap: 20px;
+  width: 80%;
+  height: 320px;
+  padding: 20px;
+  margin-left:7%;
+  .contient_graphic_circuage {
+    background: rgba(241, 241, 236, 0.233);
+    backdrop-filter: blur(20px);
+    border-radius: 10px;
+    box-shadow: 0 8px 10px 5px rgba(0, 0, 0, 0.4);
+    width: 20%;
+    height: 258px;
+    overflow: hidden;
+
+  }
+  .contient_tableaux {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background: rgba(241, 241, 236, 0.233);
+    backdrop-filter: blur(20px);
+    border-radius: 10px;
+    box-shadow: 0 8px 10px 5px rgba(0, 0, 0, 0.4);
+    width: 60%;
+    height: 280px;
+    padding: 20px;
+    color: white;
+    gap: 5px;
+    overflow: hidden;
+    overflow-y: scroll;
+
+  /* Sélection de l'âge */
+    .champ_age {
+      width: 50%;
+      font-size: 18px;
+      label {
+        margin-right: 10px;
+      }
+      select {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background: white;
+        color: black;
+      }
+  }
+  /* Tableau */
+  .table_equipement {
+    width: 100%;
+    border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    color: #000;
+    border-radius: 10px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+
+
+    /* Style des titres de colonnes */
+    th {
+      background-color: #000; /* Fond noir pour l'en-tête */
+      color: white;
+      padding: 4px;
+      text-align: left;
+      font-size: 16px;
+      text-transform: uppercase;
+      border-bottom: 3px solid rgb(252, 236, 11); /* Séparateur visuel */
+
+    }
+    .contenu_logo_titre{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .titre_texte{
+        font-size: 17px;
+        color: #f1e979;
+      }
+    }
+    /* Style des cellules */
+    td {
+      padding: 12px;
+      text-align: left;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Alternance des couleurs pour les lignes */
+    tr:nth-child(odd) {
+      background-color: #222;
+      color: #fdf986;
+    }
+
+    tr:nth-child(even) {
+      background-color: #2c2a2a;
+      color: #fdf986;
+    }
+
+    /* Effet hover pour dynamiser */
+    tr:hover {
+      background-color: #3b3b3b;
+      transition: background-color 0.3s ease;
+    }
+
+  }
+  /* Bouton */
+  .conitient_but_gener {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    text-align: center;
+    width: 100%;
+    button {
+      background: #e9b818;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #d4a117;
+    }
+
+  }
+
+  }
+
+}

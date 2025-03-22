@@ -165,7 +165,7 @@ async recupe_all_ticket() {
         // Filtrage des tickets par statut
         this.tickets_ouvert = this.tickets.filter(ticket => ticket.statut === 'OUVERT');
         this.tickets_encours = this.tickets.filter(ticket => ticket.statut === 'EN COURS DE MAINTENANCE'  );
-        this.tickets_ferme = this.tickets.filter(ticket => ticket.statut === 'FERMÉ');
+        this.tickets_ferme = this.tickets.filter(ticket => ticket.statut === 'FERME');
 
         // Affectation des tickets ouverts
         this.tickets = this.tickets_ouvert;

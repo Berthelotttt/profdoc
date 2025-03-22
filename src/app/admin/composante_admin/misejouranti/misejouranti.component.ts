@@ -1,4 +1,9 @@
 
+
+
+//---------------
+
+
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -7,7 +12,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { RouterOutlet } from '@angular/router';
 
 import { ActivatedRoute } from '@angular/router';
-import { BackendserviceService } from '../../backendservice.service';
+import { BackendserviceService } from '../../../backendservice.service';
 export interface Ordinateur  {
   id?: number;  // Ajout d'un ID facultatif
   nom: string;
@@ -76,17 +81,18 @@ export interface Prisemiseajourlogiciel {
   idtechnin: string; // Nouveau champ : ID du technicien
   nomtechnicein: string; // Nouveau champ : Nom du technicien
 }
+
 @Component({
   imports: [ RouterOutlet,
     CommonModule,
     FormsModule,
     MatButtonModule,
     MatDialogModule],
-      selector: 'app-misejourpc',
-      templateUrl: './misejourpc.component.html',
-      styleUrl: './misejourpc.component.scss'
+    selector: 'app-misejouranti',
+    templateUrl: './misejouranti.component.html',
+    styleUrl: './misejouranti.component.scss'
     })
-    export class MisejourpcComponent {
+    export class MisejourantiComponent {
 
   tickets_ouvert: Ticket[] = [];
   tickets_encours: Ticket[] = [];

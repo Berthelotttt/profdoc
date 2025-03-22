@@ -1,0 +1,602 @@
+nom:
+date_aquisition:
+statut
+id_bureau
+prix
+ordinateur:{manufacturer: 'HP', model: 'HP Laptop 15-bs0xx', serial: 'CND73186WP', version: 'Type1ProductConfigId'}
+os:{} {platform: 'Windows', arch: 'x64', hostname: 'Thelot', serial: '00331-10000-00001-AA915', version: '10.0.19045'}
+ram [{…}, {…}]  {manufacturer: 'SK Hynix', type: 'DDR4', size: 4294967296, clockSpeed: 2133, serialNum: '293A2580'}{manufacturer: 'SK Hynix', type: 'DDR4', size: 4294967296, clockSpeed: 2133, serialNum: '20D82EA4'}
+virus [{…}]   {Name: 'Windows Defender', AntivirusEnabled: true, AntivirusSignatureVersion: '1.421.1876.0', AntivirusSignatureLastUpdated: '14/02/2025'}
+cpu:{ } {manufacturer: 'Intel', brand: 'Core™ i3-6006U', vendor: 'GenuineIntel', speed: 2, cores: 4}
+disks: [{…}]  {name: 'WDC WD3200BEKT-22PVMT0', type: 'HD', size: 320070320640, serialNum: 'WD-WXJ1A9197133', interfaceType: 'SATA', …}
+gpu [{…}, {…}]  {model: 'Intel(R) HD Graphics 520', vendor: 'Intel Corporation', vram: 1024}
+moniteur [{…}, {…}]   {model: 'Moniteur Plug-and-Play générique', vendor: '(Types d’écrans standard)', connection: 'INTERNAL', builtin: true, main: true, …
+net:[{…}, {…}, {…}, {…}, {…}]
+peripheriques: [{…}, {…}, {…}]   {Name: 'Synaptics SMBus TouchPad', Class: 'Mouse', Status: 'OK'}  {Name: 'Synaptics SMBus TouchPad', Class: 'Mouse', Status: 'OK'}
+//-------------------------------------bureau----------------------------------------
+model
+package database.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class Bureau {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    @Column(nullable = false)
+    private String nom;
+
+    @Column(nullable = false)
+    private int etage;
+
+    // Constructeur par défaut
+    public Bureau() {
+    }
+
+    // Constructeur avec paramètres
+    public Bureau(long id, String nom, int etage) {
+        this.id = id;
+        this.nom = nom;
+        this.etage = etage;
+    }
+
+    // Getters and Setters
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public int getEtage() {
+        return etage;
+    }
+
+    public void setEtage(int etage) {
+        this.etage = etage;
+    }
+
+    // Méthode toString pour afficher les informations du bureau
+    @Override
+    public String toString() {
+        return "Bureau{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", etage=" + etage +
+                '}';
+    }
+}
+repositorie
+package database.repositori;
+import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import database.model.Bureau;
+
+@Repository
+public interface BureauRepository extends CrudRepository<Bureau, Long> {
+
+    // Trouver un bureau par son nom
+    Optional<Bureau> findByNom(String nom);
+
+    // Trouver un bureau par son étage
+    Optional<Bureau> findByEtage(int etage);
+
+    // Trouver le dernier bureau ajouté (par ordre décroissant d'ID)
+    Optional<Bureau> findTopByOrderByIdDesc();
+}
+//---------------------------------------------------------------------------------
+service
+package database.service; 
+ 
+import database.model.Bureau;
+import database.repositori.BureauRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class BureauService {
+
+    @Autowired
+    private BureauRepository bureauRepository;
+
+    // Récupérer tous les bureaux
+    public List<Bureau> getAllBureaux() {
+        List<Bureau> bureaux = new ArrayList<>();
+        bureauRepository.findAll().forEach(bureaux::add);
+        return bureaux;
+    }
+
+    // Récupérer un bureau par ID
+    public Bureau getBureauById(long id) {
+        return bureauRepository.findById(id).orElse(null);
+    }
+
+    // Récupérer un bureau par nom
+    public Bureau getBureauByNom(String nom) {
+        return bureauRepository.findByNom(nom).orElse(null);
+    }
+
+    // Récupérer un bureau par étage
+    public Bureau getBureauByEtage(int etage) {
+        return bureauRepository.findByEtage(etage).orElse(null);
+    }
+
+    // Ajouter un nouveau bureau
+    public void addBureau(Bureau bureau) {
+        bureauRepository.save(bureau);
+    }
+
+    // Mettre à jour un bureau existant
+    public void updateBureau(Bureau bureau, long id) {
+        Optional<Bureau> bureauData = bureauRepository.findById(id);
+        if (bureauData.isPresent()) {
+            Bureau existingBureau = bureauData.get();
+            existingBureau.setNom(bureau.getNom());
+            existingBureau.setEtage(bureau.getEtage());
+            bureauRepository.save(existingBureau);
+        }
+    }
+
+    // Supprimer un bureau par ID
+    public void deleteBureau(long id) {
+        bureauRepository.deleteById(id);
+    }
+}
+
+//------------------------------------------------------------------------
+controleur
+package database.controleure;
+import database.model.Bureau;
+import database.service.BureauService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@CrossOrigin(origins = "*")
+@RequestMapping("/bureaux")
+public class BureauControleur {
+
+    @Autowired
+    private BureauService bureauService;
+
+    // Récupérer tous les bureaux
+    @GetMapping
+    public List<Bureau> getAllBureaux() {
+        return bureauService.getAllBureaux();
+    }
+
+    // Récupérer un bureau par ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Bureau> getBureauById(@PathVariable long id) {
+        Bureau bureau = bureauService.getBureauById(id);
+        if (bureau != null) {
+            return new ResponseEntity<>(bureau, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Récupérer un bureau par nom
+    @GetMapping("/nom/{nom}")
+    public ResponseEntity<Bureau> getBureauByNom(@PathVariable String nom) {
+        Bureau bureau = bureauService.getBureauByNom(nom);
+        if (bureau != null) {
+            return new ResponseEntity<>(bureau, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Récupérer un bureau par étage
+    @GetMapping("/etage/{etage}")
+    public ResponseEntity<Bureau> getBureauByEtage(@PathVariable int etage) {
+        Bureau bureau = bureauService.getBureauByEtage(etage);
+        if (bureau != null) {
+            return new ResponseEntity<>(bureau, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Ajouter un nouveau bureau
+    @PostMapping
+    public ResponseEntity<Map<String, String>> addBureau(@RequestBody Bureau bureau) {
+        bureauService.addBureau(bureau);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Bureau ajouté avec succès");
+        return ResponseEntity.ok(response);
+    }
+
+    // Mettre à jour un bureau existant
+    @PutMapping("/{id}")
+    public ResponseEntity<Map<String, String>> updateBureau(@RequestBody Bureau bureau, @PathVariable long id) {
+        bureauService.updateBureau(bureau, id);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Bureau mis à jour avec succès");
+        return ResponseEntity.ok(response);
+    }
+
+    // Supprimer un bureau par ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBureau(@PathVariable long id) {
+        bureauService.deleteBureau(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+}
+//-----------------------------------------------ordinateur-----------------------------------------------
+model
+package database.model;
+import jakarta.persistence.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+@Entity
+public class Ordinateur {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false)
+    private String nom;
+    @Column(nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date dateAcquisition;
+    @Column(nullable = false)
+    private String statut;
+    @Column(nullable = false)
+    private int idBureau;
+    @Column(nullable = false)
+    private double prix;
+
+    @Convert(converter = MapToStringConverter.class)
+    @Column(columnDefinition = "TEXT") // Utiliser TEXT pour éviter la limitation de longueur
+    private Map<String, Object> ordinateur;
+
+    @Convert(converter = MapToStringConverter.class)
+    @Column(columnDefinition = "TEXT")
+    private Map<String, Object> os;
+
+    @Convert(converter = MapToStringConverter.class)
+    @Column(columnDefinition = "TEXT")
+    private Map<String, Object> cpu;
+
+    @Convert(converter = MapToStringConverter.class)
+    @Column(columnDefinition = "TEXT")
+    private List<Map<String, Object>> disks;
+
+    @Convert(converter = MapToStringConverter.class)
+    @Column(columnDefinition = "TEXT")
+    private List<Map<String, Object>> ram;
+
+    @Convert(converter = MapToStringConverter.class)
+    @Column(columnDefinition = "TEXT")
+    private List<Map<String, Object>> virus;
+
+    @Convert(converter = MapToStringConverter.class)
+    @Column(columnDefinition = "TEXT")
+    private List<Map<String, Object>> gpu;
+
+    @Convert(converter = MapToStringConverter.class)
+    @Column(columnDefinition = "TEXT")
+    private List<Map<String, Object>> moniteur;
+
+    @Convert(converter = MapToStringConverter.class)
+    @Column(columnDefinition = "TEXT")
+    private List<Map<String, Object>> peripheriques;
+    
+    @Convert(converter = MapToStringConverter.class)
+    @Column(columnDefinition = "TEXT")
+    private List<Map<String, Object>> interfacereseau;
+    @Convert(converter = MapToStringConverter.class)
+    @Column(columnDefinition = "TEXT")
+    private List<Map<String, Object>> logiciel;
+ // Constructeur avec tous les paramètres
+    public Ordinateur(String nom, Date dateAcquisition, String statut, int idBureau, double prix,
+                      Map<String, Object> ordinateur, Map<String, Object> os, List<Map<String, Object>> ram, Map<String, Object> cpu,
+                      List<Map<String, Object>> disks, List<Map<String, Object>> virus,
+                      List<Map<String, Object>> gpu, List<Map<String, Object>> moniteur, List<Map<String, Object>> peripheriques,
+                      List<Map<String, Object>> interfacereseau,List<Map<String, Object>> logiciel) {
+        this.nom = nom;
+        this.dateAcquisition = dateAcquisition;
+        this.statut = statut;
+        this.idBureau = idBureau;
+        this.prix = prix;
+        this.ordinateur = ordinateur;
+        this.os = os; 
+        this.ram=ram;
+        this.cpu = cpu;
+        this.disks = disks;
+        this.virus = virus;
+        this.gpu = gpu;
+        this.moniteur = moniteur;
+        this.peripheriques = peripheriques;
+        this.interfacereseau=interfacereseau;
+        this.logiciel= logiciel;
+        
+    }  
+	// Constructeur par défaut (obligatoire pour JPA)
+    public Ordinateur() {
+    }
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public Date getDateAcquisition() {
+		return dateAcquisition;
+	}
+
+	public void setDateAcquisition(Date dateAcquisition) {
+		this.dateAcquisition = dateAcquisition;
+	}
+
+	public String getStatut() {
+		return statut;
+	}
+
+	public void setStatut(String statut) {
+		this.statut = statut;
+	}
+
+	public int getIdBureau() {
+		return idBureau;
+	}
+
+	public void setIdBureau(int idBureau) {
+		this.idBureau = idBureau;
+	}
+
+	public double getPrix() {
+		return prix;
+	}
+
+	public void setPrix(double prix) {
+		this.prix = prix;
+	}
+
+	public Map<String, Object> getOrdinateur() {
+		return ordinateur;
+	}
+
+	public void setOrdinateur(Map<String, Object> ordinateur) {
+		this.ordinateur = ordinateur;
+	}
+
+	public Map<String, Object> getOs() {
+		return os;
+	}
+
+	public void setOs(Map<String, Object> os) {
+		this.os = os;
+	}
+
+	public Map<String, Object> getCpu() {
+		return cpu;
+	}
+
+	public void setCpu(Map<String, Object> cpu) {
+		this.cpu = cpu;
+	}
+
+	public List<Map<String, Object>> getDisks() {
+		return disks;
+	}
+
+	public void setDisks(List<Map<String, Object>> disks) {
+		this.disks = disks;
+	}
+
+	public List<Map<String, Object>> getRam() {
+		return ram;
+	}
+
+	public void setRam(List<Map<String, Object>> ram) {
+		this.ram = ram;
+	}
+
+	public List<Map<String, Object>> getVirus() {
+		return virus;
+	}
+
+	public void setVirus(List<Map<String, Object>> virus) {
+		this.virus = virus;
+	}
+
+	public List<Map<String, Object>> getGpu() {
+		return gpu;
+	}
+
+	public void setGpu(List<Map<String, Object>> gpu) {
+		this.gpu = gpu;
+	}
+
+	public List<Map<String, Object>> getMoniteur() {
+		return moniteur;
+	}
+
+	public void setMoniteur(List<Map<String, Object>> moniteur) {
+		this.moniteur = moniteur;
+	}
+
+	public List<Map<String, Object>> getPeripheriques() {
+		return peripheriques;
+	}
+
+	public void setPeripheriques(List<Map<String, Object>> peripheriques) {
+		this.peripheriques = peripheriques;
+	}
+
+	public List<Map<String, Object>> getInterfacereseau() {
+		return interfacereseau;
+	}
+
+	public void setInterfacereseau(List<Map<String, Object>> interfacereseau) {
+		this.interfacereseau = interfacereseau;
+	}
+	public List<Map<String, Object>> getLogiciel() {
+		return logiciel;
+	}
+
+	public void setLogiciel(List<Map<String, Object>> logiciel) {
+		this.logiciel = logiciel;
+	}
+    
+}
+//---------------------------------------------------------------------------------
+repository
+
+package database.repositori;
+import database.model.Ordinateur;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+@Repository
+public interface OrdinateurRepository extends JpaRepository<Ordinateur, Long> {
+
+    // Trouver un ordinateur par son nom
+    Optional<Ordinateur> findByNom(String nom);
+
+    // Trouver des ordinateurs par statut
+    List<Ordinateur> findByStatut(String statut);
+
+    // Trouver des ordinateurs par ID du bureau
+    List<Ordinateur> findByIdBureau(int idBureau);
+
+    // Trouver des ordinateurs par prix inférieur ou égal à un montant donné
+    List<Ordinateur> findByPrixLessThanEqual(double prix);
+}
+//--------------------------------------------------------------------------------------
+service
+
+package database.service;
+
+import database.model.Ordinateur;
+import database.repositori.OrdinateurRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class OrdinateurService {
+
+    private final OrdinateurRepository ordinateurRepository;
+
+    public OrdinateurService(OrdinateurRepository ordinateurRepository) {
+        this.ordinateurRepository = ordinateurRepository;
+    }
+
+    // Ajouter un nouvel ordinateur
+    public Ordinateur ajouterOrdinateur(Ordinateur ordinateur) {
+        return ordinateurRepository.save(ordinateur);
+    }
+
+    // Récupérer tous les ordinateurs
+    public List<Ordinateur> getTousLesOrdinateurs() {
+        return ordinateurRepository.findAll();
+    }
+
+    // Récupérer un ordinateur par son ID
+    public Optional<Ordinateur> getOrdinateurParId(Long id) {
+        return ordinateurRepository.findById(id);
+    }
+
+    // Récupérer un ordinateur par son nom
+    public Optional<Ordinateur> getOrdinateurParNom(String nom) {
+        return ordinateurRepository.findByNom(nom);
+    }
+
+    // Récupérer les ordinateurs par statut
+    public List<Ordinateur> getOrdinateursParStatut(String statut) {
+        return ordinateurRepository.findByStatut(statut);
+    }
+
+    // Récupérer les ordinateurs d'un bureau spécifique
+    public List<Ordinateur> getOrdinateursParIdBureau(int idBureau) {
+        return ordinateurRepository.findByIdBureau(idBureau);
+    }
+
+    // Récupérer les ordinateurs par prix inférieur ou égal à un montant donné
+    public List<Ordinateur> getOrdinateursParPrixMax(double prix) {
+        return ordinateurRepository.findByPrixLessThanEqual(prix);
+    }
+
+    // Mettre à jour un ordinateur
+    public Optional<Ordinateur> mettreAJourOrdinateur(Long id, Ordinateur ordinateurDetails) {
+        return ordinateurRepository.findById(id).map(ordinateur -> {
+            ordinateur.setNom(ordinateurDetails.getNom());
+            ordinateur.setDateAcquisition(ordinateurDetails.getDateAcquisition());
+            ordinateur.setStatut(ordinateurDetails.getStatut());
+            ordinateur.setIdBureau(ordinateurDetails.getIdBureau());
+            ordinateur.setPrix(ordinateurDetails.getPrix());
+            ordinateur.setOrdinateur(ordinateurDetails.getOrdinateur());
+            ordinateur.setOs(ordinateurDetails.getOs());
+            ordinateur.setRam(ordinateurDetails.getRam());
+            ordinateur.setVirus(ordinateurDetails.getVirus());
+            ordinateur.setCpu(ordinateurDetails.getCpu());
+            ordinateur.setDisks(ordinateurDetails.getDisks());
+            ordinateur.setGpu(ordinateurDetails.getGpu());
+            ordinateur.setMoniteur(ordinateurDetails.getMoniteur());
+            ordinateur.setPeripheriques(ordinateurDetails.getPeripheriques());
+            return ordinateurRepository.save(ordinateur);
+        });
+    }
+
+    // Supprimer un ordinateur par son ID
+    public boolean supprimerOrdinateur(Long id) {
+        if (ordinateurRepository.existsById(id)) {
+            ordinateurRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+}
+
+

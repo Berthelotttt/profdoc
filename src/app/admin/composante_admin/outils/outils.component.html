@@ -1,8 +1,6 @@
 <div class="grph_entete">
   <div (click)="afficherGraphique('equipement')" class="titre">Equipement</div>
-  <div (click)="afficherGraphique('ticket')" class="titre">Âge des équipements </div>
-  <div (click)="afficherGraphique('cout')" class="titre">Coût des équipements </div>
-  <div (click)="afficherGraphique('panne')" class="titre">Statut des équipements </div>
+  <div (click)="actualise( )" class="titre">Actualiser</div>
 </div>
 <div class="contenu_graph">
   <!--------------------------------EQUIPEMENTT----------------------->
@@ -24,35 +22,59 @@
                 type="pie">
             </canvas>
             </div>
-            <div class="contient_champ_graphic_circu2">
+              <div class="contient_tableau">
+                <table>
+                  <tr>
+                    <th>Equipements</th>
+                    <th>Nombre total</th>
+                  </tr>
+                  <tr>
+                    <td>Ordinateurs</td>
+                    <td>{{this.all_ordinateurs.length}}</td>
+                  </tr>
+                  <tr>
+                    <td>Imprimantes</td>
+                    <td>{{this.All_imprimante.length}}</td>
+                  </tr>
+                  <tr>
+                    <td>Moniteurs</td>
+                    <td>{{this.allmoniteur.length}}</td>
+                  </tr>
+                  <tr>
+                    <td>Switchs</td>
+                    <td>{{this.Allswitches.length}}</td>
+                  </tr>
+                  <tr>
+                    <td>Routeurs</td>
+                    <td>{{this.All_routeur.length}}</td>
+                  </tr>
+                  <tr>
+                    <td>Stabilisateurs</td>
+                    <td>{{this.All_Stabilisateur.length}}</td>
+                  </tr>
+                  <tr>
+                    <td>Serveurs</td>
+                    <td>{{this.All_serveur.length}}</td>
+                  </tr>
+                  <tr>
+                    <td>Projecteurs</td>
+                    <td>{{this.All_Projecteur.length}}</td>
+                  </tr>
+                  <tr>
+                    <td>Points d'accès</td>
+                    <td>{{this.All_pointsAcces.length}}</td>
+                  </tr>
+                </table>
 
-              <div class="graphic_circu2">
-                <canvas
-                baseChart
-                [data]="repartition_pieChartData"
-                [type]="pieChartType"
-                [options]="pieChartOptions"
-                >
-                </canvas>
 
               </div>
-              <div class="champ">
-                <select>
-                    <option value="">Sélectionner un bureau</option>
-                    <option value="bureau1">Bureau 12</option>
-                    <option value="bureau2">Bureau 2</option>
-                    <option value="bureau3">Bureau 3</option>
-                </select>
-              </div>
-            </div>
+
       </div>
     </div>
 
     <!--------------age equipment---------------->
     <div *ngIf="ouverture_age_equipement" class="contenu_graph_repart_age">
       <div class="contenu_graph_age">
-        <!-----graph---------->
-
         <canvas class="contient_graphic_circuage"
             baseChart
             [data]="barChartData"
@@ -263,67 +285,54 @@
     </div>
  </div>
  <!---------------------------------TICKET----------------------------->
-  <div *ngIf="ouverture_Graphique_Ticket" class="graphique_TICKET">
-     <!---------------------ticket ouvert fermer--------------------------->
-    <div *ngIf="ouverture_ticket_ouvert" class="contenu_graph_tickets">
-      <div class="contenu_graph_tickets_ligne">
-        <!-- Graphique des tickets ouverts et fermés -->
-          <div  class="graphique_tickets" >
-            <canvas  baseChart
-              [data]="lineChartDataTickets"
-              [type]="lineChartTypeTickets"
-              [options]="lineChartOptionsTickets">
-            </canvas>
-            <div class="filtres_tickets">
+  <div *ngIf="ouverture_Graphique_Ticket" class="contenu_graph_repart_age">
+    <div class="contenu_graph_agex">
+      <!-----graph---------->
 
-              <select>
-                <option  >Sélectionner une période</option>
-                <option value="semaine">Cette semaine</option>
-                <option value="mois">Ce mois-ci</option>
-                <option value="annee">Cette année</option>
-              </select>
+      <canvas class="contient_graphic_circuage"
+          baseChart
+          [data]="barChartData"
+          [options]="barChartOptions"
+          [type]="barChartType">
+      </canvas>
+
+        <!----tab---------->
+      <div class="contient_tableaux">
+            <!-- Sélection de l'âge -->
+                <!-- Bouton pour générer un rapport -->
+            <div class="conitient_but_gener">
+              <div class="champ_age">
+                <select id="ageSelect">
+                  <option value="0-5">0-5 ans</option>
+                  <option value="6-10">6-10 ans</option>
+                  <option value="11-15">11-15 ans</option>
+                  <option value="16-20">16-20 ans</option>
+                  <option value="20+">20+ ans</option>
+                </select>
+              </div>
+              <button (click)="genererRapport()">Générer Rapport</button>
             </div>
-          </div>
+            <!-- Tableau des équipements par âge, bâtiment et bureau-->
+            <table class="table_equipement">
+              <thead>
+                <tr>
+                  <th>Âge</th>
 
-
-
-        <!-- Filtres -->
-
+                  <th>Bureau</th>
+                  <th>Nom d'équipements</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let equipement of equipements">
+                  <td>{{ equipement.age }}</td>
+                  <td>{{ equipement.bureau }}</td>
+                  <td>{{ equipement.nom }}</td>
+                </tr>
+              </tbody>
+            </table>
 
       </div>
-    </div>
 
-    <!---------------------ticket Priorité --------------------------->
-    <div *ngIf="ouverture_ticket_priorite" class="contenu_graph_tickets">
-      <div class="contenu_graph_ticketss">
-        <div class="contient_graphic_circu1">
-          <div class="graphic_circu1">
-
-
-          </div>
-        </div>
-        <div class="contient_champ_graphic_circu2">
-          <div class="champ">
-            <div class="titre">Bâtiment</div>
-            <select >
-                <option value="">Sélectionner un bâtiment</option>
-                <option value="batiment1">Bâtiment 1</option>
-                <option value="batiment2">Bâtiment 2</option>
-                <option value="batiment3">Bâtiment 3</option>
-            </select>
-            <div class="titre">Bureau</div>
-            <select>
-                <option value="">Sélectionner un bureau</option>
-                <option value="bureau1">Bureau 1</option>
-                <option value="bureau2">Bureau 2</option>
-                <option value="bureau3">Bureau 3</option>
-            </select>
-          </div>
-          <div class="graphic_circu2">
-
-          </div>
-        </div>
-      </div>
     </div>
 
   </div>

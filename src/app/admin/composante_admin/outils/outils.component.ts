@@ -289,7 +289,15 @@ liste_ticket:boolean=false;
 ajoute_ticket:boolean=false;
 
 
-
+constructor(
+  private cdr: ChangeDetectorRef,
+  private router: Router,
+  public dialog: MatDialog,
+  private backend: BackendserviceService
+) {
+  Chart.register(...registerables);
+  this.initializeChartData();
+}
   // Configuration du graphique
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
@@ -327,38 +335,83 @@ ajoute_ticket:boolean=false;
  // Type du graphique
  public pieChartType: ChartType = 'pie';
 
+ updateBarChartData() {
+  const now = new Date();
+  const ageData = [0, 0, 0, 0, 0];
 
+  const allEquipments = [
+    ...this.all_ordinateurs,
+    ...this.allmoniteur,
+    ...this.All_imprimante,
+    ...this.Allswitches,
+    ...this.All_routeur,
+    ...this.All_Stabilisateur,
+    ...this.All_serveur,
+    ...this.All_Projecteur,
+    ...this.All_pointsAcces
+  ];
+
+  allEquipments.forEach(equipment => {
+    console.log(equipment)
+   // const acquisitionDate = new Date(equipment.);
+ //   const age = now.getFullYear() - acquisitionDate.getFullYear();
+/*
+    if (age >= 0 && age < 5) {
+      ageData[0]++;
+    } else if (age >= 5 && age < 10) {
+      ageData[1]++;
+    } else if (age >= 10 && age < 15) {
+      ageData[2]++;
+    } else if (age >= 15 && age < 20) {
+      ageData[3]++;
+    } else if (age >= 20) {
+      ageData[4]++;
+    }*/
+  });
+
+  this.barChartData.datasets[0].data = ageData;
+  console.log(this.barChartData.datasets[0].data);
+}
 //------------------------------------------repartition------------------------------------------------
-public  repartition_pieChartData: ChartConfiguration['data'] = {
-  labels: ['imprimante', 'ordinateur', 'switch', 'moniteur', 'routeur', 'Stabilisateur', 'serveur'],
+public repartition_pieChartData: ChartConfiguration['data'] = {
+  labels: ['ordinateur', 'imprimante', 'moniteur',  'switch', 'routeur','Stabilisateur', 'serveur', 'Projecteur', 'Ponts d\'accès'],
   datasets: [{
-    data: [], // Initialiser avec un tableau vide
+    data: [
+    ], // Initialiser avec un tableau vide
     backgroundColor: [
-      'rgba(253, 5, 59, 0.95)',
-      'rgb(13, 158, 255)',
-      'rgba(248, 178, 2, 0.97)',
-      'rgb(0, 255, 255)',
-      'rgb(9, 156, 255)',
-      'rgba(252, 182, 5, 0.97)',
-      'rgba(8, 241, 241, 0.97)',
+      'rgb(13, 158, 255)',        // ordinateur
+      'rgb(0, 255, 255)',         // moniteur
+      'rgba(253, 5, 59, 0.95)',   // imprimante
+      'rgba(8, 241, 241, 0.97)',  // serveur
+      'rgb(9, 156, 255)',         // routeur
+      'rgba(248, 178, 2, 0.97)',  // switch
+      'rgba(252, 182, 5, 0.97)',  // Stabilisateur
+      'rgba(153, 102, 255, 0.95)',// Projecteur
+      'rgba(255, 159, 64, 0.95)'  // Ponts d'accès
     ],
   }]
 };
 
-// Métjhode pour mettre à jour les données du graphique
+
+
 repartition_updateChartData() {
   this.repartition_pieChartData.datasets[0].data = [
-    this.All_imprimante.length,     // Nombre d'imprimantes
-    this.all_ordinateurs.length,    // Nombre d'ordinateurs
-    this.Allswitches.length,        // Nombre de switches
-    this.allmoniteur.length,        // Nombre de moniteurs
-    this.All_routeur.length,        // Nombre de routeurs
-    this.All_Stabilisateur.length,  // Nombre d'onduleurs
-    this.All_serveur.length         // Nombre de serveurs
-  ];
-  console.log( this.repartition_pieChartData)
-}
+    this.all_ordinateurs.length,
+    this.All_imprimante.length,
+    this.allmoniteur.length,        // Nombre d'ordinateurs // Nombre d'imprimantes ordinateurs switches moniteurs routeurs stabilisateurs serveurs
 
+    this.Allswitches.length,        // Nombre de switches
+
+    this.All_routeur.length,        // Nombre de routeurs
+    this.All_Stabilisateur.length,  // Nombre de stabilisateurs
+    this.All_serveur.length ,        // Nombre de serveurs
+    this.All_Projecteur.length,
+    this.All_pointsAcces.length
+  ];
+  console.log(this.repartition_pieChartData.datasets[0].data);
+
+
+}
 
  // Options du graphique
  public pieChartOptions: ChartConfiguration['options'] = {
@@ -386,28 +439,10 @@ repartition_updateChartData() {
 };
 
 
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private router: Router,
-    public dialog: MatDialog,
-    private backend: BackendserviceService
-  ) {
-    Chart.register(...registerables);
-    this.initializeChartData();
-  }
+
   async loadAllData() {
     try {
-      // Récupérer les données de manière séquentielle
-        await this.backend.getAllOrdinateurs().toPromise();
-     await this.backend.getAllMoniteurs().toPromise();
-        await this.backend.getAllImprimantes().toPromise();
-      await this.backend.getAllStabilisateurs().toPromise();
-       await this.backend.getAllSwitches().toPromise();
-      await this.backend.getAllRouteurs().toPromise();
-      await this.backend.getAllServeurs().toPromise();
-
-      // Mettre à jour les données du graphique
-      this.repartition_updateChartData();
+      await this.recupere_all_ordi();
 
       // Forcer la détection de changement
       this.cdr.detectChanges();
@@ -415,6 +450,141 @@ repartition_updateChartData() {
       console.error('Erreur:', err);
     }
   }
+
+async recupere_all_ordi(){
+  await this.backend.getAllOrdinateurs (  ).subscribe(
+    (data) => {
+      // Vérifier si la réponse est un objet ou un tableau et assigner correctement
+      this.all_ordinateurs =  data;
+      console.log(this.all_ordinateurs)
+
+    this.recupere_all_moniteur();
+
+    },
+    (error) => {
+      console.error('Erreur lors de la récupération de l’utilisateur:', error);
+    }
+  );
+
+}
+///-------------------------------------moniteur---------------------------------------------------
+async recupere_all_moniteur(){
+  await this.backend.getAllMoniteurs (  ).subscribe(
+    (data) => {
+      // Vérifier si la réponse est un objet ou un tableau et assigner correctement
+      this. allmoniteur =  data;
+      console.log(this.all_ordinateurs)
+
+    this.recupere_all_imprimante();
+    },
+    (error) => {
+      console.error('Erreur lors de la récupération de l’utilisateur:', error);
+    }
+  );
+
+}
+///-------------------------------------imprimante---------------------------------------------------
+async recupere_all_imprimante(){
+  await this.backend.getAllImprimantes (  ).subscribe(
+    (data) => {
+      // Vérifier si la réponse est un objet ou un tableau et assigner correctement
+      this. All_imprimante =  data;
+      console.log(this.all_ordinateurs)
+
+    this.recupere_all_stabilisateur();
+    },
+    (error) => {
+      console.error('Erreur lors de la récupération de l’utilisateur:', error);
+    }
+  );
+}
+//-----------------------------------------Stabilisateur--------------------------------------------
+async recupere_all_stabilisateur(){
+  await this.backend.getAllStabilisateurs () .subscribe(
+    (data) => {
+      this.All_Stabilisateur= data;
+
+    this.recupere_all_swicth();
+
+    },
+    (error) => {
+      console.error('Erreur lors du char ent des bureaux', error);
+    }
+  );
+
+}
+//------------------------------------------swicth-------------------------------------------------
+async recupere_all_swicth(){
+  await this.backend.getAllSwitches () .subscribe(
+    (data) => {
+      this.Allswitches= data;
+      console.log(  this.Allswitches)
+
+    this.recupere_all_routeur();
+
+    },
+    (error) => {
+      console.error('Erreur lors du char ent des bureaux', error);
+    }
+  );
+
+}
+//-----------------------------------routeur------------------------------------
+async recupere_all_routeur(){
+  await this.backend.getAllRouteurs () .subscribe(
+    (data) => {
+      this.All_routeur= data;
+
+    this.recupere_all_pointdacce();
+
+    },
+    (error) => {
+      console.error('Erreur lors du char ent des bureaux', error);
+    }
+  );
+
+}
+//-----------------------------------------point---------------------------------------------
+async recupere_all_pointdacce(){
+  await this.backend.getAllPointsAcces() .subscribe(
+    (data) => {
+      this.All_pointsAcces= data;
+
+    this.recupere_all_serveur();
+    },
+    (error) => {
+      console.error('Erreur lors du char ent des bureaux', error);
+    }
+  );
+}
+//--------------------------------------------------serveur-----------------------------------
+async recupere_all_serveur(){
+
+  await this.backend.getAllServeurs () .subscribe(
+    (data) => {
+      this.All_serveur= data;
+
+    this.recupere_all_Projecteur();
+    },
+    (error) => {
+      console.error('Erreur lors du char ent des bureaux', error);
+    }
+  );
+}
+//------------------------------------------------projecteur------------------------------------
+async recupere_all_Projecteur(){
+  await this.backend. getAllProjecteurs () .subscribe(
+    (data) => {
+     this.All_Projecteur = data;
+     // Mettre à jour les données du graphique
+     this.repartition_updateChartData();
+    },
+    (error) => {
+      console.error('Erreur lors du char ent des bureaux', error);
+    }
+  );
+
+}
   async ngOnInit() {
     this.loadAllData();
     this.  ouverture_parc=true;
@@ -530,7 +700,12 @@ onSubmit_ticket(){
   ouverture_Graphique_Technicien: boolean = false;
   ouverture_Graphique_Cout: boolean = false;
   ouverture_Graphique_Panne: boolean = false;
-
+  actualise( ){
+    this.ouverture_Graphique_equipement = false;
+    setTimeout(() => {
+      this.ouverture_Graphique_equipement = true;
+    }, 1000);
+  }
   // Fonction pour afficher le graphique correspondant
   afficherGraphique(type: string) {
     // Ferme tous les graphiques avant d'en ouvrir un
@@ -656,7 +831,7 @@ onSubmit_ticket(){
       labels: this.barChartLabels,
       datasets: [
         {
-          data: [15, 30, 20, 10],
+          data: [ ],
           label: 'Nombre d’équipements',
         //  backgroundColor: 'rgb(44, 42, 42)',
         backgroundColor: 'rgb(41, 27, 1)',
@@ -1058,10 +1233,9 @@ get ouverture_cout_temp() {
 }
 
 
-
 // ✅ Données pour le graphique en secteurs (Pie)
 dataMateriel: ChartData<"pie", number[], unknown> = {
-  labels: ['Ordinateurs', 'Serveurs', 'Périphériques'],
+  labels: ['Ordinateurs','imprimantes','moniteurs','Switchs','Routeurs','Stabilisateurs','Serveurs'],
   datasets: [
     {
       data: [5000, 7000, 3000],
@@ -1635,121 +1809,4 @@ newsProjecteur: Projecteur = {
   id_ordi_visual!:number;
   user_id_odrinateur={};
   user:Utilisateur[] = [];
-async recupere_all_ordi(){
-  await this.backend.getAllOrdinateurs (  ).subscribe(
-    (data) => {
-      // Vérifier si la réponse est un objet ou un tableau et assigner correctement
-      this.all_ordinateurs =  data;
-      console.log(this.all_ordinateurs)
-
-
-    },
-    (error) => {
-      console.error('Erreur lors de la récupération de l’utilisateur:', error);
-    }
-  );
-
-}
-///-------------------------------------moniteur---------------------------------------------------
-async recupere_all_moniteur(){
-  await this.backend.getAllMoniteurs (  ).subscribe(
-    (data) => {
-      // Vérifier si la réponse est un objet ou un tableau et assigner correctement
-      this. allmoniteur =  data;
-      console.log(this.all_ordinateurs)
-    },
-    (error) => {
-      console.error('Erreur lors de la récupération de l’utilisateur:', error);
-    }
-  );
-
-}
-///-------------------------------------imprimante---------------------------------------------------
-async recupere_all_imprimante(){
-  await this.backend.getAllImprimantes (  ).subscribe(
-    (data) => {
-      // Vérifier si la réponse est un objet ou un tableau et assigner correctement
-      this. All_imprimante =  data;
-      console.log(this.all_ordinateurs)
-    },
-    (error) => {
-      console.error('Erreur lors de la récupération de l’utilisateur:', error);
-    }
-  );
-}
-//-----------------------------------------Stabilisateur--------------------------------------------
-async recupere_all_stabilisateur(){
-  await this.backend.getAllStabilisateurs () .subscribe(
-    (data) => {
-      this.All_Stabilisateur= data;
-
-    },
-    (error) => {
-      console.error('Erreur lors du char ent des bureaux', error);
-    }
-  );
-
-}
-//------------------------------------------swicth-------------------------------------------------
-async recupere_all_swicth(){
-  await this.backend.getAllSwitches () .subscribe(
-    (data) => {
-      this.Allswitches= data;
-      console.log(  this.Allswitches)
-
-    },
-    (error) => {
-      console.error('Erreur lors du char ent des bureaux', error);
-    }
-  );
-
-}
-//-----------------------------------routeur------------------------------------
-async recupere_all_routeur(){
-  await this.backend.getAllRouteurs () .subscribe(
-    (data) => {
-      this.All_routeur= data;
-
-    },
-    (error) => {
-      console.error('Erreur lors du char ent des bureaux', error);
-    }
-  );
-
-}
-//-----------------------------------------point---------------------------------------------
-async recupere_all_pointdacce(){
-  await this.backend.getAllPointsAcces() .subscribe(
-    (data) => {
-      this.All_pointsAcces= data;
-    },
-    (error) => {
-      console.error('Erreur lors du char ent des bureaux', error);
-    }
-  );
-}
-//--------------------------------------------------serveur-----------------------------------
-async recupere_all_serveur(){
-
-  await this.backend.getAllServeurs () .subscribe(
-    (data) => {
-      this.All_serveur= data;
-    },
-    (error) => {
-      console.error('Erreur lors du char ent des bureaux', error);
-    }
-  );
-}
-//------------------------------------------------projecteur------------------------------------
-async recupere_all_Projecteur(){
-  await this.backend. getAllProjecteurs () .subscribe(
-    (data) => {
-     this.All_Projecteur = data;
-    },
-    (error) => {
-      console.error('Erreur lors du char ent des bureaux', error);
-    }
-  );
-
-}
 }

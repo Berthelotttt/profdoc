@@ -13,8 +13,10 @@ import { BaseChartDirective } from 'ng2-charts';
 import { forkJoin } from 'rxjs';
 import { BackendserviceService, } from '../backendservice.service';
 import { InventaireComponent } from "./composante_admin/inventaire/inventaire.component";
+import { MisejourantiComponent } from './composante_admin/misejouranti/misejouranti.component';
 import { OutilsComponent } from './composante_admin/outils/outils.component';
 import { ParcComponent } from './composante_admin/parc/parc.component';
+import { ProfilComponent } from './composante_admin/profil/profil.component';
 import { TicketComponent } from './composante_admin/ticket/ticket.component';
 import { UtilisateurComponent } from './composante_admin/utilisateur/utilisateur.component';
 export interface Bureau {
@@ -252,6 +254,8 @@ export interface Vlan {
   selector: 'app-admin',
   standalone: true,
   imports: [
+    MisejourantiComponent,
+    ProfilComponent,
     OutilsComponent,
     ParcComponent,
     TicketComponent,
@@ -278,6 +282,8 @@ export class AdminComponent {
   ouverture_Graphique:boolean=false;
   ouverture_acceuille:boolean=false;
   ouverture_user:boolean=false;
+  ouverture_profil:boolean=false;
+  ouverture_anti:boolean=false;
 
   //-----------------parc------------------------------
   //--------affiche---------------------
@@ -436,9 +442,7 @@ repartition_updateChartData() {
   }
 
   async ngOnInit() {
-    const userAgent = navigator.userAgent;
-    this.plateformeDifferentDeNavigateur = !userAgent.includes('YourSpecificBrowserIdentifier');
-    console.log(   this.plateformeDifferentDeNavigateur)
+
     this.loadAllData();
     this.  ouverture_parc=true;
     this.active_insert_ordinateur=true;
@@ -447,6 +451,8 @@ repartition_updateChartData() {
 
   }
   ouvrir_acceuille(){
+    this.ouverture_anti=false;
+    this.ouverture_profil=false;
     this.ouverture_user=false;
     this.ouverture_acceuille=true;
     this.ouverture_parc=false;
@@ -455,16 +461,42 @@ repartition_updateChartData() {
     this.ouverture_Graphique=false;
     this.active_affiche_equiment=false;
   }
-  ouvrir_parc(){
+  ouvrir_anti(){
+    this.ouverture_anti=true;
+    this.ouverture_profil=false;
     this.ouverture_user=false;
-    this.ouverture_parc=true;
+    this.ouverture_acceuille=true;
+    this.ouverture_parc=false;
+    this.ouverture_ticket=false;
+    this.ouverture_inventaire=false;
+    this.ouverture_Graphique=false;
+    this.active_affiche_equiment=false;
+  }
+  ouvrir_profil() {
+    this.ouverture_anti=false;
+    this.ouverture_profil=true;
+    this.ouverture_user=false;
+    this.ouverture_parc=false;
     this.ouverture_ticket=false;
     this.ouverture_inventaire=false;
     this.ouverture_Graphique=false;
     this.ouverture_acceuille=false;
     this.active_affiche_equiment=false;
   }
+  ouvrir_parc(){
+    this.ouverture_anti=false;
+    this.ouverture_profil=false;
+    this.ouverture_user=false;
+    this.ouverture_parc=true;
+    this.ouverture_ticket=false;;
+    this.ouverture_inventaire=false;
+    this.ouverture_Graphique=false;
+    this.ouverture_acceuille=false;
+    this.active_affiche_equiment=false;
+  }
   ouvrir_ticket(){
+    this.ouverture_anti=false;
+    this.ouverture_profil=false;
     this.ouverture_user=false;
     this.ouverture_parc=false;
     this.ouverture_ticket=true;
@@ -474,6 +506,8 @@ repartition_updateChartData() {
     this.active_affiche_equiment=false;
   }
   ouvrir_inventaire(){
+    this.ouverture_anti=false;
+    this.ouverture_profil=false;
     this.ouverture_user=false;
     this.ouverture_parc=false;
     this.ouverture_ticket=false;
@@ -483,6 +517,8 @@ repartition_updateChartData() {
     this.active_affiche_equiment=false;
 }
   ouvrir_Graphique(){
+    this.ouverture_anti=false;
+    this.ouverture_profil=false;
     this.ouverture_user=false;
     this.ouverture_parc=false;
     this.ouverture_ticket=false;
@@ -497,6 +533,8 @@ repartition_updateChartData() {
     this.router.navigate(['/acceuille']);
   }
   ouvrir_user(){
+    this.ouverture_anti=false;
+    this.ouverture_profil=false;
     this.ouverture_parc=false;
     this.ouverture_ticket=false;
     this.ouverture_inventaire=false;
