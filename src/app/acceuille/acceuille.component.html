@@ -16,16 +16,7 @@
           <label for="password">Mot de passe</label>
           <input  [(ngModel)]="mot_pass_connx"  type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
         </div>
-        <div *ngIf="!plateformeDifferentDeNavigateur" class="form-group  ">
-          <label for="role">Profession</label>
-          <select id="role" name="role" required [(ngModel)]="roleSelectionne">
-            <option value="" disabled selected>Choisissez votre profession</option>
-            <option value="Administrateur parc informatique">Administrateur du parc informatique</option>
-            <option value="Technicien">Technicien</option>
-        </select>
-
-            </div>
-            <div *ngIf="plateformeDifferentDeNavigateur" class="form-group  ">
+          <div  class="form-group  ">
               <label for="role">Profession</label>
               <select id="role" name="role" required [(ngModel)]="roleSelectionne">
                 <option value="" disabled selected>Choisissez votre profession</option>

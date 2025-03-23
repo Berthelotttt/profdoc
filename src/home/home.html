@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+</head>
+<body>
+  <h1>Page Home</h1>
+  <button onclick="goBack()">Retour</button>
+  <script>
+    const { remote } = require('electron');
+    function goBack() {
+      remote.getGlobal('navigateToPage')('index.html');
+    }
+  </script>
+</body>
+</html>

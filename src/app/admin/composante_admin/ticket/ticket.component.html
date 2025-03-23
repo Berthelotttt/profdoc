@@ -20,7 +20,7 @@
         <tr>
           <th>ID</th>
           <th>Titre</th>
-          <th>Catégorie</th>
+          <th>Type</th>
           <th>Priorité</th>
           <th>Bureau</th>
           <th>Demandeur</th>
@@ -102,7 +102,7 @@
             <td>{{ tickets_id.priorite || '--------' }}</td>
         </tr>
         <tr>
-            <th>Catégorie</th>
+            <th>Type</th>
             <td>{{ tickets_id.categorie || '--------' }}</td>
         </tr>
         <tr>
@@ -117,10 +117,7 @@
             <th>Date d'ouverture</th>
             <td>{{ tickets_id.dateOuverture || '--------' }}</td>
         </tr>
-        <tr>
-            <th>Date de prise en charge</th>
-            <td>{{ tickets_id.datePrise || '--------' }}</td>
-        </tr>
+
         <tr>
             <th>Date de fermeture</th>
             <td>{{ tickets_id.dateFermeture || '--------' }}</td>
@@ -138,20 +135,16 @@
             <td>{{ tickets_id.typeEquipement || '--------' }}</td>
         </tr>
         <tr>
-            <th>ID Équipement</th>
-            <td>{{ tickets_id.idEquipement || '--------' }}</td>
-        </tr>
-        <tr>
             <th> Panne</th>
             <td>{{ tickets_id.panne || '--------' }}</td>
         </tr>
         <tr>
             <th>ID Bureau</th>
-            <td>{{ tickets_id.id_bureau || '--------' }}</td>
+            <td>{{ recupbureaux(tickets_id.id_bureau) || '--------' }}</td>
         </tr>
         <tr>
             <th>ID Demandeur</th>
-            <td>{{ tickets_id.id_demandeur || '--------' }}</td>
+            <td>{{ tickets_id.demandeur || '--------' }}</td>
         </tr>
     </table>
 

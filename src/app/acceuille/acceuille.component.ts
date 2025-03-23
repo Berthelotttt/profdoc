@@ -115,9 +115,7 @@ export class AcceuilleComponent {
   }
   //-----------------------------------------------
   async connexion(){
-    if(this.plateformeDifferentDeNavigateur==true){
-      this. roleSelectionne='Autres professions'
-    }
+
     console.log(this.num_matricule_connx );
     console.log( this.mot_pass_connx);
      await this.backend.getUtilisateurByMatricule(this.num_matricule_connx).subscribe({

@@ -2061,7 +2061,7 @@ recupere_serveurmodi_id(id: number) {
     { value: 3, label: '3e étage' },
     { value: 4, label: '4e étage' },
     { value: 5, label: '5e étage' },
-    { value: 5, label: '6e étage' },
+    { value: 6, label: '6e étage' },
   ];
  //---------------sdfdsds--------------ordinateurs -----------------------
   nom_utilisateur_ordi:string=''
@@ -4005,7 +4005,7 @@ softwareInfo: any[] = [];
 async  telecharge_pdf_global() {
       const pdf = new jsPDF('p', 'mm', 'a4');
       pdf.setFontSize(18);
-      pdf.text('Rapport sur les équipements réseau', 10, 20);
+      pdf.text('Rapport sur tous les équipements', 10, 20);
       const now = new Date();
       const formattedDate = now.toISOString().split('T')[0];
       const generatedBy = `Généré par l'administrateur du parc Inforùatique`;

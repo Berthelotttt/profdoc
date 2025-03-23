@@ -72,10 +72,7 @@
             <th>Date d'ouverture</th>
             <td>{{ tickets_id.dateOuverture || '--------' }}</td>
         </tr>
-        <tr>
-            <th>Date de prise en charge</th>
-            <td>{{ tickets_id.datePrise || '--------' }}</td>
-        </tr>
+
         <tr>
             <th>Date de fermeture</th>
             <td>{{ tickets_id.dateFermeture || '--------' }}</td>
@@ -105,7 +102,7 @@
           <th>Panne </th>
           <select name="panne" id="panne" (change)="modife_ticket_panne($event)">
             <option value="">Choisissez le type de panne</option>
-            <optgroup label="--------------------Logiciel-------------------">
+            <optgroup label="-------------------Logiciel-------------------">
                 <option value="systeme_exploitation">Système d'exploitation</option>
                 <option value="pilotes">Pilotes</option>
                 <option value="installations_incompletes">Installations logiciels incomplètes</option>
@@ -115,7 +112,7 @@
                 <option value="autres_logiciels">Autres logiciel</option>
             </optgroup>
 
-            <optgroup label="--------------------Matériel sur Pc------------------">
+            <optgroup label="--------------------Matériel sur Pc--------------------">
                 <option value="processeur">Processeur (CPU)</option>
                 <option value="memoire_vive">Mémoire vive (RAM)</option>
                 <option value="stockage">Stockage (Disque dur / SSD)</option>
@@ -137,7 +134,7 @@
                 <option value="autres_pannes_imprimante">Autres pannes</option>
             </optgroup>
 
-            <optgroup label="--------------------Stabilisateur-------------------">
+            <optgroup label="-------------------Stabilisateur-------------------">
                 <option value="probleme_tension">Problème de tension</option>
                 <option value="surchauffe">Surchauffe</option>
                 <option value="defaillance_composants">Défaillance des composants internes</option>
